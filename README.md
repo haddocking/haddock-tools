@@ -27,7 +27,7 @@ cd haddock-tools && git pull origin master
 Scripts
 ------------
 
-* active active-passive_to_ambig.py *
+## active-passive_to_ambig.py
 A python script to create ambiguous interaction restraints for use in HADDOCK based on list of active and passive residues (refer to the [HADDOCK software page](http://www.bonvinlab.org/software/haddock2.2/haddock.html) for more infmation)
 
 Usage:
