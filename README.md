@@ -1,6 +1,6 @@
 haddock-tools
 ================================================
-Set of usefil HADDOCK utility scripts
+Set of useful HADDOCK utility scripts
 
 About
 ---------
