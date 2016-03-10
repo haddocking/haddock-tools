@@ -1,0 +1,103 @@
+#!/bin/sh
+# Author: Jurgen F. Doreleijers (modified by Ton Rullmann).
+# Make a multi-model PDB file from separate PDB files.
+#
+# The result appears on stdout or on the file named with the "-o" option.
+# The input files are given as arguments, or they are taken to be
+# xxx1.pdb, xxx2.pdb etc. where xxx and the number of files are
+# retrieved interactively.
+#
+
+if [ $# -eq 0 ]
+then
+    echo "Usage: joinpdb  -o outputfile  [inputfiles]"
+    echo "   if no inputfiles are given, their names are assumed to be"
+    echo "   xxx1.pdb, xxx2.pdb etc."
+    echo "   and you will be prompted to specify xxx and the number of files"
+    echo
+    echo "Concatenate separate single structure PDB files into a multi-model"
+    echo "file."
+    echo
+    echo "Everything before the first ATOM record will be left out except for the"
+    echo "first model."
+    echo "An END record MUST be present in every file (therefore it is added by the"
+    echo "script when missing)."
+    echo "CONECT and MASTER records are discarded."
+    exit
+fi
+if [ "$1" = "-o" ]
+then
+    outfil=$2
+    shift 2
+fi
+if [ $# -eq 0 ]
+then
+    echo "Make a multi-model PDB file from separate files, named xxx1.pdb etc."
+    echo "Rootname of files (xxx): "
+    read xxx
+    echo "Number of files: "
+    read max_files
+else
+    max_files=$#
+fi
+
+if [ -s join.temp ]
+then
+    /bin/rm join.temp
+fi
+
+number=1
+while [ "$number" -le "$max_files" ]
+do
+    if [ $# -eq 0 ]
+    then
+        infil=$xxx$number".pdb"
+    else
+        infil=$1
+        shift
+    fi
+    echo "Concatenate" $infil
+    cat $infil >> join.temp
+    if [ "`tail -1 $infil | cut -c1-3`" != "END" ]
+    then
+        echo "END" >> join.temp
+    fi
+    number=`expr $number + 1`
+done
+
+echo "Using a awk script to adjust the result"
+
+awk '
+BEGIN {
+    ModelNumber = 1
+    NewModel    = "yes"
+}
+
+# first ATOM card signals start of model
+/^ATOM/ {
+    if ( NewModel == "yes" ) {
+	printf( "MODEL     %4i\n", ModelNumber )
+	NewModel = "no"
+    }
+}
+
+/^CONECT/ { next }
+
+/^MASTER/ { next }
+
+# END card signals end of model
+/^END/ {
+    ModelNumber++
+    NewModel = "yes"
+    print "ENDMDL"
+    next
+}
+
+# print everything else, except things BEFORE start of 2nd, 3rd... model
+ModelNumber == 1 || ( ModelNumber > 1 && NewModel == "no" ) { print $0 }
+
+END { print "END" }
+
+' join.temp > $outfil
+
+/bin/rm join.temp

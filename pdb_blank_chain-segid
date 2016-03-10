@@ -1,0 +1,34 @@
+#!/usr/bin/awk -f
+#
+# pdb_chain_segid  script
+#
+# This script blanks the chainID 
+#
+# Usage: see usage statement (type 'pdb_blank_chain' without arguments)
+#
+# Example:
+# input lines:
+# ATOM     32  CD1 LEU A   2      -6.002  10.544   9.006  1.00  0.00      A   
+#  output lines:
+# ATOM     32  CD1 LEU     2      -6.002  10.544   9.006  1.00  0.00          
+# 
+# Remarks: 
+#  - Only ATOM and HETATM records are affected.
+
+BEGIN {
+    if ( ARGC == 1 ) {
+	print "Usage: pdb_blank_chain-segid inputfile > outputfile"
+	print "Action:"
+	print "the chain given in column 22 and segid given in columns 73:76 are blanked"
+	exit
+    }
+}
+
+$1 == "ATOM" || $1 == "HETATM" {
+    printf( "%s%s%s\n", substr($0,1,21), " ", substr($0,23,50), "    ", substr($0,77) )
+    next
+}
+
+{
+    print $0
+}
