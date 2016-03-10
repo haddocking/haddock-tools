@@ -1,4 +1,15 @@
-haddock-tools ================================================ Set of useful HADDOCK utility scripts About --------- This is a collection of scripts useful for pre- and post-processing and analysis for HADDOCK runs.  Requests for new scripts will be taken into consideration, depending on the effort and general usability of the script.  
+================================================
+============== haddock-tools ===================
+================================================
+
+Set of useful HADDOCK utility scripts 
+
+About 
+--------- 
+This is a collection of scripts useful for pre- and post-processing and analysis for HADDOCK runs.  
+Requests for new scripts will be taken into consideration, depending on the effort and general usability of the script.  
+
+
 Installation
 ------------
 Download the zip archive or clone the repository with git. This last is the recommended option as it
