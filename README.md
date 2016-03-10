@@ -52,17 +52,33 @@ Usage:
 ------------
 ## PDB-related
 
+#### contact-segid
+A c++ program to calculate all heavy atom interchain contacts (where the chain identification is taken from the segid) within a given distance cutoff in Angstrom.
+
+Usage:
+```bash
+   contact-segid <pdb file> <cutoff>
+```
+
+#### contact-chainID
+A c++ program to calculate all heavy atom interchain contacts (where the chain identification is taken from the chainID) within a given distance cutoff in Angstrom.
+
+Usage:
+```bash
+   contact-chainID <pdb file> <cutoff>
+```
+
 #### molprobity.py
 A python script to predict the protonation state of Histidine residues for HADDOCK. It uses molprobity for this, calling the reduce software which should in the path.
 
 Usage:
 ```bash
-    ./molprobity.py <PDBfile>
+    molprobity.py <PDBfile>
 ```
 
 Example:
 ```bash
-./molprobity.py 1F3G.pdb
+molprobity.py 1F3G.pdb
 ## Executing Reduce to assign histidine protonation states
 ## Input PDB: 1F3G.pdb
 HIS ( 90 )	-->	HISD
@@ -76,7 +92,7 @@ Simple perl script to remove the chainID from a PDB file
 
 Usage:
 ```bash
-    ./pdb_blank_chain inputfile > outputfile
+    pdb_blank_chain inputfile > outputfile
 ```
 
 #### pdb_blank_segid
@@ -84,7 +100,7 @@ Simple perl script to remove the segid from a PDB file
 
 Usage:
 ```bash
-    ./pdb_blank_segid inputfile > outputfile
+    pdb_blank_segid inputfile > outputfile
 ```
 
 #### pdb_blank_chain-segid
@@ -92,7 +108,7 @@ Simple perl script to remove both the chainID and segid from a PDB file
 
 Usage:
 ```bash
-    ./pdb_blank_chain-segid inputfile > outputfile
+    pdb_blank_chain-segid inputfile > outputfile
 ```
 
 #### pdb_chain-to-segid
@@ -100,7 +116,7 @@ Simple perl script to copy the chainID to the segid in a PDB file
 
 Usage:
 ```bash
-    ./pdb_chain-to-segid inputfile > outputfile
+    pdb_chain-to-segid inputfile > outputfile
 ```
 
 #### pdb_segid-to-chain
@@ -108,7 +124,7 @@ Simple perl script to copy the segid to the chainID in a PDB file
 
 Usage:
 ```bash
-    ./pdb_segid-to-chain inputfile > outputfile
+    pdb_segid-to-chain inputfile > outputfile
 ```
 
 #### pdb_chain-segid
@@ -116,7 +132,7 @@ Simple perl script to copy the chainID to segid in case the latter is empty (or 
 
 Usage:
 ```bash
-    ./pdb_chain-segid inputfile > outputfile
+    pdb_chain-segid inputfile > outputfile
 ```
 
 #### pdb_setchain
@@ -124,14 +140,14 @@ Simple perl script to set the chainID in a PDB file
 
 Usage:
 ```bash
-     ./pdb_setchain -v CHAIN=chainID inputfile > outputfile
+     pdb_setchain -v CHAIN=chainID inputfile > outputfile
 ```
 
 #### joinpdb
 Simple perl script to concatenate separate single structure PDB files into a multi-model PDB file.
 Usage:
 ```bash
-     ./joinpdb  -o outputfile  [inputfiles]
+     joinpdb  -o outputfile  [inputfiles]
 
     where inputfiles are a list of PDB files to be concatenated
 ```

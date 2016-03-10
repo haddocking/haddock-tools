@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
   if (argc < 3) {
     fprintf(stderr,"ERROR: Too few arguments\n");
-    fprintf(stderr, "Usage: contact <pdb file> <cutoff>\n");
+    fprintf(stderr, "Usage: contact-segid <pdb file> <cutoff>\n");
     return 1;
   }
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
   if (cutoff < 0 || cutoff > 100) {
     fprintf(stderr,"ERROR: Cutoff out of range\n");
-    fprintf(stderr, "Usage: contact <pdb file> <cutoff>\n");
+    fprintf(stderr, "Usage: contact-segid <pdb file> <cutoff>\n");
     return 1;
   }
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  if (!res.size()) {fprintf(stderr, "ERROR: PDB file %s contains no residues\n"); return 1;}
+  if (!res.size()) {fprintf(stderr, "ERROR: PDB file contains no residues\n"); return 1;}
 
   double cutoffsq = cutoff * cutoff;
 
