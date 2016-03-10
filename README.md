@@ -1,5 +1,5 @@
 ================================================
-============== haddock-tools ===================
+ haddock-tools 
 ================================================
 
 Set of useful HADDOCK utility scripts 
@@ -18,6 +18,10 @@ is then extremely simple to get updates.
 ```bash
 # To download
 git clone https://github.com/haddocking/haddock-tools
+
+# To compile the executables
+cd haddock-tools
+make
 
 # To update
 cd haddock-tools && git pull origin master
