@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+
+"""
+Python script to convert a list of active and passive residues into 
+ambiguous interaction restraints for HADDOCK
+"""
+
+import os, sys, time
+import subprocess
+import tempfile
+
 def active_passive_to_ambig(active1, passive1, active2, passive2, 
         segid1='A', segid2='B', out='ambig.tbl'):
     """Convert active and passive residues to Ambiguous Interaction Restraints
