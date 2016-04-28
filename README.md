@@ -63,6 +63,23 @@ Usage:
     --verbose, -v
 ```
 
+#### haddock_tbl_validation
+The validate_tbl.py script in that directoy will check the correctness of your restraints (CNS format) for HADDOCK.
+
+Usage:
+```bash
+usage: validate_tbl.py [-h] [--pcs] file
+
+This script validates a restraint file (*.tbl).
+
+positional arguments:
+  file        TBL file to be validated
+
+  optional arguments:
+    -h, --help  show this help message and exit
+    --pcs       PCS mode
+```
+
 
 ------------
 ## PDB-related

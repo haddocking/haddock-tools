@@ -1,0 +1,1023 @@
+!remark phi angle constraints
+
+  !!    v2
+ assign (resid  1  and name c ) (resid  2  and name n ) 
+        (resid  2  and name ca) (resid  2  and name c )   1.0  -125.0 25.0 2
+  !!    k3
+ assign (resid  2  and name c ) (resid  3  and name n ) 
+        (resid  3  and name ca) (resid  3  and name c )   1.0  -152.0 20.0 2
+  !!    q4
+ assign (resid  3  and name c ) (resid  4  and name n ) 
+        (resid  4  and name ca) (resid  4  and name c )   1.0  -95.0 20.0 2
+  !!    i5
+ assign (resid  4  and name c ) (resid  5  and name n ) 
+        (resid  5  and name ca) (resid  5  and name c )   1.0  -105.0 40.0 2
+  !!    e6
+ assign (resid  5  and name c ) (resid  6  and name n ) 
+        (resid  6  and name ca) (resid  6  and name c )   1.0  -92.0 30.0 2
+  !!    s7
+ assign (resid  6  and name c ) (resid  7  and name n ) 
+        (resid  7  and name ca) (resid  7  and name c )  1.0 -158.0 20.0 2
+  !!    k8
+ assign (resid  7  and name c ) (resid  8  and name n ) 
+        (resid  8  and name ca) (resid  8  and name c )   1.0  -60.0 20.0 2
+  !!    t9
+ assign (resid  8  and name c ) (resid  9  and name n ) 
+        (resid  9  and name ca) (resid  9  and name c )   1.0  -58.0 20.0 2
+  !!    a10
+ assign (resid  9  and name c ) (resid 10 and name n ) 
+        (resid  10 and name ca) (resid 10 and name c )   1.0  -62.0 20.0 2
+  !!    f11
+ assign (resid 10 and name c ) (resid 11 and name n ) 
+        (resid 11 and name ca) (resid 11 and name c )   1.0  -60.0 20.0 2
+  !!    q12
+ assign (resid 11 and name c ) (resid 12 and name n ) 
+        (resid 12 and name ca) (resid 12 and name c )   1.0  -57.0 20.0 2
+  !!    e13
+ assign (resid 12 and name c ) (resid 13 and name n ) 
+        (resid 13 and name ca) (resid 13 and name c )   1.0  -58.0 20.0 2
+  !!    a14
+ assign (resid 13 and name c ) (resid 14 and name n ) 
+        (resid 14 and name ca) (resid 14 and name c )   1.0  -69.0 20.0 2
+  !!    l15
+ assign (resid 14 and name c ) (resid 15 and name n ) 
+        (resid 15 and name ca) (resid 15 and name c )   1.0  -62.0 20.0 2
+  !!    d16
+ assign (resid 15 and name c ) (resid 16 and name n ) 
+        (resid 16 and name ca) (resid 16 and name c )   1.0  -71.0 20.0 2
+  !!    a17
+ assign (resid 16 and name c ) (resid 17 and name n ) 
+        (resid 17 and name ca) (resid 17 and name c )   1.0  -73.0 10.0 2
+  !!    a18
+ assign (resid 17 and name c ) (resid 18 and name n ) 
+        (resid 18 and name ca) (resid 18 and name c )   1.0  -63.0 10.0 2
+  !!    g19
+ assign (resid 18 and name c ) (resid 19 and name n ) 
+        (resid 19 and name ca) (resid 19 and name c )   1.0  100.0 50.0 2
+  !!    d20
+ assign (resid 19 and name c ) (resid 20 and name n ) 
+        (resid 20 and name ca) (resid 20 and name c )   1.0  -95.0 25.0 2
+  !!    k21
+ assign (resid 20 and name c ) (resid 21 and name n ) 
+        (resid 21 and name ca) (resid 21 and name c )   1.0  -77.0 10.0 2
+  !!    l22
+ assign (resid 21 and name c ) (resid 22 and name n ) 
+        (resid 22 and name ca) (resid 22 and name c )   1.0  -60.0 10.0 2
+  !!    v23
+ assign (resid 22 and name c ) (resid 23 and name n ) 
+        (resid 23 and name ca) (resid 23 and name c )   1.0  -157.0 30.0 2
+  !!    v24
+ assign (resid 23 and name c ) (resid 24 and name n ) 
+        (resid 24 and name ca) (resid 24 and name c )   1.0  -95.0 30.0 2
+  !!    v25
+ assign (resid 24 and name c ) (resid 25 and name n ) 
+        (resid 25 and name ca) (resid 25 and name c )   1.0  -95.0 30.0 2
+  !!    d26
+ assign (resid 25 and name c ) (resid 26 and name n ) 
+        (resid 26 and name ca) (resid 26 and name c )   1.0  -92.0 30.0 2
+  !!    f27
+ assign (resid 26 and name c ) (resid 27 and name n ) 
+        (resid 27 and name ca) (resid 27 and name c )   1.0  -90.0 35.0 2
+  !!    s28
+ assign (resid 27 and name c ) (resid 28 and name n ) 
+        (resid 28 and name ca) (resid 28 and name c )  1.0 -82.0 50.0 2
+  !!    a29
+ assign (resid 28 and name c ) (resid 29 and name n ) 
+        (resid 29 and name ca) (resid 29 and name c )  1.0 -82.0 30.0 2
+  !!    t30
+ assign (resid 29 and name c ) (resid 30 and name n ) 
+        (resid 30 and name ca) (resid 30 and name c )  1.0 -78.0 40.0 2
+  !!    w31
+ assign (resid 30 and name c ) (resid 31 and name n ) 
+        (resid 31 and name ca) (resid 31 and name c )  1.0 -86.0 40.0 2
+  !!    c32
+ assign (resid 31 and name c ) (resid 32 and name n ) 
+        (resid 32 and name ca) (resid 32 and name c )  1.0 -88.0 60.0 2
+  !!    g33
+ assign (resid 32 and name c ) (resid 33 and name n ) 
+        (resid 33 and name ca) (resid 33 and name c )  1.0 -85.0 60.0 2
+  !!    p34
+ assign (resid 33 and name c ) (resid 34 and name n ) 
+        (resid 34 and name ca) (resid 34 and name c )  1.0 -50.0 40.0 2
+  !!    a35
+ assign (resid 34 and name c ) (resid 35 and name n ) 
+        (resid 35 and name ca) (resid 35 and name c )  1.0 -81.0 20.0 2
+  !!    k36
+ assign (resid 35 and name c ) (resid 36 and name n ) 
+        (resid 36 and name ca) (resid 36 and name c )  1.0 -53.0 30.0 2
+  !!    m37
+ assign (resid 36 and name c ) (resid 37 and name n ) 
+        (resid 37 and name ca) (resid 37 and name c )  1.0 -62.0 20.0 2
+  !!    i38
+ assign (resid 37 and name c ) (resid 38 and name n ) 
+        (resid 38 and name ca) (resid 38 and name c )  1.0 -86.0 20.0 2
+  !!    k39
+ assign (resid 38 and name c ) (resid 39 and name n ) 
+        (resid 39 and name ca) (resid 39 and name c )  1.0 -50.0 60.0 2
+  !!    p40
+ assign (resid 39 and name c ) (resid 40 and name n ) 
+        (resid 40 and name ca) (resid 40 and name c )  1.0 -68.0 20.0 2
+  !!    f41
+ assign (resid 40 and name c ) (resid 41 and name n ) 
+        (resid 41 and name ca) (resid 41 and name c )  1.0 -71.0 50.0 2
+  !!    f42
+ assign (resid 41 and name c ) (resid 42 and name n ) 
+        (resid 42 and name ca) (resid 42 and name c )  1.0 -56.0 30.0 2
+  !!    h43
+ assign (resid 42 and name c ) (resid 43 and name n ) 
+        (resid 43 and name ca) (resid 43 and name c )  1.0 -66.0 20.0 2
+  !!    s44
+ assign (resid 43 and name c ) (resid 44 and name n ) 
+        (resid 44 and name ca) (resid 44 and name c )  1.0 -52.0 30.0 2
+  !!    l45
+ assign (resid 44 and name c ) (resid 45 and name n ) 
+        (resid 45 and name ca) (resid 45 and name c )  1.0 -60.0 20.0 2
+  !!    s46
+ assign (resid 45 and name c ) (resid 46 and name n ) 
+        (resid 46 and name ca) (resid 46 and name c )  1.0 -58.0 60.0 2
+  !!    e47
+ assign (resid 46 and name c ) (resid 47 and name n ) 
+        (resid 47 and name ca) (resid 47 and name c )  1.0 -86.0 20.0 2
+  !!    k48
+ assign (resid 47 and name c ) (resid 48 and name n ) 
+        (resid 48 and name ca) (resid 48 and name c )   1.0  -87.0 10.0 2
+  !!    y49
+ assign (resid 48 and name c ) (resid 49 and name n ) 
+        (resid 49 and name ca) (resid 49 and name c )   1.0  -120.0 25.0 2
+  !!    s50
+ assign (resid 49 and name c ) (resid 50 and name n ) 
+        (resid 50 and name ca) (resid 50 and name c )   1.0  -65.0 10.0 2
+  !!    n51
+ assign (resid 50 and name c ) (resid 51 and name n ) 
+        (resid 51 and name ca) (resid 51 and name c )   1.0  -96.0 15.0 2
+  !!    v52
+ assign (resid 51 and name c ) (resid 52 and name n ) 
+        (resid 52 and name ca) (resid 52 and name c )   1.0  -101.0 25.0 2
+  !!    i53
+ assign (resid 52 and name c ) (resid 53 and name n ) 
+        (resid 53 and name ca) (resid 53 and name c )   1.0  -98.0 25.0 2
+  !!    f54
+ assign (resid 53 and name c ) (resid 54 and name n ) 
+        (resid 54 and name ca) (resid 54 and name c )   1.0  -96.0 25.0 2
+  !!    l55
+ assign (resid 54 and name c ) (resid 55 and name n ) 
+        (resid 55 and name ca) (resid 55 and name c )   1.0  -120.0 25.0 2
+  !!    e56
+ assign (resid 55 and name c ) (resid 56 and name n ) 
+        (resid 56 and name ca) (resid 56 and name c )   1.0  -134.0 30.0 2
+  !!    v57
+ assign (resid 56 and name c ) (resid 57 and name n ) 
+        (resid 57 and name ca) (resid 57 and name c )   1.0  -99.0 35.0 2
+  !!    d58
+ assign (resid 57 and name c ) (resid 58 and name n ) 
+        (resid 58 and name ca) (resid 58 and name c )   1.0  -88.0 20.0 2
+  !!    v59
+ assign (resid 58 and name c ) (resid 59 and name n ) 
+        (resid 59 and name ca) (resid 59 and name c )   1.0  -61.0 60.0 2
+  !!    d60
+ assign (resid 59 and name c ) (resid 60 and name n ) 
+        (resid 60 and name ca) (resid 60 and name c )   1.0  -107.0 25.0 2
+  !!    d61
+ assign (resid 60 and name c ) (resid 61 and name n ) 
+        (resid 61 and name ca) (resid 61 and name c )   1.0  -110.0 20.0 2
+  !!    a62
+ assign (resid 61 and name c ) (resid 62 and name n ) 
+        (resid 62 and name ca) (resid 62 and name c )   1.0  -107.0 20.0 2
+  !!    q63
+ assign (resid 62 and name c ) (resid 63 and name n ) 
+        (resid 63 and name ca) (resid 63 and name c )   1.0  -73.0 40.0 2
+  !!    d64
+ assign (resid 63 and name c ) (resid 64 and name n ) 
+        (resid 64 and name ca) (resid 64 and name c )   1.0 -73.0 10.0 2
+  !!    v65
+ assign (resid 64 and name c ) (resid 65 and name n ) 
+        (resid 65 and name ca) (resid 65 and name c )   1.0  -80.0 20.0 2
+  !!    a66
+ assign (resid 65 and name c ) (resid 66 and name n ) 
+        (resid 66 and name ca) (resid 66 and name c )   1.0 -71.0 25.0 2
+  !!    e67
+ assign (resid 66 and name c ) (resid 67 and name n ) 
+        (resid 67 and name ca) (resid 67 and name c )   1.0 -66.0 10.0 2
+  !!    e68
+ assign (resid 67 and name c ) (resid 68 and name n ) 
+        (resid 68 and name ca) (resid 68 and name c )   1.0 -63.0 10.0 2
+  !!    a69
+ assign (resid 68 and name c ) (resid 69 and name n ) 
+        (resid 69 and name ca) (resid 69 and name c )   1.0  -85.0 30.0 2
+  !!    e70
+ assign (resid 69 and name c ) (resid 70 and name n ) 
+        (resid 70 and name ca) (resid 70 and name c )   1.0 60.0 30.0 2
+  !!    v71
+ assign (resid 70 and name c ) (resid 71 and name n ) 
+        (resid 71 and name ca) (resid 71 and name c )   1.0  -81.0 20.0 2
+  !!    k72
+ assign (resid 71 and name c ) (resid 72 and name n ) 
+        (resid 72 and name ca) (resid 72 and name c )   1.0  -110.0 25.0 2
+  !!    a73
+ assign (resid 72 and name c ) (resid 73 and name n ) 
+        (resid 73 and name ca) (resid 73 and name c )  1.0 -162.0 25.0 2
+  !!    t74
+ assign (resid 73 and name c ) (resid 74 and name n )
+        (resid 74 and name ca) (resid 74 and name c )  1.0 -120.0 30.0 2
+  !!    p75
+ assign (resid 74 and name c ) (resid 75 and name n )
+        (resid 75 and name ca) (resid 75 and name c )  1.0 -50.0 40.0 2
+  !!    t76
+ assign (resid 75 and name c ) (resid 76 and name n ) 
+        (resid 76 and name ca) (resid 76 and name c )   1.0 -120.0 35.0 2
+  !!    f77
+ assign (resid 76 and name c ) (resid 77 and name n ) 
+        (resid 77 and name ca) (resid 77 and name c )   1.0  -120.0 40.0 2
+  !!    q78
+ assign (resid 77 and name c ) (resid 78 and name n ) 
+        (resid 78 and name ca) (resid 78 and name c )   1.0  -107.0 25.0 2
+  !!    f79
+ assign (resid 78 and name c ) (resid 79 and name n ) 
+        (resid 79 and name ca) (resid 79 and name c )   1.0  -95.0 40.0 2
+  !!    f80
+ assign (resid 79 and name c ) (resid 80 and name n ) 
+        (resid 80 and name ca) (resid 80 and name c )   1.0  -120.0 15.0 2
+  !!    k81
+ assign (resid 80 and name c ) (resid 81 and name n ) 
+        (resid 81 and name ca) (resid 81 and name c )   1.0 -157.0 10.0 2
+  !!    k82
+ assign (resid 81 and name c ) (resid 82 and name n ) 
+        (resid 82 and name ca) (resid 82 and name c )   1.0 60.0 15.0 2
+  !!    g83
+ assign (resid 82 and name c ) (resid 83 and name n ) 
+        (resid 83 and name ca) (resid 83 and name c )   1.0 95.0 30.0 2
+  !!    q84
+ assign (resid 83 and name c ) (resid 84 and name n ) 
+        (resid 84 and name ca) (resid 84 and name c )   1.0  -120.0 20.0 2
+  !!    k85
+ assign (resid 84 and name c ) (resid 85 and name n ) 
+        (resid 85 and name ca) (resid 85 and name c )   1.0  -85.0 30.0 2
+  !!    v86
+ assign (resid 85 and name c ) (resid 86 and name n ) 
+        (resid 86 and name ca) (resid 86 and name c )   1.0  -120.0 15.0 2
+  !!    g87
+ assign (resid 86 and name c ) (resid 87 and name n )
+        (resid 87 and name ca) (resid 87 and name c )   1.0 180.0 40.0 2
+  !!    e88
+ assign (resid 87 and name c ) (resid 88 and name n ) 
+        (resid 88 and name ca) (resid 88 and name c )   1.0 -172.0 10.0 2
+  !!    f89
+ assign (resid 88 and name c ) (resid 89 and name n )
+        (resid 89 and name ca) (resid 89 and name c )   1.0 -174.0 10.0 2
+  !!    s90
+ assign (resid 89 and name c ) (resid 90 and name n ) 
+        (resid 90 and name ca) (resid 90 and name c )   1.0 -100.0 25.0 2
+  !!    g91
+ assign (resid 90 and name c ) (resid 91 and name n ) 
+        (resid 91 and name ca) (resid 91 and name c )   1.0  150.0 40.0 2
+  !!    a92
+ assign (resid 91 and name c ) (resid 92 and name n ) 
+        (resid 92 and name ca) (resid 92 and name c )   1.0  -81.0 40.0 2
+  !!    n93
+ assign (resid 92 and name c ) (resid 93 and name n ) 
+        (resid 93 and name ca) (resid 93 and name c )   1.0 -88.0 30.0 2
+  !!    k94
+ assign (resid 93 and name c ) (resid 94 and name n ) 
+        (resid 94 and name ca) (resid 94 and name c )   1.0 -63.0 10.0 2
+  !!    e95
+ assign (resid 94 and name c ) (resid 95 and name n ) 
+        (resid 95 and name ca) (resid 95 and name c )   1.0 -66.0 25.0 2
+  !!    k96
+ assign (resid 95 and name c ) (resid 96 and name n ) 
+        (resid 96 and name ca) (resid 96 and name c )   1.0  -67.0 25.0 2
+  !!    l97
+ assign (resid 96 and name c ) (resid 97 and name n ) 
+        (resid 97 and name ca) (resid 97 and name c )   1.0 -52.0 10.0 2
+  !!    e98
+ assign (resid 97 and name c ) (resid 98 and name n ) 
+        (resid 98 and name ca) (resid 98 and name c )   1.0 -67.0 10.0 2
+  !!    a99
+ assign (resid 98 and name c ) (resid 99 and name n ) 
+        (resid 99 and name ca) (resid 99 and name c )   1.0 -67.0 20.0 2
+  !!    t100
+ assign (resid 99 and name c ) (resid 100 and name n ) 
+        (resid 100 and name ca) (resid 100 and name c )   1.0 -70.0 10.0 2
+  !!    i101
+ assign (resid 100 and name c ) (resid 101 and name n ) 
+        (resid 101 and name ca) (resid 101 and name c )   1.0  -64.0 30.0 2
+  !!    n102
+ assign (resid 101 and name c ) (resid 102 and name n ) 
+        (resid 102 and name ca) (resid 102 and name c )   1.0 -62.0 30.0 2
+  !!    e103
+ assign (resid 102 and name c ) (resid 103 and name n ) 
+        (resid 103 and name ca) (resid 103 and name c )   1.0 -78.0 10.0 2
+  !!    l104
+ assign (resid 103 and name c ) (resid 104 and name n ) 
+        (resid 104 and name ca) (resid 104 and name c )   1.0 -100.0 20.0 2
+  !!    v105
+ assign (resid 104 and name c ) (resid 105 and name n ) 
+        (resid 105 and name ca) (resid 105 and name c )   1.0  -63.0 10.0 2
+
+!remark psi angles constraints
+
+  !!    m1
+ assign (resid 1 and name n ) (resid 1 and name ca) 
+        (resid 1 and name c ) (resid 2 and name n )   1.0  180.0 50.0 2
+  !!    2
+ assign (resid 2 and name n ) (resid 2 and name ca) 
+        (resid 2 and name c ) (resid 3 and name n )   1.0  180.0 50.0 2
+  !!    k3
+ assign (resid 3 and name n ) (resid 3 and name ca) 
+        (resid 3 and name c ) (resid 4 and name n )   1.0  120.0 50.0 2
+  !!    k3
+ assign (resid 3 and name n ) (resid 3 and name ca) 
+        (resid 3 and name c ) (resid 4 and name n )   1.0  120.0 50.0 2
+  !!    i5
+ assign (resid 5 and name n ) (resid 5 and name ca) 
+        (resid 5 and name c ) (resid 6 and name n )   1.0  115.0 90.0 2
+  !!    e6
+ assign (resid 6 and name n ) (resid 6 and name ca) 
+        (resid 6 and name c ) (resid 7 and name n )   1.0  -10.0 75.0 2
+  !!    s7
+ assign (resid 7 and name n ) (resid 7 and name ca) 
+        (resid 7 and name c ) (resid 8 and name n )   1.0  -165.0 90.0 2
+  !!    k8
+ assign (resid 8 and name n ) (resid 8 and name ca) 
+        (resid 8 and name c ) (resid 9 and name n )   1.0  -50.0 50.0 2
+  !!    t9
+ assign (resid 9 and name n ) (resid 9 and name ca) 
+        (resid 9 and name c ) (resid 10 and name n )   1.0  -45.0 50.0 2
+  !!    a14
+ assign (resid 14 and name n ) (resid 14 and name ca) 
+        (resid 14 and name c ) (resid 15 and name n )   1.0  0.0 105.0 2
+  !!    l15
+ assign (resid 15 and name n ) (resid 15 and name ca) 
+        (resid 15 and name c ) (resid 16 and name n )   1.0  -30.0 105.0 2
+  !!    a17
+ assign (resid 17 and name n ) (resid 17 and name ca) 
+        (resid 17 and name c ) (resid 18 and name n )   1.0  5.0 60.0 2
+  !!    a18
+ assign (resid 18 and name n ) (resid 18 and name ca) 
+        (resid 18 and name c ) (resid 19 and name n )   1.0  0.0 85.0 2
+  !!    g19
+ assign (resid 19 and name n ) (resid 19 and name ca) 
+        (resid 19 and name c ) (resid 20 and name n )   1.0  -85.0 90.0 2
+  !!    d20
+ assign (resid 20 and name n ) (resid 20 and name ca) 
+        (resid 20 and name c ) (resid 21 and name n )   1.0  0.0 85.0 2
+  !!    k21
+ assign (resid 21 and name n ) (resid 21 and name ca) 
+        (resid 21 and name c ) (resid 22 and name n )   1.0  110.0 85.0 2
+  !!    l22
+ assign (resid 22 and name n ) (resid 22 and name ca) 
+        (resid 22 and name c ) (resid 23 and name n )   1.0  110.0 85.0 2
+  !!    v24
+ assign (resid 24 and name n ) (resid 24 and name ca) 
+        (resid 24 and name c ) (resid 25 and name n )   1.0  115.0 90.0 2
+  !!    d26
+ assign (resid 26 and name n ) (resid 26 and name ca) 
+        (resid 26 and name c ) (resid 27 and name n )   1.0  100.0 155.0 2
+  !!    f27
+ assign (resid 27 and name n ) (resid 27 and name ca) 
+        (resid 27 and name c ) (resid 28 and name n )   1.0  110.0 135.0 2
+  !!    s28
+ assign (resid 28 and name n ) (resid 28 and name ca) 
+        (resid 28 and name c ) (resid 29 and name n )  1.0 180.0 50.0 2
+  !!    a29
+!assign (resid 29 and name n ) (resid 29 and name ca) 
+!       (resid 29 and name c ) (resid 30 and name n )  1.0 170.0 50.0 2
+  !!    g33
+ assign (resid 33 and name n ) (resid 33 and name ca) 
+        (resid 33 and name c ) (resid 34 and name n )  1.0 -85.0 90.0 2
+  !!    p34
+ assign (resid 34 and name n ) (resid 34 and name ca) 
+        (resid 34 and name c ) (resid 35 and name n )  1.0 -5.0 75.0 2
+  !!    a35
+ assign (resid 35 and name n ) (resid 35 and name ca) 
+        (resid 35 and name c ) (resid 36 and name n )  1.0 -5.0 60.0 2
+  !!    k36
+ assign (resid 36 and name n ) (resid 36 and name ca) 
+        (resid 36 and name c ) (resid 37 and name n )  1.0 -40.0 50.0 2
+  !!    m37
+ assign (resid 37 and name n ) (resid 37 and name ca) 
+        (resid 37 and name c ) (resid 38 and name n )  1.0 85.0 170.0 2
+  !!    i38
+ assign (resid 38 and name n ) (resid 38 and name ca) 
+        (resid 38 and name c ) (resid 39 and name n )  1.0 65.0 130.0 2
+  !!    n39
+ assign (resid 39 and name n ) (resid 39 and name ca) 
+        (resid 39 and name c ) (resid 40 and name n )  1.0 -35.0 50.0 2
+  !!    p40
+ assign (resid 40 and name n ) (resid 40 and name ca) 
+        (resid 40 and name c ) (resid 41 and name n )  1.0 -40.0 50.0 2
+  !!    f41
+ assign (resid 41 and name n ) (resid 41 and name ca) 
+        (resid 41 and name c ) (resid 42 and name n )  1.0 -50.0 50.0 2
+  !!    f42
+ assign (resid 42 and name n ) (resid 42 and name ca) 
+        (resid 42 and name c ) (resid 43 and name n )  1.0 -50.0 50.0 2
+  !!    h43
+ assign (resid 43 and name n ) (resid 43 and name ca) 
+        (resid 43 and name c ) (resid 44 and name n )  1.0 -50.0 50.0 2
+  !!    s44
+ assign (resid 44 and name n ) (resid 44 and name ca) 
+        (resid 44 and name c ) (resid 45 and name n )  1.0 85.0 170.0 2
+  !!    l45
+ assign (resid 45 and name n ) (resid 45 and name ca) 
+        (resid 45 and name c ) (resid 46 and name n )  1.0 -30.0 50.0 2
+  !!    s46
+ assign (resid 46 and name n ) (resid 46 and name ca) 
+        (resid 46 and name c ) (resid 47 and name n )  1.0 -45.0 50.0 2
+  !!    e47
+ assign (resid 47 and name n ) (resid 47 and name ca) 
+        (resid 47 and name c ) (resid 48 and name n )   1.0 -15.0 90.0 2
+  !!    k48
+ assign (resid 48 and name n ) (resid 48 and name ca) 
+        (resid 48 and name c ) (resid 49 and name n )   1.0  -25.0 70.0 2
+  !!    v52
+ assign (resid 52 and name n ) (resid 52 and name ca) 
+        (resid 52 and name c ) (resid 53 and name n )   1.0  140.0 115.0 2
+  !!    i53
+ assign (resid 53 and name n ) (resid 53 and name ca) 
+        (resid 53 and name c ) (resid 54 and name n )   1.0  115.0 90.0 2
+  !!    f54
+ assign (resid 54 and name n ) (resid 54 and name ca) 
+        (resid 54 and name c ) (resid 55 and name n )   1.0  115.0 90.0 2
+  !!    l55
+ assign (resid 55 and name n ) (resid 55 and name ca) 
+        (resid 55 and name c ) (resid 56 and name n )   1.0  110.0 135.0 2
+  !!    v57
+ assign (resid 57 and name n ) (resid 57 and name ca) 
+        (resid 57 and name c ) (resid 58 and name n )   1.0  115.0 90.0 2
+  !!    d58 
+ assign (resid 58 and name n ) (resid 58 and name ca) 
+        (resid 58 and name c ) (resid 59 and name n )   1.0  85.0 90.0 2
+  !!    v59
+ assign (resid 59 and name n ) (resid 59 and name ca) 
+        (resid 59 and name c ) (resid 60 and name n )   1.0  85.0 160.0 2
+  !!    d60
+ assign (resid 60 and name n ) (resid 60 and name ca) 
+        (resid 60 and name c ) (resid 61 and name n )   1.0  -50.0 50.0 2
+  !!    d61
+ assign (resid 61 and name n ) (resid 61 and name ca) 
+        (resid 61 and name c ) (resid 62 and name n )   1.0  0.0 85.0 2
+  !!    a62
+ assign (resid 62 and name n ) (resid 62 and name ca) 
+        (resid 62 and name c ) (resid 63 and name n )   1.0  110.0 135.0 2
+  !!    q63
+ assign (resid 63 and name n ) (resid 63 and name ca) 
+        (resid 63 and name c ) (resid 64 and name n )   1.0  25.0 60.0 2
+  !!    d64
+ assign (resid 64 and name n ) (resid 64 and name ca) 
+        (resid 64 and name c ) (resid 65 and name n )   1.0  -40.0 50.0 2
+  !!    66
+ assign (resid 66 and name n ) (resid 66 and name ca) 
+        (resid 66 and name c ) (resid 67 and name n )   1.0  -40.0 50.0 2
+  !!    67
+ assign (resid 67 and name n ) (resid 67 and name ca) 
+        (resid 67 and name c ) (resid 68 and name n )   1.0  -60.0 50.0 2
+  !!    e68
+ assign (resid 68 and name n ) (resid 68 and name ca) 
+        (resid 68 and name c ) (resid 69 and name n )   1.0  0.0 50.0 2
+  !!    a69
+ assign (resid 69 and name n ) (resid 69 and name ca) 
+        (resid 69 and name c ) (resid 70 and name n )   1.0  0.0 50.0 2
+  !!    e70
+ assign (resid 70 and name n ) (resid 70 and name ca) 
+        (resid 70 and name c ) (resid 71 and name n )   1.0  50.0 50.0 2
+  !!    v71
+ assign (resid 71 and name n ) (resid 71 and name ca) 
+        (resid 71 and name c ) (resid 72 and name n )   1.0  115.0 50.0 2
+  !!    k72
+ assign (resid 72 and name n ) (resid 72 and name ca) 
+        (resid 72 and name c ) (resid 73 and name n )   1.0  -20.0 65.0 2
+  !!    t76
+ assign (resid 76 and name n ) (resid 76 and name ca) 
+        (resid 76 and name c ) (resid 77 and name n )   1.0  140.0 115.0 2
+  !!    f77
+ assign (resid 77 and name n ) (resid 77 and name ca) 
+        (resid 77 and name c ) (resid 78 and name n )   1.0  120.0 75.0 2
+  !!    q78
+ assign (resid 78 and name n ) (resid 78 and name ca) 
+        (resid 78 and name c ) (resid 79 and name n )   1.0  120.0 75.0 2
+  !!    f79
+ assign (resid 79 and name n ) (resid 79 and name ca) 
+        (resid 79 and name c ) (resid 80 and name n )   1.0  130.0 75.0 2
+  !!    f80
+ assign (resid 80 and name n ) (resid 80 and name ca) 
+        (resid 80 and name c ) (resid 81 and name n )   1.0  125.0 80.0 2
+  !!    k81
+ assign (resid 81 and name n ) (resid 81 and name ca) 
+        (resid 81 and name c ) (resid 82 and name n )   1.0  135.0 120.0 2
+  !!    k85
+ assign (resid 85 and name n ) (resid 85 and name ca) 
+        (resid 85 and name c ) (resid 86 and name n )   1.0  110.0 85.0 2
+  !!    v86
+ assign (resid 86 and name n ) (resid 86 and name ca) 
+        (resid 86 and name c ) (resid 87 and name n )   1.0  -15.0 90.0 2
+  !!    g87
+ assign (resid 87 and name n ) (resid 87 and name ca) 
+        (resid 87 and name c ) (resid 88 and name n )   1.0  150.0 50.0 2
+  !!    e88
+ assign (resid 88 and name n ) (resid 88 and name ca) 
+        (resid 88 and name c ) (resid 89 and name n )   1.0  -175.0 60.0 2
+  !!    f89
+ assign (resid 89 and name n ) (resid 89 and name ca) 
+        (resid 89 and name c ) (resid 90 and name n )   1.0  110.0 135.0 2
+  !!    s90
+ assign (resid 90 and name n ) (resid 90 and name ca) 
+        (resid 90 and name c ) (resid 91 and name n )   1.0  165.0 50.0 2
+  !!    g91
+ assign (resid 91 and name n ) (resid 91 and name ca) 
+        (resid 91 and name c ) (resid 92 and name n )   1.0  95.0 90.0 2
+  !!    a92
+ assign (resid 92 and name n ) (resid 92 and name ca) 
+        (resid 92 and name c ) (resid 93 and name n )   1.0  110.0 85.0 2
+  !!    n93
+ assign (resid 93 and name n ) (resid 93 and name ca) 
+        (resid 93 and name c ) (resid 94 and name n )   1.0  80.0 50.0 2
+  !!    k94
+ assign (resid 94 and name n ) (resid 94 and name ca) 
+        (resid 94 and name c ) (resid 95 and name n )   1.0  -15.0 80.0 2
+  !!    e95
+ assign (resid 95 and name n ) (resid 95 and name ca) 
+        (resid 95 and name c ) (resid 96 and name n )   1.0  0.0 85.0 2
+  !!    k96
+ assign (resid 96 and name n ) (resid 96 and name ca) 
+        (resid 96 and name c ) (resid 97 and name n )   1.0  -25.0 70.0 2
+  !!    e98
+ assign (resid 98 and name n ) (resid 98 and name ca) 
+        (resid 98 and name c ) (resid 99 and name n )   1.0  0.0 105.0 2
+  !!    i101
+ assign (resid 101 and name n ) (resid 101 and name ca) 
+        (resid 101 and name c ) (resid 102 and name n )   1.0  -95.0 70.0 2
+
+
+!remark chi angles constraints
+
+  !!   v2
+ assign (resid 2 and name n ) (resid 2 and name ca) 
+        (resid 2 and name cb) (resid 2 and name cg1)   1.0   180.0 20.0 2
+  !!   k3
+ assign (resid 3 and name n ) (resid 3 and name ca) 
+        (resid 3 and name cb) (resid 3 and name cg)  1.0 180.0 20.0 2
+  !!   q4
+ assign (resid 4 and name n ) (resid 4 and name ca) 
+        (resid 4 and name cb) (resid 4 and name cg)  1.0 180.0 20.0 2 
+  !!   i5
+ assign (resid 5 and name n ) (resid 5 and name ca) 
+        (resid 5 and name cb) (resid 5 and name cg1)   1.0   -60.0 20.0 2
+  !!   e6
+ assign (resid 6 and name n ) (resid 6 and name ca)
+        (resid 6 and name cb) (resid 6 and name cg)   1.0   -60.0 20.0 2
+  !!   s7
+ assign (resid 7 and name n ) (resid 7 and name ca) 
+        (resid 7 and name cb) (resid 7 and name og)   1.0   60.0 20.0 2
+  !!   k8
+ assign (resid 8 and name n ) (resid 8 and name ca) 
+        (resid 8 and name cb) (resid 8 and name cg)   1.0   180.0 20.0 2
+  !!   t9
+ assign (resid 9 and name n ) (resid 9 and name ca) 
+        (resid 9 and name cb) (resid 9 and name og1)   1.0   -60.0 20.0 2
+  !!   f11
+ assign (resid 11 and name n ) (resid 11 and name ca) 
+        (resid 11 and name cb) (resid 11 and name cg)   1.0   180.0 20.0 2
+  !!   e13
+ assign (resid 13 and name n ) (resid 13 and name ca)
+        (resid 13 and name cb) (resid 13 and name cg)   1.0   -60.0 20.0 2
+  !!   l15
+ assign (resid 15 and name n ) (resid 15 and name ca) 
+        (resid 15 and name cb) (resid 15 and name cg)  1.0 -60.0 20.0 2
+  !!   d16
+ assign (resid 16 and name n ) (resid 16 and name ca) 
+        (resid 16 and name cb) (resid 16 and name cg)  1.0 -180.0 20.0 2
+  !!   d20
+ assign (resid 20 and name n ) (resid 20 and name ca) 
+        (resid 20 and name cb) (resid 20 and name cg)  1.0 -120.0 135.0 2
+  !!   k21
+ assign (resid 21 and name n ) (resid 21 and name ca) 
+        (resid 21 and name cb) (resid 21 and name cg)  1.0 -60.0 20.0 2
+  !!   v23
+ assign (resid 23 and name n ) (resid 23 and name ca) 
+        (resid 23 and name cb) (resid 23 and name cg1)   1.0   180.0 20.0 2
+  !!   v24
+ assign (resid 24 and name n ) (resid 24 and name ca) 
+        (resid 24 and name cb) (resid 24 and name cg1)   1.0   180.0 20.0 2
+  !!   v25
+ assign (resid 25 and name n ) (resid 25 and name ca) 
+        (resid 25 and name cb) (resid 25 and name cg1)   1.0   180.0 20.0 2
+  !!   d26
+ assign (resid 26 and name n ) (resid 26 and name ca) 
+        (resid 26 and name cb) (resid 26 and name cg)  1.0 180.0 20.0 2
+  !!   f27
+ assign (resid 27 and name n ) (resid 27 and name ca) 
+        (resid 27 and name cb) (resid 27 and name cg)  1.0 -60.0 20.0 2
+  !!   s28
+ assign (resid 28 and name n ) (resid 28 and name ca)
+        (resid 28 and name cb) (resid 28 and name og)  1.0 -60.0 20.0 2
+  !!   t30
+ assign (resid 30 and name n ) (resid 30 and name ca) 
+        (resid 30 and name cb) (resid 30 and name og1)  1.0 180.0 20.0 2
+  !!   w31
+ assign (resid 31 and name n ) (resid 31 and name ca) 
+        (resid 31 and name cb) (resid 31 and name cg)  1.0 60.0 20.0 2
+  !!   c32
+ assign (resid 32 and name n ) (resid 32 and name ca) 
+        (resid 32 and name cb) (resid 32 and name sg)  1.0 180.0 20.0 2
+  !!   p34
+ assign (resid 34 and name n ) (resid 34 and name ca) 
+        (resid 34 and name cb) (resid 34 and name cg)  1.0 0.0 20.0 2
+  !!   a35
+ !assign (resid 35 and name n ) (resid 35 and name ca) 
+ !       (resid 35 and name cb) (resid 35 and name sg)  1.0 -60.0 20.0 2
+  !!   k36
+ assign (resid 36 and name n ) (resid 36 and name ca) 
+        (resid 36 and name cb) (resid 36 and name cg)  1.0 180.0 20.0 2
+  !!   i38
+ assign (resid 38 and name n ) (resid 38 and name ca) 
+        (resid 38 and name cb) (resid 38 and name cg1)  1.0 -60.0 20.0 2
+  !!   k39
+ assign (resid 39 and name n ) (resid 39 and name ca)
+        (resid 39 and name cb) (resid 39 and name cg)  1.0 60.0 20.0 2
+  !!   p40
+ assign (resid 40 and name n ) (resid 40 and name ca) 
+        (resid 40 and name cb) (resid 40 and name cg)  1.0 0.0 20.0 2
+  !!   f41
+ assign (resid 41 and name n ) (resid 41 and name ca) 
+        (resid 41 and name cb) (resid 41 and name cg)  1.0 -60.0 20.0 2
+  !!   f42
+ assign (resid 42 and name n ) (resid 42 and name ca) 
+        (resid 42 and name cb) (resid 42 and name cg)  1.0 180.0 20.0 2
+  !!   h43
+ assign (resid 43 and name n ) (resid 43 and name ca) 
+        (resid 43 and name cb) (resid 43 and name cg)  1.0 180.0 25.0 2
+  !!   l45
+ assign (resid 45 and name n ) (resid 45 and name ca) 
+        (resid 45 and name cb) (resid 45 and name cg)  1.0 -60.0 20.0 2
+  !!   s46
+ assign (resid 46 and name n ) (resid 46 and name ca) 
+        (resid 46 and name cb) (resid 46 and name og)  1.0 -60.0 20.0 2
+  !!   e47
+ assign (resid 47 and name n ) (resid 47 and name ca) 
+        (resid 47 and name cb) (resid 47 and name cg)  1.0 -60.0 20.0 2
+  !!   k48
+ assign (resid 48 and name n ) (resid 48 and name ca) 
+        (resid 48 and name cb) (resid 48 and name cg)  1.0 180.0 20.0 2
+  !!   y49
+ assign (resid 49 and name n ) (resid 49 and name ca) 
+        (resid 49 and name cb) (resid 49 and name cg)  1.0 -60.0 20.0 2
+  !!   s50
+ assign (resid 50 and name n ) (resid 50 and name ca) 
+        (resid 50 and name cb) (resid 50 and name og)  1.0 60.0 20.0 2
+  !!   n51
+ assign (resid 51 and name n ) (resid 51 and name ca) 
+        (resid 51 and name cb) (resid 51 and name cg)  1.0 -170.0 25.0 2
+  !!   v52
+ assign (resid 52 and name n ) (resid 52 and name ca) 
+        (resid 52 and name cb) (resid 52 and name cg1)  1.0 180.0 20.0 2
+  !!   i53
+ assign (resid 53 and name n ) (resid 53 and name ca) 
+        (resid 53 and name cb) (resid 53 and name cg1)  1.0 -60.0 20.0 2
+  !!   f54
+ assign (resid 54 and name n ) (resid 54 and name ca) 
+        (resid 54 and name cb) (resid 54 and name cg)  1.0 -60.0 20.0 2
+  !!   l55
+ assign (resid 55 and name n ) (resid 55 and name ca) 
+        (resid 55 and name cb) (resid 55 and name cg)  1.0 -60.0 20.0 2
+  !!   v57
+ assign (resid 57 and name n ) (resid 57 and name ca) 
+        (resid 57 and name cb) (resid 57 and name cg1)  1.0 180.0 20.0 2 
+  !!   d58
+ assign (resid 58 and name n ) (resid 58 and name ca) 
+        (resid 58 and name cb) (resid 58 and name cg)  1.0 180.0 20.0 2
+  !!   v59
+ assign (resid 59 and name n ) (resid 59 and name ca) 
+        (resid 59 and name cb) (resid 59 and name cg1)  1.0 -60.0 20.0 2
+  !!   d60
+ assign (resid 60 and name n ) (resid 60 and name ca) 
+        (resid 60 and name cb) (resid 60 and name cg)  1.0 -60.0 20.0 2
+  !!   d61
+ assign (resid 61 and name n ) (resid 61 and name ca) 
+        (resid 61 and name cb) (resid 61 and name cg)  1.0 -60.0 20.0 2
+  !!   d64
+ assign (resid 64 and name n ) (resid 64 and name ca) 
+        (resid 64 and name cb) (resid 64 and name cg)  1.0 60.0 20.0 2
+  !!   v65
+ assign (resid 65 and name n ) (resid 65 and name ca) 
+        (resid 65 and name cb) (resid 65 and name cg1)  1.0 180.0 20.0 2
+  !!   e68
+ assign (resid 68 and name n ) (resid 68 and name ca) 
+        (resid 68 and name cb) (resid 68 and name cg)  1.0 180.0 20.0 2
+  !!   v71
+ assign (resid 71 and name n ) (resid 71 and name ca) 
+        (resid 71 and name cb) (resid 71 and name cg1)  1.0 180.0 20.0 2
+  !!   k72
+ assign (resid 72 and name n ) (resid 72 and name ca) 
+        (resid 72 and name cb) (resid 72 and name cg)  1.0 -60.0 20.0 2
+  !!   t74
+ assign (resid 74 and name n ) (resid 74 and name ca) 
+        (resid 74 and name cb) (resid 74 and name og1)  1.0 60.0 20.0 2
+  !!   p75
+ assign (resid 75 and name n ) (resid 75 and name ca) 
+        (resid 75 and name cb) (resid 75 and name cg)  1.0 0.0 25.0 2
+  !!   t76
+ assign (resid 76 and name n ) (resid 76 and name ca) 
+        (resid 76 and name cb) (resid 76 and name og1)  1.0 -60.0 20.0 2
+  !!   f77
+ assign (resid 77 and name n ) (resid 77 and name ca) 
+        (resid 77 and name cb) (resid 77 and name cg)  1.0 -60.0 20.0 2
+  !!   n78
+ assign (resid 78 and name n ) (resid 78 and name ca)
+        (resid 78 and name cb) (resid 78 and name cg)  1.0 -60.0 20.0 2
+  !!   f79
+ assign (resid 79 and name n ) (resid 79 and name ca) 
+        (resid 79 and name cb) (resid 79 and name cg)  1.0 -60.0 20.0 2
+  !!   f80
+ assign (resid 80 and name n ) (resid 80 and name ca) 
+        (resid 80 and name cb) (resid 80 and name cg)  1.0 -60.0 20.0 2
+  !!   k81
+ assign (resid 81 and name n ) (resid 81 and name ca) 
+        (resid 81 and name cb) (resid 81 and name cg)  1.0 180.0 20.0 2
+  !!   k82
+ assign (resid 82 and name n ) (resid 82 and name ca)
+        (resid 82 and name cb) (resid 82 and name cg)  1.0 -60.0 20.0 2
+  !!   n84
+ assign (resid 84 and name n ) (resid 84 and name ca)
+        (resid 84 and name cb) (resid 84 and name cg)  1.0 -60.0 20.0 2
+  !!   k85
+ assign (resid 85 and name n ) (resid 85 and name ca) 
+        (resid 85 and name cb) (resid 85 and name cg)  1.0 180.0 20.0 2
+  !!   v86
+ assign (resid 86 and name n ) (resid 86 and name ca) 
+        (resid 86 and name cb) (resid 86 and name cg1)  1.0 -60.0 20.0 2
+  !!   f89
+ assign (resid 89 and name n ) (resid 89 and name ca) 
+        (resid 89 and name cb) (resid 89 and name cg)  1.0 60.0 20.0 2
+  !!   s90
+ assign (resid 90 and name n ) (resid 90 and name ca) 
+        (resid 90 and name cb) (resid 90 and name og)  1.0 60.0 20.0 2
+  !!   n93
+ assign (resid 93 and name n ) (resid 93 and name ca) 
+        (resid 93 and name cb) (resid 93 and name cg)  1.0 180.0 20.0 2
+  !!  k94
+ assign (resid 94 and name n ) (resid 94 and name ca)
+        (resid 94 and name cb) (resid 94 and name cg)  1.0 60.0 20.0 2
+  !!  e95
+ assign (resid 95 and name n ) (resid 95 and name ca)
+        (resid 95 and name cb) (resid 95 and name cg)   1.0 -60.0 20.0 2
+  !!  k96
+ assign (resid 96 and name n ) (resid 96 and name ca) 
+        (resid 96 and name cb) (resid 96 and name cg)  1.0 180.0 20.0 2
+  !!  l97
+ assign (resid 97 and name n ) (resid 97 and name ca) 
+        (resid 97 and name cb) (resid 97 and name cg)  1.0 -60.0 20.0 2
+  !!  e98
+ assign (resid 98 and name n ) (resid 98 and name ca) 
+        (resid 98 and name cb) (resid 98 and name cg)  1.0 180.0 40.0 2
+  !!  t100
+ assign (resid 100 and name n ) (resid 100 and name ca) 
+        (resid 100 and name cb) (resid 100 and name og1)  1.0 -60.0 20.0 2
+  !!  i101 
+ assign (resid 101 and name n ) (resid 101 and name ca) 
+        (resid 101 and name cb) (resid 101 and name cg1)  1.0 -60.0 20.0 2
+  !!  n102
+ assign (resid 102 and name n ) (resid 102 and name ca) 
+        (resid 102 and name cb) (resid 102 and name cg)  1.0 180.0 20.0 2
+  !!  e103
+ assign (resid 103 and name n ) (resid 103 and name ca) 
+        (resid 103 and name cb) (resid 103 and name cg)  1.0 180.0 20.0 2
+  !!  l104
+ assign (resid 104 and name n ) (resid 104 and name ca) 
+        (resid 104 and name cb) (resid 104 and name cg)   1.0 -60.0 20.0 2
+  !!  v105
+ assign (resid 105 and name n ) (resid 105 and name ca) 
+        (resid 105 and name cb) (resid 105 and name cg1)  1.0 60.0 60.0 2
+
+!remark chi2 angles constraints
+!!   q4
+ assign (resid 4 and name ca) (resid 4 and name cb)
+        (resid 4 and name cg) (resid 4 and name cd)   1.0   180.0 20.0 2
+!!   i5
+ assign (resid 5 and name ca) (resid 5 and name cb)
+        (resid 5 and name cg1) (resid 5 and name cd1)   1.0   -60.0 20.0 2
+!!   k8
+ assign (resid 8 and name ca) (resid 8 and name cb)
+        (resid 8 and name cg) (resid 8 and name cd)   1.0   180.0 20.0 2
+!!   f11
+ assign (resid 11 and name ca) (resid 11 and name cb)
+        (resid 11 and name cg) (resid 11 and name cd1)   1.0   90.0 20.0 2
+!!   l15
+ assign (resid 15 and name ca) (resid 15 and name cb)
+        (resid 15 and name cg) (resid 15 and name cd1)   1.0   180.0 20.0 2
+!!   k21
+ assign (resid 21 and name ca) (resid 21 and name cb)
+        (resid 21 and name cg) (resid 21 and name cd)   1.0   180.0 20.0 2
+!!   l22
+ assign (resid 22 and name ca) (resid 22 and name cb)
+        (resid 22 and name cg) (resid 22 and name cd1)   1.0   180.0 20.0 2
+!!   f27
+ assign (resid 27 and name ca) (resid 27 and name cb)
+        (resid 27 and name cg) (resid 27 and name cd1)   1.0   -90.0 20.0 2
+!!   k36
+ assign (resid 36 and name ca) (resid 36 and name cb)
+        (resid 36 and name cg) (resid 36 and name cd)   1.0   180.0 20.0 2
+!!   i38
+ assign (resid 38 and name ca) (resid 38 and name cb)
+        (resid 38 and name cg1) (resid 38 and name cd1)   1.0   180.0 20.0 2
+!!   k39
+ assign (resid 39 and name ca) (resid 39 and name cb)
+        (resid 39 and name cg) (resid 39 and name cd)   1.0   180.0 20.0 2
+!!   f41
+ assign (resid 41 and name ca) (resid 41 and name cb)
+        (resid 41 and name cg) (resid 41 and name cd1)   1.0   -90.0 20.0 2
+!!   f42
+ assign (resid 42 and name ca) (resid 42 and name cb)
+        (resid 42 and name cg) (resid 42 and name cd1)   1.0   90.0 20.0 2
+!!   h43
+ assign (resid 43 and name ca) (resid 43 and name cb)
+        (resid 43 and name cg) (resid 43 and name cd2)   1.0   -60.0 20.0 2
+!!   l45
+ assign (resid 45 and name ca) (resid 45 and name cb)
+        (resid 45 and name cg) (resid 45 and name cd1)   1.0   180.0 20.0 2
+!!   y49
+ assign (resid 49 and name ca) (resid 49 and name cb)
+        (resid 49 and name cg) (resid 49 and name cd1)   1.0   90.0 20.0 2
+!!   i53
+ assign (resid 53 and name ca) (resid 53 and name cb)
+        (resid 53 and name cg1) (resid 53 and name cd1)   1.0  -60.0 20.0 2
+!!   f54
+ assign (resid 54 and name ca) (resid 54 and name cb)
+        (resid 54 and name cg) (resid 54 and name cd1)   1.0   90.0 20.0 2
+!!   l55
+ assign (resid 55 and name ca) (resid 55 and name cb)
+        (resid 55 and name cg) (resid 55 and name cd1)   1.0   60.0 20.0 2
+!!   f77
+ assign (resid 77 and name ca) (resid 77 and name cb)
+        (resid 77 and name cg) (resid 77 and name cd1)   1.0   -90.0 20.0 2
+!!   q78
+ assign (resid 78 and name ca) (resid 78 and name cb)
+        (resid 78 and name cg) (resid 78 and name cd)   1.0   180.0 20.0 2
+!!   f79
+ assign (resid 79 and name ca) (resid 79 and name cb)
+        (resid 79 and name cg) (resid 79 and name cd1)   1.0   -90.0 20.0 2
+!!   f80
+ assign (resid 80 and name ca) (resid 80 and name cb)
+        (resid 80 and name cg) (resid 80 and name cd1)   1.0   -90.0 20.0 2
+!!   k82
+ assign (resid 82 and name ca) (resid 82 and name cb)
+        (resid 82 and name cg) (resid 82 and name cd)   1.0   180.0 20.0 2
+!!   k85
+ assign (resid 85 and name ca) (resid 85 and name cb)
+        (resid 85 and name cg) (resid 85 and name cd)   1.0   180.0 20.0 2
+!!   f89
+ assign (resid 89 and name ca) (resid 89 and name cb)
+        (resid 89 and name cg) (resid 89 and name cd1)   1.0   90.0 20.0 2
+!!   k96
+ assign (resid 96 and name ca) (resid 96 and name cb)
+        (resid 96 and name cg) (resid 96 and name cd)   1.0   180.0 20.0 2
+!!   l97
+ assign (resid 97 and name ca) (resid 97 and name cb)
+        (resid 97 and name cg) (resid 97 and name cd1)   1.0   180.0 20.0 2
+!!   i101
+ assign (resid 101 and name ca) (resid 101 and name cb)
+        (resid 101 and name cg1) (resid 101 and name cd1)   1.0   180.0 20.0 2
+!!   l104
+ assign (resid 104 and name ca) (resid 104 and name cb)
+        (resid 104 and name cg) (resid 104 and name cd1)   1.0   180.0 20.0 2
+
+
+!remark phi angle constraints
+
+  !!    a107
+ assign (resid 106 and name c ) (resid 107 and name n )
+        (resid 107 and name ca) (resid 107 and name c )   1.0  -90.0 80.0 2
+  !!    t108
+ assign (resid  107  and name c ) (resid  108  and name n ) 
+        (resid  108  and name ca) (resid  108  and name c )   1.0  -100.0 20.0 2
+  !!    l109
+ assign (resid  108  and name c ) (resid  109  and name n ) 
+        (resid  109  and name ca) (resid  109  and name c )   1.0  -75.0 20.0 2
+  !!    k110
+ assign (resid  109  and name c ) (resid  110  and name n ) 
+        (resid  110  and name ca) (resid  110  and name c )   1.0  -70.0 20. 2
+  !!    i111
+ assign (resid  110  and name c ) (resid  111  and name n ) 
+        (resid  111  and name ca) (resid  111  and name c )   1.0  -130.0 20.0 2
+  !!    c112
+ assign (resid  111  and name c ) (resid  112  and name n ) 
+        (resid  112  and name ca) (resid  112  and name c )  1.0 -90.0 20.0 2 
+  !!    s113
+ assign (resid  112  and name c ) (resid  113  and name n ) 
+        (resid  113  and name ca) (resid  113  and name c )   1.0  -85.0 20.0 2 
+  !!    w114
+ assign (resid  113  and name c ) (resid  114  and name n ) 
+        (resid  114  and name ca) (resid  114  and name c )   1.0  -80.0 20.0 2 
+  !!    n115
+ assign (resid  114  and name c ) (resid 115 and name n ) 
+        (resid  115 and name ca) (resid 115 and name c )   1.0  -50.0 20.0 2
+  !!    v116
+ assign (resid 115 and name c ) (resid 116 and name n ) 
+        (resid 116 and name ca) (resid 116 and name c )   1.0  -60.0 30.0 2
+  !!    d117
+ assign (resid 116 and name c ) (resid 117 and name n ) 
+        (resid 117 and name ca) (resid 117 and name c )   1.0  -60.0 30.0 2
+  !!    g118
+!assign (resid 117 and name c ) (resid 118 and name n )
+!       (resid 118 and name ca) (resid 118 and name c )   1.0  -90.0 80.0 2
+
+!remark psi angles constraints
+
+  !!    p106
+!assign (resid 106 and name n ) (resid 106 and name ca) 
+!       (resid 106 and name c ) (resid 107 and name n )   1.0  180.0 50.0 2
+!  !!    a107
+!assign (resid 107 and name n ) (resid 107 and name ca) 
+!       (resid 107 and name c ) (resid 108 and name n )   1.0  180.0 50.0 2
+!  !!    t108
+assign (resid 108 and name n ) (resid 108 and name ca) 
+       (resid 108 and name c ) (resid 109 and name n )   1.0  130.0 40.0 2
+   !!    l109
+assign (resid 109 and name n ) (resid 109 and name ca) 
+       (resid 109 and name c ) (resid 110 and name n )   1.0  -10.0 50.0 2
+   !!    k110
+ assign (resid 110 and name n ) (resid 110 and name ca) 
+        (resid 110 and name c ) (resid 111 and name n )   1.0  -10.0 20.0 2
+  !!    i111
+ assign (resid 111 and name n ) (resid 111 and name ca) 
+        (resid 111 and name c ) (resid 112 and name n )   1.0  130.0 30.0 2
+  !!    c112
+ assign (resid 112 and name n ) (resid 112 and name ca) 
+        (resid 112 and name c ) (resid 113 and name n )   1.0  130.0 20.0 2
+  !!    s113
+ assign (resid 113 and name n ) (resid 113 and name ca) 
+        (resid 113 and name c ) (resid 114 and name n )   1.0  140.0 40.0 2
+  !!    w114
+ assign (resid 114 and name n ) (resid 114 and name ca) 
+        (resid 114 and name c ) (resid 115 and name n )   1.0  -10.0 20.0 2
+  !!    n115
+assign (resid 115 and name n ) (resid 115 and name ca) 
+       (resid 115 and name c ) (resid 116 and name n )   1.0  20.0 30.0 2
+  !!    v116
+assign (resid 116 and name n ) (resid 116 and name ca) 
+       (resid 116 and name c ) (resid 117 and name n )   1.0  140.0 40.0 2
+  !!    d117
+!assign (resid 117 and name n ) (resid 117 and name ca) 
+!       (resid 117 and name c ) (resid 118 and name n )   1.0  5.0 60.0 2
+!remark chi angles constraints
+
+  !!   p106
+!assign (resid 106 and name n ) (resid 106 and name ca) 
+!       (resid 106 and name cb) (resid 106 and name cg)   1.0   180.0 20.0 2
+  !!   a107
+!assign (resid 107 and name n ) (resid 107 and name ca) 
+!       (resid 107 and name cb) (resid 107 and name cg)  1.0 180.0 20.0 2
+  !!   t108
+ assign (resid 108 and name n ) (resid 108 and name ca) 
+        (resid 108 and name cb) (resid 108 and name og1)  1.0 -60.0 20.0 2 
+  !!   l109
+ assign (resid 109 and name n ) (resid 109 and name ca) 
+        (resid 109 and name cb) (resid 109 and name cg)   1.0   -60.0 20.0 2
+  !!   k110
+ assign (resid 110 and name n ) (resid 110 and name ca)
+        (resid 110 and name cb) (resid 110 and name cg)   1.0   -60.0 20.0 2
+  !!   i111
+ assign (resid 111 and name n ) (resid 111 and name ca) 
+        (resid 111 and name cb) (resid 111 and name cg1)   1.0   -60.0 20.0 2
+  !!   c112
+ assign (resid 112 and name n ) (resid 112 and name ca) 
+        (resid 112 and name cb) (resid 112 and name sg)   1.0   -60.0 20.0 2
+  !!   s113
+ assign (resid 113 and name n ) (resid 113 and name ca) 
+        (resid 113 and name cb) (resid 113 and name og)   1.0   -60.0 20.0 2
+  !!   w114
+ assign (resid 114 and name n ) (resid 114 and name ca)
+        (resid 114 and name cb) (resid 114 and name cg)   1.0  -60.0 20.0 2
+  !!   n115
+ assign (resid 115 and name n ) (resid 115 and name ca) 
+        (resid 115 and name cb) (resid 115 and name cg)  1.0 -60.0 20.0 2
+
+  !!   v116
+ assign (resid 116 and name n ) (resid 116 and name ca) 
+        (resid 116 and name cb) (resid 116 and name cg1)  1.0 -60.0 20.0 2
+
+!remark chi2 angles constraints
+
+!!   l109
+ assign (resid 109 and name ca) (resid 109 and name cb)
+        (resid 109 and name cg) (resid 109 and name cd1)   1.0   180.0 20.0 2
+!!   k110
+ assign (resid 110 and name ca) (resid 110 and name cb)
+        (resid 110 and name cg) (resid 110 and name cd)   1.0   -60.0 20.0 2
+ !!   i111
+ assign (resid 111 and name ca) (resid 111 and name cb)
+        (resid 111 and name cg1) (resid 111 and name cd1)   1.0   -60.0 20.0 2
+ !!    w114
+ assign (resid 114 and name ca) (resid 114 and name cb)
+        (resid 114 and name cg) (resid 114 and name cd1)  1.0 60.0 15.0 2
+ !!  n115
+ assign (resid 115 and name ca ) (resid 115 and name cb )
+        (resid 115 and name cg) (resid 115 and name od1 )  1.0 180.0 20.0 2
+
+!disulfide
+ assign (resid 32 and name ca) (resid 32 and name cb)
+        (resid 32 and name sg) (resid 112 and name sg) 1.0 180.0 40.0 2
+ assign (resid 32 and name cb) (resid 32 and name sg)
+        (resid 112 and name sg) (resid 112 and name cb) 1.0 -90.0 40.0 2
+ assign (resid 32 and name sg) (resid 112 and name sg)
+        (resid 112 and name cb) (resid 112 and name ca) 1.0 -90.0 40.0 2
+ 
