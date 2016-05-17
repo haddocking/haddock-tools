@@ -68,7 +68,7 @@ The validate_tbl.py script in that directoy will check the correctness of your r
 
 Usage:
 ```bash
-usage: validate_tbl.py [-h] [--pcs] file
+usage: python validate_tbl.py [-h] [--pcs] file
 
 This script validates a restraint file (*.tbl).
 
