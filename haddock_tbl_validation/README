@@ -1,0 +1,3 @@
+usage: python validate_tbl.py [-h] [--pcs] [--quick] file
+
+Various examples provided
