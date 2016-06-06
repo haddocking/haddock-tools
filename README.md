@@ -184,6 +184,24 @@ Usage:
     where inputfiles are a list of PDB files to be concatenated
 ```
 
+#### mutate.py
+A python script to mutate residues for HADDOCK. A PDB file and a mutation list file are used as input, and the output is/are corresponding PDB file(s) of mutant(s). The format of mutation in the mutation list file is "ResidueID ResidueName ChainID", The ResidueName is the residue mutated to.
+
+
+Usage:
+```bash
+    mutate.py <PDBfile> <mutation list file>
+```
+
+Example:
+```bash
+molprobity.py 1A22.pdb mut_1A22.list
+
+## In  mut_1A22.list, the residue 14, 18 and 21 in chain A will be mutated to ALA:
+## 14 ALA A
+## 18 ALA A
+## 21 ALA A
+```
 
 
 License
