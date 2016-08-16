@@ -203,6 +203,14 @@ molprobity.py 1A22.pdb mut_1A22.list
 ## 21 ALA A
 ```
 
+#### pdb_strict_format.py
+A python script to check format of PDB files with respect to HADDOCK format rules. A PDB file is used as input, and the output is a console message if an error or a warning is triggered by a bad formmated line. The script uses wwPDB format guidelines [wwwPDB guidelines](http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html) and check resid against a list of known ligands and amino-acids recognized by HADDOCK.
+
+
+Usage:
+```bash
+    pdb_strict_format.py <PDBfile>
+```
 
 License
 ---------
