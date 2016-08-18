@@ -146,7 +146,7 @@ class PDBParser(object):
 
         # Check if it is a known residue
         if record.strip() == "ATOM" and resn not in aa:
-        	raise PDBParsingError('Residue name ("{}") is unknown, please check the syntax or replace ATOM by HETATM'.format(resn), line)
+            raise PDBParsingError('Residue name ("{}") is unknown, please check the syntax or replace ATOM by HETATM'.format(resn), line)
 
         # This is probably redundant because of the validation done in the regex matching..
         try:
@@ -158,9 +158,12 @@ class PDBParser(object):
         except ValueError as error:
             raise PDBParsingError('X,Y,Z coordinates, occupancy, and temperature (b) factors must be decimal numbers.', line)   
         if chain_id_check and chain == " ":
-            raise PDBParsingError('No chain_id found', line)
-        if chain != " " and segid != " " and (chain != segid):
-        	raise PDBParsingError('seg_id different from chain_id', line)
+            if not segid:
+                raise PDBParsingError('No chain_id found', line)
+            else:
+                raise PDBParsingError('No chain_id found but segid detected,\nuse http://github.com/haddocking/pdb-tools/pdb_segxchain.py to exchange chain_id for segid', line)
+        if chain_id_check and segid != " " and (chain != segid):
+            raise PDBParsingError('The seg_id is different from chain_id', line)
         
         # Could use a named tuple here?
         atom = (record, atname, altloc, resn, chain, resi, icode, x, y, z, o, b) 
@@ -201,8 +204,8 @@ class PDBParser(object):
                         model_open = False
 
                     elif line.startswith(('ATOM', 'HETATM')):
-                    	if not len_warning and len(line) < 81:
-                    		len_warning = True
+                        if not len_warning and len(line) < 81:
+                            len_warning = True
                         try:
                             atom = self._parse_atom_line(line, chain_id_check)
                         except PDBParsingError as error:
@@ -225,18 +228,19 @@ class PDBParser(object):
                 else:
                     raise PDBParsingError('Could not parse the PDB file at line {0}: record unknown ({1})'.format(iline, record), line, True)
         if len_warning:
-        	print "WARNING: At least one ATOM/HETATM line consists of less than 80 columns. \nTo follow the official wwPDB guidelines, please use http://github.com/haddocking/pdb-tools/pdb_linewidth to"+\
-        	"format your PDB file.\nOfficial PDB format guidelines can be found here: http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM.\n"
+            print "WARNING: At least one ATOM/HETATM line consists of less than 80 columns. \nTo follow the official wwPDB guidelines, please use http://github.com/haddocking/pdb-tools/pdb_linewidth to"+\
+            "format your PDB file.\nOfficial PDB format guidelines can be found here: http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM.\n"
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="This script validates a PDB file (*.tbl).\n")
+    parser = argparse.ArgumentParser(description="This script validates a PDB file (*.pdb).\n")
     
     parser.add_argument("pdb", help="PDB file")
+    parser.add_argument("-nc", "--no_chainid", action="store_false", help="Ignore empty chain ids")
 
     args = parser.parse_args()
 
     try:
-        f_pdb = PDBParser(args.pdb, True)
+        f_pdb = PDBParser(args.pdb, args.no_chainid)
     except PDBParsingError as e:
         print e

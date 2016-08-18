@@ -209,7 +209,16 @@ A python script to check format of PDB files with respect to HADDOCK format rule
 
 Usage:
 ```bash
-    pdb_strict_format.py <PDBfile>
+pdb_strict_format.py [-h] [-nc] pdb
+
+This script validates a PDB file (*.pdb).
+
+positional arguments:
+  pdb                PDB file
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -nc, --no_chainid  Ignore empty chain ids
 ```
 
 License
