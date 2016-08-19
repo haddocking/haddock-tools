@@ -38,8 +38,12 @@ def validate_tbl(restraints, pcs = False):
         # Take everything which is before putative "!" (comment) caracter
         if l.find("!") > -1: 
             l = l[:l.find("!")]
-        # Remove whitespaces
-        l = l.strip()
+        # Remove whitespaces and merge with previous line if in OR statement for AIR restraints
+        if mode != "format":
+            l = l.strip()
+        else:
+            l = tmp + l.strip()
+            mode = "postassign"
         # End of line
         if not len(l):
             continue
@@ -71,12 +75,19 @@ def validate_tbl(restraints, pcs = False):
             # and no "OR" restraint is present -> ERROR
             else:
                 raise Exception("Invalid TBL file: Unknown statement (line %d): %s" % (lnr, l))
+        # We check if the selection is made over two lines (thanks to "segid" keyword)
+        if mode == "postassign":
+            if l.count("segid") == 1:
+                mode = "format"
+                tmp = l
+                continue
 
         matched = True
         while matched:
             matched = False
             # We are looking for parenthesis as start of the selections
             if mode in ("assign", "postassign"):
+                # Ambiguous restraint for two different pairs of atoms (ex: THR 1 B <-> ALA 2 A OR GLY 2 B <-> ASP 10 A )
                 pos = l.find("(")
                 if pos != -1:
                     matched = True
@@ -91,7 +102,7 @@ def validate_tbl(restraints, pcs = False):
                     level = 1
             # Get the structural selections
             if mode in ("sel", "postsel"):
-                # print mode
+                # Detect opening and closing parenthesis
                 for match in parentmatch.finditer(l):
                     if match.group() == "(":
                         level += 1
@@ -121,8 +132,6 @@ def validate_tbl(restraints, pcs = False):
                         if repr(s) == "''":
                             # print repr(l), repr(s), selections
                             s += "\n\t"
-                        # else:
-                        #     s += "SALUT"
         # TBD
         if mode in ("sel", "postsel"):
             continue
@@ -133,8 +142,6 @@ def validate_tbl(restraints, pcs = False):
             tmp_output +=" or"
             for s in selections:
                 tmp_output += "\t(%s)\n" % s
-            # output += tmp_output
-            # tmp_output = None
             # We let the possibility for other "OR"
             mode = "postglobal"
         if len(l) == 0:
