@@ -50,7 +50,7 @@ re_ATOM = re.compile("""
 # http://www.wwpdb.org/documentation/format33/v3.3.html
 valid_records = set(( 'ANISOU', 'ATOM', 'AUTHOR',
                       'CAVEAT', 'CISPEP', 'COMPND',
-                      'CONECT', 'CRYST', 'DBREF',
+                      'CONECT', 'CRYST1', 'DBREF',
                       'ENDMDL', 'EXPDTA', 'FORMUL',
                       'HEADER', 'HELIX', 'HET',
                       'HETATM', 'HETNAM', 'HETSYN',
