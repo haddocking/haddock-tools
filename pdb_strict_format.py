@@ -57,9 +57,9 @@ valid_records = set(( 'ANISOU', 'ATOM', 'AUTHOR',
                       'HETATM', 'HETNAM', 'HETSYN',
                       'JRNL', 'KEYWDS', 'LINK',
                       'MDLTYP', 'MODEL', 'MODRES',
-                      'MTRIX1', 'MTRIX2', 'MTRIX3' 
+                      'MTRIX1', 'MTRIX2', 'MTRIX3', 
                       'NUMMDL', 'OBSLTE',
-                      'ORIG1', 'ORIG2', 'ORIG3'
+                      'ORIGX1', 'ORIGX2', 'ORIGX3',
                       'REVDAT', 'SCALE1',
                       'SCALE2', 'SCALE3', 
                       'SEQADV', 'SEQRES', 'SHEET',
