@@ -1,4 +1,4 @@
-================================================
+
  haddock-tools 
 ================================================
 
@@ -34,11 +34,11 @@ Scripts
 ## Restraints-related
 
 #### active-passive_to_ambig.py
-A python script to create ambiguous interaction restraints for use in HADDOCK based on list of active and passive residues (refer to the [HADDOCK software page](http://www.bonvinlab.org/software/haddock2.2/haddock.html) for more infmation)
+A python script to create ambiguous interaction restraints for use in HADDOCK based on list of active and passive residues (refer to the [HADDOCK software page](http://www.bonvinlab.org/software/haddock2.2/haddock.html) for more information)
 
 Usage:
 ```bash
-     python active-passive_to_ambig.py <active-passive-file1> <active-passive-file2>
+     ./active-passive_to_ambig.py <active-passive-file1> <active-passive-file2>
 ```
 
 where <active-passive-file> is a file consisting of two space-delimited lines with
@@ -61,6 +61,25 @@ Usage:
     -h, --help            show this help message and exit
     --exclude EXCLUDE [EXCLUDE ...], -e EXCLUDE [EXCLUDE ...] Chains to exclude from the calculation
     --verbose, -v
+```
+
+#### restrain_ligand.py
+Calculates distances between neighboring residues of a ligand molecule and produces a set of
+unambiguous distance restraints for HADDOCK to keep it in place during semi-flexible refinement.
+Produces, at most, one restraint per ligand atom.
+
+Usage:
+```bash
+./restrain_ligand.py [-h] -l LIGAND [-p] pdbf
+
+positional arguments:
+  pdbf                  PDB file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l LIGAND, --ligand LIGAND
+                        Ligand residue name
+  -p, --pml             Write Pymol file with restraints
 ```
 
 #### haddock_tbl_validation
@@ -101,16 +120,16 @@ Usage:
 ```
 
 #### molprobity.py
-A python script to predict the protonation state of Histidine residues for HADDOCK. It uses molprobity for this, calling the reduce software which should in the path.
+A python script to predict the protonation state of Histidine residues for HADDOCK. It uses molprobity for this, calling the [Reduce](http://kinemage.biochem.duke.edu/software/reduce.php) software which should in the path.
 
 Usage:
 ```bash
-    molprobity.py <PDBfile>
+    ./molprobity.py <PDBfile>
 ```
 
 Example:
 ```bash
-molprobity.py 1F3G.pdb
+./molprobity.py 1F3G.pdb
 ## Executing Reduce to assign histidine protonation states
 ## Input PDB: 1F3G.pdb
 HIS ( 90 )	-->	HISD
@@ -190,12 +209,12 @@ A python script to mutate residues for HADDOCK. A PDB file and a mutation list f
 
 Usage:
 ```bash
-    mutate.py <PDBfile> <mutation list file>
+    ./mutate.py <PDBfile> <mutation list file>
 ```
 
 Example:
 ```bash
-molprobity.py 1A22.pdb mut_1A22.list
+./mutate.py 1A22.pdb mut_1A22.list
 
 ## In  mut_1A22.list, the residue 14, 18 and 21 in chain A will be mutated to ALA:
 ## 14 ALA A
@@ -209,7 +228,7 @@ A python script to check format of PDB files with respect to HADDOCK format rule
 
 Usage:
 ```bash
-pdb_strict_format.py [-h] [-nc] pdb
+./pdb_strict_format.py [-h] [-nc] pdb
 
 This script validates a PDB file (*.pdb).
 
