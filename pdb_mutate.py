@@ -1,13 +1,16 @@
 #!/usr/bin/python
 """
-(dummy-)Mutates residue on a PDB-formatted structure.
+(dummy-)Mutates single residue on a PDB-formatted structure.
 HADDOCK will then reconstruct the residue according to its topology.
 
-usage: python pdb_mutate.py <file of mutation list>
-    the format of mutation list:
-        PDB chain resi resn_wt resn_mut
+Usage1: python pdb_mutate.py <pdb file> <mutation chain> <mutation residue number> <wildtype residue name> <mutant residue name>
+Example: python pdb_mutate.py 1A22.pdb A 7 SER ALA
 
-example: python pdb_mutate.py list_mutations
+Usage2: python pdb_mutate.py <mutation list file>
+        The format of mutation list:
+        pdbfile chain resi resn_wt resn_mut
+
+Example: python pdb_mutate.py list_mutations
         for mutating residue 7 Serine of chain A to Alanine:
         1A22.pdb A 7 SER ALA
 
@@ -34,8 +37,7 @@ def check_input(args):
         else:
             sys.stderr.write(USAGE)
             sys.exit(1)
-    elif len(args) == 1:
-        # File
+    elif len(args) == 1 or len(args) == 5:
         if not os.path.isfile(args[0]):
             sys.stderr.write('File not found: ' + args[0] + '\n')
             sys.stderr.write(USAGE)
@@ -44,7 +46,6 @@ def check_input(args):
     else:
         sys.stderr.write(USAGE)
         sys.exit(1)
-
     return mutfh
 
 
@@ -69,13 +70,20 @@ def mutate(structure_fhandle, chain, resi, resn_wt, resn_mut):
                 mutated_structure.append(line)
         else:
             mutated_structure.append(line)
-    return (mutated_structure)
+    return mutated_structure
 
 
-def _print_mutant(mut_fhandle):
+def _print_mutant(mut_fhandle, chain, resi, resn_wt, resn_mut):
+        mutant = mutate(mut_fhandle, chain, resi, resn_wt, resn_mut)
+        mutpdb = ''.join(mutant).rstrip("\n")
+        print(mutpdb)
+
+
+def _print_mutants(mut_fhandle):
 
     mut_list = [l.split() for l in mut_fhandle if l.strip()]
 
+    print("Generated mutant files:")
     for i in mut_list:
         if len(i) == 5:
             pdb_path, chain, resi, resn_wt, resn_mut = i
@@ -99,7 +107,14 @@ def _print_mutant(mut_fhandle):
         else:
             continue
 
+
 if __name__ == "__main__":
 
     mut_fhandle =  check_input(sys.argv[1:])
-    _print_mutant(mut_fhandle)
+
+    if len(sys.argv[1:]) == 1:
+        _print_mutants(mut_fhandle)
+    else:
+        _print_mutant(mut_fhandle, *sys.argv[2:])
+
+    mut_fhandle.close()
