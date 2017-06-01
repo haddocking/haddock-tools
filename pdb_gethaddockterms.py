@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-Extract HADDOCK terms (Evdw, Eelec, Edesolv and BSA) from a HADDOCK-format PDB file.
+Extract HADDOCK terms (Eair, Evdw, Eelec, Edesolv and BSA) from a HADDOCK-format PDB file.
 
 Usage: python pdb_gethaddockterms.py <HADDOCK PDB file>
 Example: python pdb_gethaddockterms.py cluster1_1.pdb
@@ -48,6 +48,7 @@ def ExtractHaddockTerms(pdbfhandle):
                 ene = line.split(',')
                 terms['Evdw'] = ene[5].strip()
                 terms['Eelec'] = ene[6].strip()
+                terms['Eair'] = ene[7].strip()
             elif re.match(r'REMARK Desolvation energy', line):
                 terms['Edesolv'] = line.split()[3].strip()
             elif re.match(r'REMARK buried surface area', line):
@@ -61,7 +62,7 @@ def ExtractHaddockTerms(pdbfhandle):
 def WriteHaddockTerms(pdbfhandle):
     terms = ExtractHaddockTerms(pdbfhandle)
     if terms:
-        header = ['Evdw', 'Eelec', 'Edesolv', 'BSA']
+        header = ['Eair', 'Evdw', 'Eelec', 'Edesolv', 'BSA']
         haddockterms = [terms[i] for i in header]
         print("\t".join(header))
         print("\t".join(haddockterms))
