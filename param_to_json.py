@@ -8,11 +8,13 @@ import argparse
 import os
 import json
 
+
 """
 param_to_json.py
 
 Convert a haddockparam.web in JSON format.
-Can also be used to modify a parameter.
+Can also be used to get or modify a parameter value.
+Inspired by Sjoerd de Vries parser used in HADDOCK.
 """
 
 __author__    = "Mikael Trellet"
@@ -56,7 +58,7 @@ class HaddockParamWeb(object):
                                 ## Seems to be never reached
                                 txt = curr[1][:-2]  # we have removed outer indentation from txt and we are effectively doing a 2nd pass here (suboptimal)
                                 print txt, curr[0]
-                                curr[3].append(self.parse(curr[0]))
+                                curr[3].append(self._parse(curr[0]))
                                 curr[:2] = None, None
                         else:  # dedent and leave objectlist mode
                             curr[:] = curr[3]
@@ -126,6 +128,72 @@ class HaddockParamWeb(object):
         assert len(stack) == 1  # when we're done, the stack must have been popped
         return curr[0]
 
+    def _change_value(self, key, new_val, dic):
+        if hasattr(dic, 'iteritems'):
+            for k, v in dic.iteritems():
+                if k == key:
+                    if type(new_val) != type(v):
+                        raise Exception("Old and new values are not of the same type, {} expects {}".format(key, type(v)))
+                    else:
+                        if hasattr(new_val, "len") and hasattr(v, "len"):
+                            if len(new_val) != len(v):
+                                raise Exception("Old and new values have different length, {} is {} long".format(key, len(v)))
+                            else:
+                                print "Changing {} value from {} to {}".format(k, v, str(new_val))
+                                dic[k] = str(new_val)
+                                yield dic
+                        else:
+                            print "Changing {} value from {} to {}".format(k, v, str(new_val))
+                            dic[k] = str(new_val)
+                            yield dic
+                if isinstance(v, dict):
+                    for result in self._change_value(key, new_val, v):
+                        yield result
+                elif isinstance(v, list):
+                    for d in v:
+                        for result in self._change_value(key, new_val, d):
+                            yield result
+
+    def _get_value(self, key, dic=None):
+        if not dic:
+            dic = self.data
+        if hasattr(dic, 'iteritems'):
+            for k, v in dic.iteritems():
+                if k == key:
+                    yield v
+                if isinstance(v, dict):
+                    for result in self._get_value(key, v):
+                        yield result
+                elif isinstance(v, list):
+                    for d in v:
+                        for result in self._get_value(key, d):
+                            yield result
+
+    def change_value(self, key, new_val):
+        # Check for the key existence first
+        if list(haddockparams.get_value(key)):
+            print 'Found key "{}", process to change...'.format(key)
+        else:
+            raise Exception("Key {} not found".format(key))
+        # Try to change the value (must be a match between the old and new value types)
+        try:
+            result = list(haddockparams._change_value(key, new_val, self.data))
+            if result:
+                print "Updating dictionary..."
+                self.data = result[0]
+            else:
+                raise Exception("An error was not caught during the update of the dictionary")
+        except:
+            raise
+
+    def get_value(self, key):
+        value = list(haddockparams._get_value(key, self.data))
+        if value:
+            print "{} : {}".format(key, value[0])
+            return value[0]
+        else:
+            raise Exception("Key {} not found".format(key))
+
     def dump_keys(self, d, lvl=0):
         keys = {}
         for k, v in d.iteritems():
@@ -134,71 +202,37 @@ class HaddockParamWeb(object):
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
 
-    def get_value(self, key, dic=None):
-        if not dic:
-            dic = self.data
-        if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
-                if k == key:
-                    yield v
-                if isinstance(v, dict):
-                    for result in self.get_value(key, v):
-                        yield result
-                elif isinstance(v, list):
-                    for d in v:
-                        for result in self.get_value(key, d):
-                            yield result
 
-    def change_value(self, key, new_val, dic=None):
-        print dic
-        if not dic:
-            dic = self.data
-        if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
-                if k == key:
-                    if type(new_val) != type(v):
-                        print "Old and new values are not of the same type, {} expects {}".format(key, type(v))
-                    else:
-                        if hasattr(new_val, len) and hasattr(v, len):
-                            if len(new_val) != len(v):
-                                print "Old and new values have different length, {} is {} long".format(key, len(v))
-                            else:
-                                print "Changing key value from {} to {}".format(v, new_val)
-                                dic[k] = new_val
-                        else:
-                            print "Changing key value from {} to {}".format(v, new_val)
-                            dic[k] = new_val
-                if isinstance(v, dict):
-                    for result in self.change_value(key, new_val, v):
-                        yield result
-                elif isinstance(v, list):
-                    for d in v:
-                        for result in self.change_value(key, new_val, d):
-                            yield result
+
+    # def update(self, u, d):
+    #     for k, v in u.iteritems():
+    #         if isinstance(v, collections.Mapping):
+    #             r = self.update(v, d.get(k, {}))
+    #             self.data[k] = r
+    #         else:
+    #             self.data[k] = u[k]
+    #     return d
 
 parser = argparse.ArgumentParser(description="This script parses a HADDOCK parameter file (*.web) and transforms it to "
-                                             "JSON format.\n It also allows to change a parameter of the haddockparam.web")
-
+                                             "JSON format.\n It also allows to change a parameter of the "
+                                             "haddockparam.web")
 parser.add_argument("web", nargs=1, help="HADDOCK parameter file")
 parser.add_argument("-o", "--output", nargs=1, help="Path of JSON output file")
-parser.add_argument("-e", "--edit", nargs=2, help="Parameters you would like to change")
 parser.add_argument("-g", "--get", nargs=1, help="Get value of a particular parameter")
 
 args = parser.parse_args()
 
 if os.path.exists(args.web[0]):
     haddockparams = HaddockParamWeb(args.web[0])
-#    print haddockparams.type
-#    print haddockparams.data.keys()
     if args.get:
-        value = list(haddockparams.get_value(args.get[0]))[0]
-        print "{} : {}".format(args.get[0], value)
-        # if args.parameter[0] in haddockparams.data.keys():
-        #     print haddockparams.data[args.parameter[0]]
-    if args.edit:
-        print args.edit[0], args.edit[1]
-        haddockparams.change_value(args.edit[0], args.edit[1])
-        print list(haddockparams.get_value(args.edit[0]))[0]
+        haddockparams.get_value(args.get[0])
     if args.output:
         with open(args.output, 'w') as output:
             json.dump(haddockparams.data, output)
+
+# EXAMPLE
+
+# dic = haddockparams.data
+print haddockparams.get_value('waterrefine')
+haddockparams.change_value('waterrefine', 400)
+print haddockparams.get_value('waterrefine')
