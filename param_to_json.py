@@ -30,6 +30,7 @@ class HaddockParamWeb(object):
         self.filename = filename
         self.type = self._type()
         self.data = self._parse()
+        self._cast_type()
 
 
     def _type(self):
@@ -139,12 +140,12 @@ class HaddockParamWeb(object):
                             if len(new_val) != len(v):
                                 raise Exception("Old and new values have different length, {} is {} long".format(key, len(v)))
                             else:
-                                print "Changing {} value from {} to {}".format(k, v, str(new_val))
-                                dic[k] = str(new_val)
+                                print "Changing {} value from {} to {}".format(k, v, new_val)
+                                dic[k] = new_val
                                 yield dic
                         else:
-                            print "Changing {} value from {} to {}".format(k, v, str(new_val))
-                            dic[k] = str(new_val)
+                            print "Changing {} value from {} to {}".format(k, v, new_val)
+                            dic[k] = new_val
                             yield dic
                 if isinstance(v, dict):
                     for result in self._change_value(key, new_val, v):
@@ -155,8 +156,8 @@ class HaddockParamWeb(object):
                             yield result
 
     def _get_value(self, key, dic=None):
-        if not dic:
-            dic = self.data
+        # if not dic:
+        #     dic = self.data
         if hasattr(dic, 'iteritems'):
             for k, v in dic.iteritems():
                 if k == key:
@@ -169,11 +170,48 @@ class HaddockParamWeb(object):
                         for result in self._get_value(key, d):
                             yield result
 
+    def _cast_type(self, dic=None, key=None):
+        if not dic:
+            dic = self.data
+        if hasattr(dic, 'iteritems'):
+            for k, v in dic.iteritems():
+                if isinstance(v, dict):
+                    self._cast_type(v, k)
+                elif isinstance(v, list):
+                    c = 0
+                    for s in v:
+                        if isinstance(s, dict):
+                            # print s
+                            self._cast_type(s, k)
+                        else:
+                            dic[k][c] = eval(s)
+                            c += 1
+                else:
+                    dic[k] = eval(v)
+        elif isinstance(dic, list):
+            for s in dic:
+                self._cast_type(s)
+        else:
+            dic[key] = eval(dic)
+
+    def cast_type(self, dic=None):
+        if not dic:
+            dic = self.data
+        if hasattr(dic, 'iteritems'):
+            for k, v in dic.iteritems():
+                if isinstance(v, dict):
+                    for result in self._get_value(v):
+                        yield result
+                elif isinstance(v, list):
+                    for d in v:
+                        for result in self._get_value(d):
+                            yield result
+                else:
+                    dic[k] = eval(v)
+
     def change_value(self, key, new_val):
         # Check for the key existence first
-        if list(haddockparams.get_value(key)):
-            print 'Found key "{}", process to change...'.format(key)
-        else:
+        if not haddockparams.get_value(key):
             raise Exception("Key {} not found".format(key))
         # Try to change the value (must be a match between the old and new value types)
         try:
@@ -187,9 +225,9 @@ class HaddockParamWeb(object):
             raise
 
     def get_value(self, key):
-        value = list(haddockparams._get_value(key, self.data))
+        dic = self.data
+        value = list(haddockparams._get_value(key, dic))
         if value:
-            print "{} : {}".format(key, value[0])
             return value[0]
         else:
             raise Exception("Key {} not found".format(key))
@@ -202,16 +240,6 @@ class HaddockParamWeb(object):
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
 
-
-
-    # def update(self, u, d):
-    #     for k, v in u.iteritems():
-    #         if isinstance(v, collections.Mapping):
-    #             r = self.update(v, d.get(k, {}))
-    #             self.data[k] = r
-    #         else:
-    #             self.data[k] = u[k]
-    #     return d
 
 parser = argparse.ArgumentParser(description="This script parses a HADDOCK parameter file (*.web) and transforms it to "
                                              "JSON format.\n It also allows to change a parameter of the "
@@ -227,12 +255,10 @@ if os.path.exists(args.web[0]):
     if args.get:
         haddockparams.get_value(args.get[0])
     if args.output:
-        with open(args.output, 'w') as output:
+        with open(args.output[0], 'w') as output:
             json.dump(haddockparams.data, output)
 
-# EXAMPLE
-
-# dic = haddockparams.data
+# EXAMPLE - change waterrefine parameter from 400 to 200
 print haddockparams.get_value('waterrefine')
-haddockparams.change_value('waterrefine', 400)
+haddockparams.change_value('waterrefine', 200)
 print haddockparams.get_value('waterrefine')
