@@ -8,6 +8,7 @@ import argparse
 import os
 import json
 
+import collections
 
 """
 param_to_json.py
@@ -194,6 +195,17 @@ class HaddockParamWeb(object):
         else:
             dic[key] = eval(dic)
 
+    def update(self, orig_dict, new_dict):
+        for key, val in new_dict.iteritems():
+            if isinstance(val, collections.Mapping):
+                tmp = self.update(orig_dict.get(key, {}), val)
+                orig_dict[key] = tmp
+            elif isinstance(val, list):
+                orig_dict[key] = (orig_dict.get(key, []) + val)
+            else:
+                orig_dict[key] = new_dict[key]
+        return orig_dict
+
     def cast_type(self, dic=None):
         if not dic:
             dic = self.data
@@ -228,7 +240,10 @@ class HaddockParamWeb(object):
         dic = self.data
         value = list(haddockparams._get_value(key, dic))
         if value:
-            return value[0]
+            if len(value) > 1:
+                return value
+            else:
+                return value[0]
         else:
             raise Exception("Key {} not found".format(key))
 
@@ -252,13 +267,15 @@ args = parser.parse_args()
 
 if os.path.exists(args.web[0]):
     haddockparams = HaddockParamWeb(args.web[0])
+    #print haddockparams.data
     if args.get:
         haddockparams.get_value(args.get[0])
     if args.output:
         with open(args.output[0], 'w') as output:
-            json.dump(haddockparams.data, output)
+            json.dump(haddockparams.data, output, indent=4, sort_keys=True)
 
 # EXAMPLE - change waterrefine parameter from 400 to 200
-print haddockparams.get_value('waterrefine')
-haddockparams.change_value('waterrefine', 200)
-print haddockparams.get_value('waterrefine')
+print haddockparams.get_value('auto_his')
+new_dic = haddockparams.update(haddockparams.data, {'dan1': {'constants': {'stages' : {'hot' : 200}}}})
+#haddockparams.change_value('waterrefine', 200)
+print haddockparams.get_value('hot')
