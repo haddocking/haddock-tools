@@ -6,6 +6,7 @@ from __future__ import with_statement
 
 import argparse
 import os
+import sys
 import json
 
 import collections
@@ -33,12 +34,10 @@ class HaddockParamWeb(object):
         self.data = self._parse()
         self._cast_type()
 
-
     def _type(self):
         with open(self.filename, 'r') as f:
             s = f.read()
         return s.splitlines()[0].split()[0]
-
 
     def _parse(self):
         with open(self.filename, 'r') as f:
@@ -255,6 +254,24 @@ class HaddockParamWeb(object):
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
 
+    def write_json(self, path, indent=True, sort_keys=True):
+        try:
+            with open(path, 'w') as output:
+                if indent and sort_keys:
+                    json.dump(haddockparams.data, output, indent=4, sort_keys=True)
+                elif indent:
+                    json.dump(haddockparams.data, output, indent=4)
+                elif sort_keys:
+                    json.dump(haddockparams.data, output, sort_keys=True)
+                else:
+                    json.dump(haddockparams.data, output)
+        except IOError:
+            print "No such file or directory: {}".format(path)
+            sys.exit()
+        except:
+            print "Error while writing the file, exiting..."
+            sys.exit()
+
 
 parser = argparse.ArgumentParser(description="This script parses a HADDOCK parameter file (*.web) and transforms it to "
                                              "JSON format.\n It also allows to change a parameter of the "
@@ -267,15 +284,14 @@ args = parser.parse_args()
 
 if os.path.exists(args.web[0]):
     haddockparams = HaddockParamWeb(args.web[0])
-    #print haddockparams.data
     if args.get:
         haddockparams.get_value(args.get[0])
     if args.output:
-        with open(args.output[0], 'w') as output:
-            json.dump(haddockparams.data, output, indent=4, sort_keys=True)
+        haddockparams.write_json(args.output[0])
 
 # EXAMPLE - change waterrefine parameter from 400 to 200
-print haddockparams.get_value('auto_his')
-new_dic = haddockparams.update(haddockparams.data, {'dan1': {'constants': {'stages' : {'hot' : 200}}}})
-#haddockparams.change_value('waterrefine', 200)
 print haddockparams.get_value('hot')
+haddockparams.data['dan1']['constants']['stages']['hot'] = 200
+print haddockparams.get_value('hot')
+# EXAMPLE 2 - print all keys of haddockparams.data
+print haddockparams.dump_keys(haddockparams.data)
