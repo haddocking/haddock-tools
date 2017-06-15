@@ -56,8 +56,10 @@ class HaddockParamWeb(object):
                             curr[1] += l[ident:] + "\n"
                             curr[2] -= 1
                             if curr[2] == 0:  # we are at outer level, parse what we have and reset
-                                ## Seems to be never reached
-                                txt = curr[1][:-2]  # we have removed outer indentation from txt and we are effectively doing a 2nd pass here (suboptimal)
+                                # Seems to be never reached
+                                # we have removed outer indentation from txt and we are effectively doing a 2nd pass
+                                # here (suboptimal)
+                                txt = curr[1][:-2]
                                 print txt, curr[0]
                                 curr[3].append(self._parse(curr[0]))
                                 curr[:2] = None, None
@@ -68,7 +70,7 @@ class HaddockParamWeb(object):
                             ident -= 2
                     else:
                         if curr[2] == 0:  # parsing an elemental value, e.g Float(1), at outer level
-                            ## Seems to be never reached
+                            # Seems to be never reached
                             ind = ll.index("(")
                             typ = ll[2:ind]
                             val = ll[ind + 1:-2]
@@ -192,31 +194,37 @@ class HaddockParamWeb(object):
         else:
             dic[key] = eval(dic)
 
-    def update(self, orig_dict, new_dict):
+    @staticmethod
+    def write_json(path, indent=True, sort_keys=True):
+        try:
+            with open(path, 'w') as output:
+                if indent and sort_keys:
+                    json.dump(haddockparams.data, output, indent=4, sort_keys=True)
+                elif indent:
+                    json.dump(haddockparams.data, output, indent=4)
+                elif sort_keys:
+                    json.dump(haddockparams.data, output, sort_keys=True)
+                else:
+                    json.dump(haddockparams.data, output)
+        except IOError:
+            print "No such file or directory: {}".format(path)
+            sys.exit()
+        except Exception as e:
+            print "Error while writing the file: {}".format(e)
+            sys.exit()
+
+    def update(self, new_dict, orig_dict=None):
+        if not orig_dict:
+            orig_dict = self.data
         for key, val in new_dict.iteritems():
             if isinstance(val, collections.Mapping):
-                tmp = self.update(orig_dict.get(key, {}), val)
+                tmp = self.update(val, orig_dict.get(key, {}))
                 orig_dict[key] = tmp
             elif isinstance(val, list):
                 orig_dict[key] = (orig_dict.get(key, []) + val)
             else:
                 orig_dict[key] = new_dict[key]
         return orig_dict
-
-    def cast_type(self, dic=None):
-        if not dic:
-            dic = self.data
-        if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
-                if isinstance(v, dict):
-                    for result in self._get_value(v):
-                        yield result
-                elif isinstance(v, list):
-                    for d in v:
-                        for result in self._get_value(d):
-                            yield result
-                else:
-                    dic[k] = eval(v)
 
     def change_value(self, key, new_val):
         # Check for the key existence first
@@ -244,30 +252,10 @@ class HaddockParamWeb(object):
             raise Exception("Key {} not found".format(key))
 
     def dump_keys(self, d, lvl=0):
-        keys = {}
         for k, v in d.iteritems():
             print '%s%s' % (lvl * '  ', k)
-            # keys.
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
-
-    def write_json(self, path, indent=True, sort_keys=True):
-        try:
-            with open(path, 'w') as output:
-                if indent and sort_keys:
-                    json.dump(haddockparams.data, output, indent=4, sort_keys=True)
-                elif indent:
-                    json.dump(haddockparams.data, output, indent=4)
-                elif sort_keys:
-                    json.dump(haddockparams.data, output, sort_keys=True)
-                else:
-                    json.dump(haddockparams.data, output)
-        except IOError:
-            print "No such file or directory: {}".format(path)
-            sys.exit()
-        except:
-            print "Error while writing the file, exiting..."
-            sys.exit()
 
 
 parser = argparse.ArgumentParser(description="This script parses a HADDOCK parameter file (*.web) and transforms it to "

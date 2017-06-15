@@ -240,6 +240,29 @@ optional arguments:
   -nc, --no_chainid  Ignore empty chain ids
 ```
 
+#### param_to_json.py
+A python script to transform a haddockparam.web file into a JSON structure. It is possible to use it as a class and then access
+extra functions like: `change_value(key, value)` ; `update(subdict_to_replace)` ; `dump_keys()` ; `get_value(key)` ; `write_json()`
+
+Usage:
+```bash
+./param_to_json.py [-h] [-o OUTPUT] [-g GET] [-e [EXAMPLE]] web
+
+This script parses a HADDOCK parameter file (*.web) and transforms it to JSON
+format. It also allows to change a parameter of the haddockparam.web
+
+positional arguments:
+  web                   HADDOCK parameter file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        Path of JSON output file
+  -g GET, --get GET     Get value of a particular parameter
+  -e [EXAMPLE], --example [EXAMPLE]
+                        Print an example
+```
+
 License
 ---------
 
