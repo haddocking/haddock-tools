@@ -140,11 +140,9 @@ class HaddockParamWeb(object):
                             if len(new_val) != len(v):
                                 raise Exception("Old and new values have different length, {} is {} long".format(key, len(v)))
                             else:
-                                print "Changing {} value from {} to {}".format(k, v, new_val)
                                 dic[k] = new_val
                                 yield dic
                         else:
-                            print "Changing {} value from {} to {}".format(k, v, new_val)
                             dic[k] = new_val
                             yield dic
                 if isinstance(v, dict):
@@ -228,7 +226,6 @@ class HaddockParamWeb(object):
         try:
             result = list(haddockparams._change_value(key, new_val, self.data))
             if result:
-                print "Updating dictionary..."
                 self.data = result[0]
             else:
                 raise Exception("An error was not caught during the update of the dictionary")
@@ -279,6 +276,7 @@ parser = argparse.ArgumentParser(description="This script parses a HADDOCK param
 parser.add_argument("web", nargs=1, help="HADDOCK parameter file")
 parser.add_argument("-o", "--output", nargs=1, help="Path of JSON output file")
 parser.add_argument("-g", "--get", nargs=1, help="Get value of a particular parameter")
+parser.add_argument("-e", "--example", nargs="?", help="Print an example")
 
 args = parser.parse_args()
 
@@ -288,10 +286,19 @@ if os.path.exists(args.web[0]):
         haddockparams.get_value(args.get[0])
     if args.output:
         haddockparams.write_json(args.output[0])
-
-# EXAMPLE - change waterrefine parameter from 400 to 200
-print haddockparams.get_value('hot')
-haddockparams.data['dan1']['constants']['stages']['hot'] = 200
-print haddockparams.get_value('hot')
-# EXAMPLE 2 - print all keys of haddockparams.data
-print haddockparams.dump_keys(haddockparams.data)
+    if args.example:
+        if int(args.example) == 1:
+            # EXAMPLE 1 - change waterrefine parameter from 400 to 200
+            print haddockparams.get_value('hot')
+            haddockparams.data['dan1']['constants']['stages']['hot'] = 10
+            print haddockparams.get_value('hot')
+        elif int(args.example) == 2:
+            # EXAMPLE 2 - change waterrefine param with key/value arguments
+            print haddockparams.get_value('waterrefine')
+            haddockparams.change_value('waterrefine', 200)
+            print haddockparams.get_value('waterrefine')
+        elif int(args.example) == 3:
+            # EXAMPLE 3 - print all keys of haddockparams.data
+            print haddockparams.dump_keys(haddockparams.data)
+        else:
+            print "You must choose between examples 1, 2 or 3. (e.g. -e 1)"
