@@ -1,4 +1,4 @@
-assign ( resid 201 and name  C18 ) ( resid 93 and name HG2+ ) 4.66 4.66 1.0
+assign ( byres resid 201 and not ( byres (name C19 or name C18))) ( resid 93 and name HG2+ ) 4.66 4.66 1.0
    or
        ( resid 201 and name  C22 ) ( resid 93 and name HG2+ )
    or

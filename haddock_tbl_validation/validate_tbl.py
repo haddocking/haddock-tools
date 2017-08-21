@@ -14,7 +14,7 @@ def check_parenthesis(file):
         opened += 1
     for match in close_parenthesis.finditer(file):
         closed += 1
-    for march in quotation_marks.finditer(file):
+    for match in quotation_marks.finditer(file):
         quote += 1
     if opened != closed:
         raise Exception("Problem with TBL file parentheses (%d opening for %d "
@@ -26,7 +26,9 @@ def check_parenthesis(file):
 
 def validate_tbl(restraints, pcs=False):
     # List of selection keywords
-    selectors = ('name', 'resn', 'atom', 'resi', 'attr', 'segi')
+    selectors = ('name', 'resn', 'atom', 'resi', 'attr', 'segi', 'chem', 'id',
+                 'byres', 'not')
+    connectors = ('and', 'or', 'not', 'byres')
     output = ""
     parentmatch = re.compile('[\(\)]')
     # Global mode is activated outside any assign statement
@@ -128,17 +130,53 @@ def validate_tbl(restraints, pcs=False):
                         # print l[:match.start()]
                         # Get back the parentheses content and check
                         # for selection keywords
-                        nb_and_or = l[:match.start()].count("and") + \
-                                    l[:match.start()].count("or")
-                        nb_kwd = 0
-                        for kwd in selectors:
-                            nb_kwd += l[:match.start()].count(kwd)
-                        if len(l[:match.start()]) and nb_kwd == nb_and_or + 1:
-                            s += l[:match.start()]
-                        elif len(l[:match.start()]):
-                            raise Exception("Invalid selection syntax in-term "
-                                            "%s (stopped at line %d)" %
-                                            (l[:match.start()], lnr))
+                        idx_connectors = []
+                        sel = l[:match.start()]
+                        # We can directly check for the 1st keyword presence
+                        if len(sel) > 0:
+                            syntax_ok = False
+                            for s in selectors:
+                                if sel.strip().startswith(s):
+                                    syntax_ok = True
+                            if not syntax_ok and not \
+                                    sel.strip().startswith('byres') and not \
+                                    sel.strip().startswith('not'):
+                                raise Exception("1) Missing or wrong keyword "
+                                                "in-term %s (stopped at line "
+                                                "%d)" % (sel, lnr))
+                        # Get indexes of connectors (AND, OR, etc.)
+                        for c in connectors:
+                            idx_connectors.append([m.start()+len(c) for m in
+                                                   re.finditer(c, sel)])
+                        # Flatten the list
+                        tmp_list = [item for sublist in idx_connectors for
+                                    item in sublist]
+                        idx_connectors = tmp_list
+                        # Check that each connector is followed by a keyword
+                        for i in idx_connectors:
+                            new_sel = sel[i:].strip().strip("(").strip()
+                            if len(new_sel) > 0:
+                                syntax_ok = False
+                                for s in selectors:
+                                    if new_sel.startswith(s):
+                                        syntax_ok = True
+                                        break
+                                if not syntax_ok:
+                                    raise Exception("Missing or wrong keyword "
+                                                    "in-term %s (stopped at "
+                                                    "line %d)" % (sel, lnr))
+                        s += sel
+                        # nb_and_or = l[:match.start()].count("and") + \
+                        #             l[:match.start()].count("or")
+                        # nb_kwd = 0
+                        # for kwd in selectors:
+                        #     nb_kwd += l[:match.start()].count(kwd)
+                        # if len(l[:match.start()]) and nb_kwd == nb_and_or + 1:
+                        #     s += l[:match.start()]
+                        # elif len(l[:match.start()]):
+                        #     raise Exception("Invalid selection syntax in-term "
+                        #                     "%s (stopped at line %d)" %
+                        #                     (l[:match.start()], lnr))
                         selections.append(s)
                         s = None
                         # Get the rest of the line
