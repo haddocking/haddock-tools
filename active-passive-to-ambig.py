@@ -10,7 +10,7 @@ import subprocess
 import tempfile
 
 def active_passive_to_ambig(active1, passive1, active2, passive2, 
-        segid1='A', segid2='B', out='ambig.tbl'):
+        segid1='A', segid2='B'):
     """Convert active and passive residues to Ambiguous Interaction Restraints
 
     Parameters
@@ -33,37 +33,40 @@ def active_passive_to_ambig(active1, passive1, active2, passive2,
     segid2 : string
         Segid to use for the second model
 
-    out : string
-        Name of the output AIR file.
     """
 
     all1 = active1 + passive1
     all2 = active2 + passive2
 
-    with open(out, 'w') as fh:
-        for resi1 in active1:
-            fh.write('assign (resi {:d} and segid {:s})\n'.format(resi1, segid1))
-            fh.write('(\n')
-            lines = []
-            for resi2 in all2:
-                lines.append('       (resi {:d} and segid {:s})\n'.format(resi2, segid2))
-            lines = '        or\n'.join(lines)
-            for line in lines:
-                fh.write(line)
+    for resi1 in active1:
+        print('assign (resi {:d} and segid {:s})'.format(resi1, segid1))
+        print('(')
+        lines = []
+        c = 0
+        for resi2 in all2:
+            print('       (resi {:d} and segid {:s})'.format(resi2, segid2))
+            c += 1
+            if c != len(all2):
+                print('        or')
+#        for line in lines:
+#            print(line)
 
-            fh.write(') 2.0 2.0 0.0\n\n')
-                
-        for resi2 in active2:
-            fh.write('assign (resi {:d} and segid {:s})\n'.format(resi2, segid2))
-            fh.write('(\n')
-            lines = []
-            for resi1 in all1:
-                lines.append('       (resi {:d} and segid {:s})\n'.format(resi1, segid1))
-            lines = '        or\n'.join(lines)
-            for line in lines:
-                fh.write(line)
+        print(') 2.0 2.0 0.0\n')
+            
+    for resi2 in active2:
+        print('assign (resi {:d} and segid {:s})'.format(resi2, segid2))
+        print('(\n')
+        lines = []
+        c = 0
+        for resi1 in all1:
+            print('       (resi {:d} and segid {:s})'.format(resi1, segid1))
+            c += 1
+            if c != len(all1):
+                print('        or\n')
+#        for line in lines:
+#            print(line)
 
-            fh.write(') 2.0 2.0 0.0\n\n')
+        print(') 2.0 2.0 0.0\n')
 
 def main():
     import sys
