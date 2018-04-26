@@ -33,6 +33,38 @@ Scripts
 
 ## Restraints-related
 
+#### passive_from_active.py
+A python script to obtain a list of passive residues providing a PDB file and a list of active residues.
+This will automatically calculate a list of surface residues from the PDB to filter out buried residues except if
+a surface list is provided.
+By default, neighbors of the active residues are searched within 6.5 Angstroms and surface residues are residues whose
+relative side chain accessibility or main chain accessibility is above 15%.
+
+Requirements:
+* [FreeSASA](https://freesasa.github.io/)
+
+`pip install freesasa`
+* [BioPython](http://biopython.org/)
+
+`pip install biopython`
+
+Usage:
+```bash
+./passive_from_active.py [-h] [-c CHAIN_ID] [-s SURFACE_LIST]
+                              pdb_file active_list
+
+positional arguments:
+  pdb_file              PDB file
+  active_list           List of active residues IDs (int) separated by commas
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CHAIN_ID, --chain-id CHAIN_ID
+                        Chain id to be used in the PDB file (default: All)
+  -s SURFACE_LIST, --surface-list SURFACE_LIST
+                        List of surface residues IDs (int) separated by commas
+```
+
 #### active-passive_to_ambig.py
 A python script to create ambiguous interaction restraints for use in HADDOCK based on list of active and passive residues (refer to the [HADDOCK software page](http://www.bonvinlab.org/software/haddock2.2/haddock.html) for more information)
 
