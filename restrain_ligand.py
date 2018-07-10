@@ -49,7 +49,7 @@ for atom in atom_lst:
 
 ligand = None
 for residue in structure.get_residues():
-    if residue.resname == args.ligand:
+    if residue.resname.strip() == args.ligand.strip():
         ligand = residue
         break
 
