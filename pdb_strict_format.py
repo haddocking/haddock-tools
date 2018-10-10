@@ -27,24 +27,21 @@ from Haddock.DataIO.GenericParser import GenericFileParser
 # Spec: http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM
 re_ATOM = re.compile("""
                      (ATOM[\s]{2}|HETATM)
-                     (?P<serial>[\d\s]{4}[0-9])
+                     (?P<serial>[\d\s]{5})
                      [\s]{1}
-                     (?P<atname>[\w\s\']{4})
+                     (?P<atname>[\w\s\+\']{4})
                      (?P<altloc>[\w\s]{1})
                      (?P<resn>[\s\w]{3})
                      [\s]{1}
                      (?P<chain>[\w\s]{1})
-                     (?P<resi>[\s\d]{3}[0-9])
+                     (?P<resi>[\s\-?\d+$]{4})
                      (?P<icode>[\w\s]{1})
                      [\s]{3}
-                     (?P<x>[\s\d\-]{4}\.[0-9]{3})
-                     (?P<y>[\s\d\-]{4}\.[0-9]{3})
-                     (?P<z>[\s\d\-]{4}\.[0-9]{3})
-                     (?P<o>[\s\d\.\-]{3}\.[0-9]{2})
-                     (?P<b>[\s\d\.\-]{3}\.[0-9]{2})
-                     [\s]{6}
-                     (?P<segid>[\w\s]{1})
-                     [\s]{3}
+                     (?P<x>[\s\d\.\-]{8})
+                     (?P<y>[\s\d\.\-]{8})
+                     (?P<z>[\s\d\.\-]{8})
+                     (?P<o>[\s\d\.\-]{6})
+                     (?P<b>[\s\d\.\-]{6})
                      """, re.VERBOSE)
 # Taken from
 # http://www.wwpdb.org/documentation/format33/v3.3.html
