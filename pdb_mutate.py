@@ -52,24 +52,42 @@ def check_input(args):
 def mutate(structure_fhandle, chain, resi, resn_wt, resn_mut):
 
     mutated_structure = []
+    chain_set = set()
+    resi_set = set()
+    atom_set = set(["CA", "C", "O", "N", "CB"]) # keep main chain atoms and CB atom of side chain
+
     for line in structure_fhandle:
         if line[0:4] == 'ATOM' or line[0:6] == 'HETATM':
             s_chain = line[21].strip()
             s_resi = line[22:26].strip()
             s_resn = line[17:20].strip()
-            if s_chain == chain and s_resi == resi:
-                # check whether wildtype residue name is same as given resn.
-                if s_resn == resn_wt:
-                    line = line[0:17]+resn_mut+line[20:]
-                    mutated_structure.append(line)
-                else:
-                    sys.stderr.write('Error: Wildtype residue of chain {0} resi {1} is not {2} but {3}.\n'.format(chain, resi, resn_wt, s_resn))
-                    return (None)
-                    break
+            s_atom = line[12:16].strip()
+            chain_set.add(s_chain)
+            if s_chain == chain:
+                resi_set.add(s_resi)
+                if s_resi == resi:
+                    if s_resn == resn_wt:
+                        if s_atom in atom_set:
+                            line = line[0:17]+resn_mut+line[20:]
+                            mutated_structure.append(line)
+                        else:
+                            next
+                    else:
+                        sys.exit('Error: Wildtype residue of chain {0} resi {1} is not {2} but {3}.\n'.format(chain, resi, resn_wt, s_resn))
             else:
                 mutated_structure.append(line)
         else:
             mutated_structure.append(line)
+
+    #  for i in chain_set:
+        #  print(i)
+
+    if chain not in chain_set:
+        sys.exit('Error: Chain {0} NOT exist in the strcuture.\n'.format(chain))
+
+    if resi not in resi_set:
+        sys.exit('Error: Residue number {0} of chain {1} NOT exist in the strcuture.\n'.format(resi, chain))
+
     return mutated_structure
 
 
