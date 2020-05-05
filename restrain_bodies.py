@@ -76,7 +76,7 @@ def get_bodies(atom_lst, prot_threshold=4.0, dna_threshold=7.5):
                 bodies.append( (body_start, i-1) )
                 body_start = i # Set new beginning
 
-        elif (chain != p_chain) or (aname != p_name): # Different molecules/types
+        elif (chain != p_chain) or (aname != p_aname): # Different molecules/types
             logging.debug('[+++] Body: {0}:{1}'.format(body_start, i-1))
             bodies.append( (body_start, i-1) )
             body_start = i # Set new beginning
@@ -178,15 +178,15 @@ def generate_pml(atom_lst, restraints):
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
-    
+
     ap = ArgumentParser(description=__doc__)
-    ap.add_argument('structures', nargs='+', 
+    ap.add_argument('structures', nargs='+',
                    help='PDB structures to restraint')
     ap.add_argument('--exclude', '-e', nargs='+',
                    help='Chains to exclude from the calculation')
     ap.add_argument('--verbose', '-v', action='count')
     args = ap.parse_args()
-    
+
     # Set Logger
     if args.verbose == 1:
         level = logging.INFO
