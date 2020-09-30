@@ -19,12 +19,6 @@ Can also be used to get or modify a parameter value.
 Inspired by Sjoerd de Vries parser used in HADDOCK.
 """
 
-__author__    = "Mikael Trellet"
-__version__   = "1.0"
-__copyright__ = "Copyright 2017, Apache 2"
-__email__     = "mikael.trellet@gmail.com"
-__credits__   = ['Mikael Trellet']
-
 
 class HaddockParamWeb(object):
 
@@ -47,13 +41,13 @@ class HaddockParamWeb(object):
         curr, listmode = stack[-1]
         ident = 0
         objectlist = "ObjectList"
-        for l in s.splitlines():
-            if l.endswith("),"):
+        for line in s.splitlines():
+            if line.endswith("),"):
                 if listmode is objectlist:  # we are parsing an objectlist
-                    ll = l[ident + 2 * (curr[2] - 1):]
+                    ll = line[ident + 2 * (curr[2] - 1):]
                     if ll == "),":  # dedent
                         if curr[2] > 0:
-                            curr[1] += l[ident:] + "\n"
+                            curr[1] += line[ident:] + "\n"
                             curr[2] -= 1
                             if curr[2] == 0:  # we are at outer level, parse what we have and reset
                                 # Seems to be never reached
@@ -68,29 +62,29 @@ class HaddockParamWeb(object):
                             # Seems to be never reached
                             pass
                         else:  # elemental value at inner level, treat it as continuation
-                            curr[1] += l[ident:] + "\n"
+                            curr[1] += line[ident:] + "\n"
                 else:  # no objectlist, dedent
                     stack.pop()
                     curr, listmode = stack[-1]
                     ident -= 2
-            elif l.endswith(","):  # continuation
+            elif line.endswith(","):  # continuation
                 if listmode:  # we're in an array, we expect unnamed items
-                    v = l[ident:-1]
+                    v = line[ident:-1]
                     curr.append(v)
                 elif listmode is objectlist:  # we're parsing an objectlist, gather it for later
-                    curr[1] += l[ident:] + "\n"
+                    curr[1] += line[ident:] + "\n"
                 else:  # we're in a class, we expect named items
-                    eq = l.index("=")
-                    k = l[ident:eq - 1]
-                    v = l[eq + 2:-1]
+                    eq = line.index("=")
+                    k = line[ident:eq - 1]
+                    v = line[eq + 2:-1]
                     curr[k] = v
             else:  # endswith ( => indent
                 if not listmode:  # we're in a class, we expect named items
-                    k = l[ident:l.find("=") - 1]
-                    if l.find("ObjectList") > -1:  # enter objectlist mode for the inner level
+                    k = line[ident:line.find("=") - 1]
+                    if line.find("ObjectList") > -1:  # enter objectlist mode for the inner level
                         new = [None, None, 0, []]
                         listmode = objectlist
-                    elif l.endswith("Array ("):  # enter array mode for the inner level
+                    elif line.endswith("Array ("):  # enter array mode for the inner level
                         new = []
                         listmode = True
                     else:  # enter class mode for the inner level
@@ -100,16 +94,16 @@ class HaddockParamWeb(object):
                     curr[k] = new
                 elif listmode is objectlist:  # parsing objectlist is just gathering text
                     if curr[2] == 0:  # reset the text if we are at the outer level
-                        curr[0] = l[ident:-2]
+                        curr[0] = line[ident:-2]
                         curr[1] = ""
-                    curr[1] += l[ident:] + "\n"
+                    curr[1] += line[ident:] + "\n"
                     curr[2] += 1
                     ident -= 2  # to offset the +2 below, we don't want to increase ident read
                 else:  # we're in array mode,
-                    if l.find("ObjectList") > -1:  # enter objectlist mode for the inner level
+                    if line.find("ObjectList") > -1:  # enter objectlist mode for the inner level
                         new = [None, None, 0, []]
                         listmode = "ObjectList"
-                    elif l.endswith("Array ("):  # enter array mode for the inner level
+                    elif line.endswith("Array ("):  # enter array mode for the inner level
                         new = []
                         listmode = True
                     else:  # enter class mode for the inner level
@@ -127,11 +121,13 @@ class HaddockParamWeb(object):
             for k, v in dic.iteritems():
                 if k == key:
                     if type(new_val) != type(v):
-                        raise Exception("Old and new values are not of the same type, {} expects {}".format(key, type(v)))
+                        raise Exception("Old and new values are not of the same type, {} expects {}".
+                                        format(key, type(v)))
                     else:
                         if hasattr(new_val, "len") and hasattr(v, "len"):
                             if len(new_val) != len(v):
-                                raise Exception("Old and new values have different length, {} is {} long".format(key, len(v)))
+                                raise Exception("Old and new values have different length, {} is {} long".
+                                                format(key, len(v)))
                             else:
                                 dic[k] = new_val
                                 yield dic

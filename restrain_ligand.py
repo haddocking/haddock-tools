@@ -64,7 +64,7 @@ ligand_com = np.asarray(ligand_com, dtype=np.float32)
 # Calculate neighbors considering only aminoacid/nucleotide atoms (excl. waters, other ligands, etc)
 sel_atoms = [at for at in structure.get_atoms() if at.parent.id[0] == ' ']
 ns = NeighborSearch(sel_atoms)
-neighbors = ns.search(ligand_com, 10.0, level='R') # 10A radius, return residues
+neighbors = ns.search(ligand_com, 10.0, level='R')  # 10A radius, return residues
 
 # Calculate residue closer to each ligand atom and the respective distance
 ligand_atoms = ligand.child_list

@@ -18,6 +18,7 @@ __email__ = "gengcunliang@gmail.com"
 
 USAGE = __doc__.format(__author__, __email__)
 
+
 def check_input(args):
     """Checks whether to read from stdin/file and validates user input/options."""
 
@@ -73,7 +74,6 @@ def write_haddock_terms(pdbfhandle):
 
 
 if __name__ == "__main__":
-
-    pdbfhandle =  check_input(sys.argv[1:])
+    pdbfhandle = check_input(sys.argv[1:])
     write_haddock_terms(pdbfhandle)
     pdbfhandle.close()

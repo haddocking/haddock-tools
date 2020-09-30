@@ -40,57 +40,57 @@ def validate_tbl(restraints, pcs=False):
     # Temporary line storage for future output
     tmp_output = None
 
-    for l in lines:
+    for line in lines:
         lnr += 1
         # Take everything which is before putative "!" (comment) caracter
-        if l.find("!") > -1:
-            l = l[:l.find("!")]
+        if line.find("!") > -1:
+            line = line[:line.find("!")]
         # Remove whitespaces and merge with previous line if in OR statement
         # for AIR restraints
         if mode != "format":
-            l = l.strip()
+            line = line.strip()
         else:
-            l = tmp + l.strip()
+            line = tmp + line.strip()
             mode = "postassign"
         # End of line
-        if not len(l):
+        if not len(line):
             continue
         # Check if all "" are closed
-        if l.count('"') % 2 > 0:
-            raise Exception('Unclosed " at line %d for line: %s' % (lnr, l))
+        if line.count('"') % 2 > 0:
+            raise Exception('Unclosed " at line %d for line: %s' % (lnr, line))
         if mode in ("global", "postglobal"):
             # Start of an assign statement
-            if l.lower().startswith("assi"):
+            if line.lower().startswith("assi"):
                 if mode == "postglobal":
                     output += "\n!\n"
                     output += tmp_output
                 mode = "assign"
                 selections = []
                 # assign is the only character of the line,check following lines
-                if l.find("(") == -1:
+                if line.find("(") == -1:
                     continue
                 # Reset temporary buffer
                 tmp_output = None
             # Check for "OR" restraint
-            elif mode == "postglobal" and l.lower().startswith("or"):
+            elif mode == "postglobal" and line.lower().startswith("or"):
                 mode = "postassign"
                 selections = []
-                l = l[len("or"):]
+                line = line[len("or"):]
                 # Case where "OR" statement is the only one on the line
                 # (rest of selection at the next line)
-                if l == "":
+                if line == "":
                     continue
             # We are not treating an assign params (postglobal) or at the
             # end (global) and no "OR" restraint is present -> ERROR
             else:
                 raise Exception("Invalid TBL file: Unknown statement "
-                                "(line %d): %s" % (lnr, l))
+                                "(line %d): %s" % (lnr, line))
         # We check if the selection is made over two lines
         # (thanks to "segid" keyword)
         if mode == "postassign":
-            if l.count("segid") == 1:
+            if line.count("segid") == 1:
                 mode = "format"
-                tmp = l
+                tmp = line
                 continue
 
         matched = True
@@ -100,10 +100,10 @@ def validate_tbl(restraints, pcs=False):
             if mode in ("assign", "postassign"):
                 # Ambiguous restraint for two different pairs of atoms
                 # (ex: THR 1 B <-> ALA 2 A OR GLY 2 B <-> ASP 10 A )
-                pos = l.find("(")
+                pos = line.find("(")
                 if pos != -1:
                     matched = True
-                    l = l[pos + 1:]
+                    line = line[pos + 1:]
                     # We look for an "OR" selection
                     if mode == "postassign":
                         mode = "postsel"
@@ -115,7 +115,7 @@ def validate_tbl(restraints, pcs=False):
             # Get the structural selections
             if mode in ("sel", "postsel"):
                 # Detect opening and closing parenthesis
-                for match in parentmatch.finditer(l):
+                for match in parentmatch.finditer(line):
                     if match.group() == "(":
                         level += 1
                     else:
@@ -131,7 +131,7 @@ def validate_tbl(restraints, pcs=False):
                         # Get back the parentheses content and check
                         # for selection keywords
                         idx_connectors = []
-                        sel = l[:match.start()]
+                        sel = line[:match.start()]
                         # We can directly check for the 1st keyword presence
                         if len(sel) > 0:
                             syntax_ok = False
@@ -180,13 +180,13 @@ def validate_tbl(restraints, pcs=False):
                         selections.append(s)
                         s = None
                         # Get the rest of the line
-                        l = l[match.end():]
+                        line = line[match.end():]
                         # Go to the process of the selection
                         break
                 # No parenthesis, we get the whole line
                 if level > 0:
-                    if l != "":
-                        s += l + "\n\t"
+                    if line != "":
+                        s += line + "\n\t"
                     else:
                         # To avoid multiple blank lines
                         if repr(s) == "''":
@@ -206,7 +206,7 @@ def validate_tbl(restraints, pcs=False):
                 tmp_output += "\t(%s)\n" % s
             # We let the possibility for other "OR"
             mode = "postglobal"
-        if len(l) == 0:
+        if len(line) == 0:
             continue
         # Define the distance restraints type to adapt the parsing
         if mode == "assign":
@@ -235,7 +235,7 @@ def validate_tbl(restraints, pcs=False):
             numbers = []
         # Distance restraints parsing
         if mode == "numbers":
-            ll = l.split()
+            ll = line.split()
             for num in ll:
                 if len(numbers) == len(types):
                     break
