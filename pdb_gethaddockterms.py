@@ -40,7 +40,7 @@ def check_input(args):
     return fhandle
 
 
-def ExtractHaddockTerms(pdbfhandle):
+def extract_haddock_terms(pdbfhandle):
     terms = {}
     for line in pdbfhandle:
         if line[0:6] == 'REMARK':
@@ -59,8 +59,8 @@ def ExtractHaddockTerms(pdbfhandle):
     return terms
 
 
-def WriteHaddockTerms(pdbfhandle):
-    terms = ExtractHaddockTerms(pdbfhandle)
+def write_haddock_terms(pdbfhandle):
+    terms = extract_haddock_terms(pdbfhandle)
     if terms:
         header = ['Eair', 'Evdw', 'Eelec', 'Edesolv', 'BSA']
         haddockterms = [terms[i] for i in header]
@@ -75,5 +75,5 @@ def WriteHaddockTerms(pdbfhandle):
 if __name__ == "__main__":
 
     pdbfhandle =  check_input(sys.argv[1:])
-    WriteHaddockTerms(pdbfhandle)
+    write_haddock_terms(pdbfhandle)
     pdbfhandle.close()

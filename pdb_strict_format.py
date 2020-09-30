@@ -63,11 +63,11 @@ class PDBParsingError(Exception):
         # Add information to our message
 
         # Valid example ATOM line
-        valid_ATOM = "ATOM     32  N  AARG A  -3      11.281  86.699  94.383  0.50 35.88           N  "
+        valid_atom = "ATOM     32  N  AARG A  -3      11.281  86.699  94.383  0.50 35.88           N  "
         full_message = '{0}\n'.format(user_message)
         # To avoid repetitive messages, only last PDBParsing exception triggers the wollowing line
         if final:
-            full_message+= '{0}  <-- (Offending Line)\n{1}(Example Valid Line)'.format(line.strip(), valid_ATOM)
+            full_message+= '{0}  <-- (Offending Line)\n{1}(Example Valid Line)'.format(line.strip(), valid_atom)
             full_message+= '\n\nSee http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM for more details'
         
         # Call base class constructor
