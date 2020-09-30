@@ -17,11 +17,11 @@ def check_parenthesis(file):
     for _match in quotation_marks.finditer(file):
         quote += 1
     if opened != closed:
-        raise Exception("Problem with TBL file parentheses (%d opening for %d "
-                        "closing parentheses)" % (opened, closed))
+        raise Exception("Problem with TBL file parentheses ({:d} opening for {:d} "
+                        "closing parentheses)".format(opened, closed))
     if quote % 2 != 0:
         raise Exception("Problem with TBL file, odd number of quotation marks "
-                        "(%d quotation marks)" % quote)
+                        "({:d} quotation marks)".format(quote))
 
 
 def validate_tbl(restraints, pcs=False):
@@ -64,7 +64,7 @@ def validate_tbl(restraints, pcs=False):
             continue
         # Check if all "" are closed
         if line.count('"') % 2 > 0:
-            raise Exception('Unclosed " at line %d for line: %s' % (lnr, line))
+            raise Exception('Unclosed " at line {:d} for line: {}'.format(lnr, line))
         if mode in ("global", "postglobal"):
             # Start of an assign statement
             if line.lower().startswith("assi"):
@@ -90,8 +90,7 @@ def validate_tbl(restraints, pcs=False):
             # We are not treating an assign params (postglobal) or at the
             # end (global) and no "OR" restraint is present -> ERROR
             else:
-                raise Exception("Invalid TBL file: Unknown statement "
-                                "(line %d): %s" % (lnr, line))
+                raise Exception("Invalid TBL file: Unknown statement (line {:d}): {}".format(lnr, line))
         # We check if the selection is made over two lines
         # (thanks to "segid" keyword)
         if mode == "postassign":
@@ -148,9 +147,8 @@ def validate_tbl(restraints, pcs=False):
                             if not syntax_ok and not \
                                     sel.strip().startswith('byres') and not \
                                     sel.strip().startswith('not'):
-                                raise Exception("1) Missing or wrong keyword "
-                                                "in-term %s (stopped at line "
-                                                "%d)" % (sel, lnr))
+                                raise Exception("1) Missing or wrong keyword in-term {} (stopped at line {:d})".
+                                                format(sel, lnr))
                         # Get indexes of connectors (AND, OR, etc.)
                         for c in connectors:
                             idx_connectors.append([m.start()+len(c) for m in
@@ -169,21 +167,9 @@ def validate_tbl(restraints, pcs=False):
                                         syntax_ok = True
                                         break
                                 if not syntax_ok:
-                                    raise Exception("Missing or wrong keyword "
-                                                    "in-term %s (stopped at "
-                                                    "line %d)" % (sel, lnr))
+                                    raise Exception("Missing or wrong keyword in-term {} (stopped at line {:d})".
+                                                    format(sel, lnr))
                         s += sel
-                        # nb_and_or = l[:match.start()].count("and") + \
-                        #             l[:match.start()].count("or")
-                        # nb_kwd = 0
-                        # for kwd in selectors:
-                        #     nb_kwd += l[:match.start()].count(kwd)
-                        # if len(l[:match.start()]) and nb_kwd == nb_and_or + 1:
-                        #     s += l[:match.start()]
-                        # elif len(l[:match.start()]):
-                        #     raise Exception("Invalid selection syntax in-term "
-                        #                     "%s (stopped at line %d)" %
-                        #                     (l[:match.start()], lnr))
                         selections.append(s)
                         s = None
                         # Get the rest of the line
@@ -205,12 +191,11 @@ def validate_tbl(restraints, pcs=False):
         # Selection parsed for "OR" line
         if mode == "postassign":
             if len(selections) != postselections:
-                raise Exception("Invalid TBL file: wrong number of selections:"
-                                " in-term %d, cross-term %d (stopped at line "
-                                "%d)" % (postselections, len(selections), lnr))
+                raise Exception("Invalid TBL file: wrong number of selections: in-term {:d}, cross-term {:d} "
+                                "(stopped at line {:d})".format(postselections, len(selections), lnr))
             tmp_output += " or"
             for s in selections:
-                tmp_output += "\t(%s)\n" % s
+                tmp_output += "\t({})\n".format(s)
             # We let the possibility for other "OR"
             mode = "postglobal"
         if len(line) == 0:
@@ -220,24 +205,21 @@ def validate_tbl(restraints, pcs=False):
             mode = "numbers"
             if pcs:
                 if len(selections) == 5:
-                    types = (" %.3f", " %.3f")
+                    types = (" {:.3f}", " {:.3f}")
                 else:
-                    raise Exception("Invalid TBL file: wrong number of "
-                                    "selections (must be 5 in PCS mode)")
+                    raise Exception("Invalid TBL file: wrong number of selections (must be 5 in PCS mode)")
             else:
                 if len(selections) == 2:
-                    types = (" %.3f", " %.3f", " %.3f")
+                    types = (" {:.3f}", " {:.3f}", " {:.3f}")
                 elif len(selections) == 4:
-                    types = (" %.3f", " %.3f", " %.3f", " %d")
+                    types = (" {:.3f}", " {:.3f}", " {:.3f}", " {:d}")
                 elif len(selections) == 5:
-                    raise Exception("Invalid TBL file: wrong number of "
-                                    "selections (can be 5 only in PCS mode)")
+                    raise Exception("Invalid TBL file: wrong number of selections (can be 5 only in PCS mode)")
                 elif len(selections) == 6:
-                    types = (" %.3f", " %.3f")
+                    types = (" {:.3f}", " {:.3f}")
                 else:
                     check_parenthesis(restraints)
-                    raise Exception("Invalid TBL file: wrong number of "
-                                    "selections (must be 2,4 or 6)")
+                    raise Exception("Invalid TBL file: wrong number of selections (must be 2, 4 or 6)")
             postselections = len(selections)
             numbers = []
         # Distance restraints parsing
@@ -250,10 +232,10 @@ def validate_tbl(restraints, pcs=False):
             if len(numbers) == len(types):
                 tmp_output = "assign "
                 for s in selections:
-                    tmp_output += "\t(%s)\n" % s
+                    tmp_output += "\t({})\n".format(s)
                 tmp_output = tmp_output[:-len("\n")]
                 for n, t in zip(numbers, types):
-                    tmp_output += t % n
+                    tmp_output += t.format(n)
                 tmp_output += "\n"
                 mode = "postglobal"
     # "OR" lines have been parsed, we store the selections
@@ -263,9 +245,8 @@ def validate_tbl(restraints, pcs=False):
         mode = "global"
     # If mode is not back to global, something has not been processed properly
     if mode != "global":
-        raise Exception("Invalid TBL file: Malformed ASSIGN statement "
-                        "(line %d), use --quick to check for putative syntax "
-                        "issues" % lastassign)
+        raise Exception("Invalid TBL file: Malformed ASSIGN statement (line {:d}), use --quick to check for "
+                        "putative syntax issues".format(lastassign))
     if not len(output.strip()):
         raise Exception("Invalid or empty TBL file")
 
@@ -309,5 +290,4 @@ if __name__ == '__main__':
         else:
             print(validate_tbl(tbldata, args.pcs))
     else:
-        raise Exception("TBL file %s does not exist, check the path" %
-                        args.file)
+        raise Exception("TBL file {} does not exist, check the path".format(args.file))

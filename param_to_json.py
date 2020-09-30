@@ -241,7 +241,7 @@ class HaddockParamWeb(object):
 
     def dump_keys(self, d, lvl=0):
         for k, v in d.items():
-            print('%s%s' % (lvl * '  ', k))
+            print("{}{}".format(lvl * "  ", k))
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
 
