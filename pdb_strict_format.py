@@ -36,26 +36,12 @@ re_ATOM = re.compile("""
                      """, re.VERBOSE)
 # Taken from
 # http://www.wwpdb.org/documentation/format33/v3.3.html
-valid_records = set(( 'ANISOU', 'ATOM', 'AUTHOR',
-                      'CAVEAT', 'CISPEP', 'COMPND',
-                      'CONECT', 'CRYST1', 'DBREF',
-                      'DBREF1', 'DBREF2', 
-                      'ENDMDL', 'EXPDTA', 'FORMUL',
-                      'HEADER', 'HELIX', 'HET',
-                      'HETATM', 'HETNAM', 'HETSYN',
-                      'JRNL', 'KEYWDS', 'LINK',
-                      'MDLTYP', 'MODEL', 'MODRES',
-                      'MTRIX1', 'MTRIX2', 'MTRIX3', 
-                      'NUMMDL', 'OBSLTE',
-                      'ORIGX1', 'ORIGX2', 'ORIGX3',
-                      'REVDAT', 'SCALE1',
-                      'SCALE2', 'SCALE3', 
-                      'SEQADV', 'SEQRES', 'SHEET',
-                      'SOURCE', 'SPLIT', 'SPRSDE',
-                      'SSBOND', 'TER', 'TITLE',
-                      'MASTER', 'END','REMARK',
-                      'SEQALI', 'SPDBVT', 'SPDBVV',
-                      'SPDBVf', 'SPDBVR', 'SPDBVb'))
+valid_records = {'ANISOU', 'ATOM', 'AUTHOR', 'CAVEAT', 'CISPEP', 'COMPND', 'CONECT', 'CRYST1', 'DBREF', 'DBREF1',
+                 'DBREF2', 'ENDMDL', 'EXPDTA', 'FORMUL', 'HEADER', 'HELIX', 'HET', 'HETATM', 'HETNAM', 'HETSYN', 'JRNL',
+                 'KEYWDS', 'LINK', 'MDLTYP', 'MODEL', 'MODRES', 'MTRIX1', 'MTRIX2', 'MTRIX3', 'NUMMDL', 'OBSLTE',
+                 'ORIGX1', 'ORIGX2', 'ORIGX3', 'REVDAT', 'SCALE1', 'SCALE2', 'SCALE3', 'SEQADV', 'SEQRES', 'SHEET',
+                 'SOURCE', 'SPLIT', 'SPRSDE', 'SSBOND', 'TER', 'TITLE', 'MASTER', 'END', 'REMARK', 'SEQALI', 'SPDBVT',
+                 'SPDBVV', 'SPDBVf', 'SPDBVR', 'SPDBVb'}
 
 aa = ["ACE", "CTN", "ALA", "CFE", "CYS", "CYM", "CYF", "CSP", "ASP","GLU","PHE","GLY","HIS","NEP","ILE","LYS","ALY", "MLY", "MLZ", "M3L", "LEU","MET","ASN","PRO","GLN","ARG","SER","SEP", "THR","THP", "TOP", "VAL","TRP","TYR","PTR","TYP","TYS", "TIP", "HYP", "HEB", "HEC", "WAT", "PNS"]
 bases = ["ADE", "CYT", "DOC", "GUA", "DGP", "URI", "THY", "THJ", " DG", " DC", " DT", " DA", "DG ", "DC ", "DT ", "DA ","  A", "  G", "  C", "  T", "  U"]

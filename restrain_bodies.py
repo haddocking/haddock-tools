@@ -24,8 +24,8 @@ def read_structure(pdbf, exclude=None):
     """
     Reads a PDB file and returns a list of parsed atoms
     """
-    _atoms = set(['CA', 'P']) # Alpha-Carbon (Prot), Backbone Phosphorous (DNA)
-    _altloc = set([' ', 'A'])
+    _atoms = {'CA', 'P'}  # Alpha-Carbon (Prot), Backbone Phosphorous (DNA)
+    _altloc = {' ', 'A'}
 
     if not exclude:
         exclude = set()
