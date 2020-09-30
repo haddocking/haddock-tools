@@ -57,12 +57,7 @@ class HaddockParamWeb(object):
                             curr[2] -= 1
                             if curr[2] == 0:  # we are at outer level, parse what we have and reset
                                 # Seems to be never reached
-                                # we have removed outer indentation from txt and we are effectively doing a 2nd pass
-                                # here (suboptimal)
-                                txt = curr[1][:-2]
-                                print(txt, curr[0])
-                                curr[3].append(self._parse(curr[0]))
-                                curr[:2] = None, None
+                                pass
                         else:  # dedent and leave objectlist mode
                             curr[:] = curr[3]
                             stack.pop()
