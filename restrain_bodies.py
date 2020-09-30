@@ -5,8 +5,6 @@ Creates distance restraints to lock several chains together. Useful to avoid unn
 flexibility or movement due to sequence/numbering gaps.
 """
 
-from __future__ import print_function
-
 import logging
 import sys
 import random
@@ -45,7 +43,7 @@ def read_structure(pdbf, exclude=None):
             chain = line[21] if line[21].strip() else line[72:76].strip()  # chain ID or segID
             if chain not in exclude and aname in _atoms and line[16] in _altloc:
                 resi = int(line[22:26])
-                coords = map(float, (line[30:38], line[38:46], line[46:54]))
+                coords = (float(line[30:38]), float(line[38:46]), float(line[46:54]))
                 res_list.append((chain, resi, aname, coords))
 
     if not res_list:
