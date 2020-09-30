@@ -20,7 +20,7 @@ try:
     from Bio.PDB import PDBParser
     from Bio.PDB import NeighborSearch
     from Bio.PDB.Polypeptide import is_aa
-except ImportError, e:
+except ImportError as e:
     print('[!] Could not import module \'biopython\': {0}'.format(e), file=sys.stderr)
     sys.exit(1)
 

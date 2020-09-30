@@ -67,7 +67,7 @@ def run_molprobity(pdbdata, molprobity_executable=None):
 
     try:
         process_handle = subprocess.Popen(cmd_string, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=False)
-    except Exception, e:
+    except Exception as e:
         raise Exception("There was an error running the 'reduce': {0}\n({1})\n".format(' '.join(cmd_string), e))    
 
     p_stdout, p_stderr = process_handle.communicate()
