@@ -64,8 +64,7 @@ def mutate(structure_fhandle, chain, resi, resn_wt, resn_mut):
                     mutated_structure.append(line)
                 else:
                     sys.stderr.write('Error: Wildtype residue of chain {0} resi {1} is not {2} but {3}.\n'.format(chain, resi, resn_wt, s_resn))
-                    return (None)
-                    break
+                    return None
             else:
                 mutated_structure.append(line)
         else:
