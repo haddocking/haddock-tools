@@ -66,7 +66,7 @@ def validate_tbl(restraints, pcs=False):
                     output += tmp_output
                 mode = "assign"
                 selections = []
-                # assign is the only caracter of the line,check following lines
+                # assign is the only character of the line,check following lines
                 if l.find("(") == -1:
                     continue
                 # Reset temporary buffer
