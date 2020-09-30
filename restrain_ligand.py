@@ -58,7 +58,7 @@ if not ligand:
     sys.exit(1)
 
 # Calculate center of mass of the ligand
-ligand_com = map(lambda x: sum(x)/len(x), zip(*[at.coord for at in ligand]))
+ligand_com = list(map(lambda x: sum(x)/len(x), zip(*[at.coord for at in ligand])))
 ligand_com = np.asarray(ligand_com, dtype=np.float32)
 
 # Calculate neighbors considering only aminoacid/nucleotide atoms (excl. waters, other ligands, etc)
