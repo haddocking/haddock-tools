@@ -79,6 +79,7 @@ class HaddockParamWeb(object):
                     v = line[eq + 2:-1]
                     curr[k] = v
             else:  # endswith ( => indent
+                new = None
                 if not listmode:  # we're in a class, we expect named items
                     k = line[ident:line.find("=") - 1]
                     if line.find("ObjectList") > -1:  # enter objectlist mode for the inner level

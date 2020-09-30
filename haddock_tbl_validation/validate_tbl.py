@@ -39,7 +39,14 @@ def validate_tbl(restraints, pcs=False):
     lnr = 0
     # Temporary line storage for future output
     tmp_output = None
-
+    tmp = None
+    level = None
+    s = None
+    selections = None
+    postselections = None
+    numbers = None
+    types = None
+    lastassign = None
     for line in lines:
         lnr += 1
         # Take everything which is before putative "!" (comment) caracter

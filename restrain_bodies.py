@@ -66,6 +66,7 @@ def get_bodies(atom_lst, prot_threshold=4.0, dna_threshold=7.5):
     threshold = {'CA': prot_threshold, 'P': dna_threshold}
 
     body_start = 0
+    i = None
     for i, atom in enumerate(atom_lst[1:], start=1):
         p_atom = atom_lst[i-1]
 
