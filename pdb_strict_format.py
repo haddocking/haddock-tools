@@ -156,7 +156,7 @@ class PDBParser(object):
             raise PDBParsingError('Residue number must be an integer (is {0!r})'.format(resi), line)
         try:
             x, y, z, o, b = map(float, [x,y,z,o,b])
-        except ValueError as error:
+        except ValueError:
             raise PDBParsingError('X,Y,Z coordinates, occupancy, and temperature (b) factors must be decimal numbers.', line)   
         if chain_id_check and chain == " ":
             if not segid:
@@ -180,7 +180,7 @@ class PDBParser(object):
         else:
             return model_number
             
-    def _parse(self, handle, chain_id_check):
+    def _parse(self, chain_id_check):
         """Actual parsing function"""
         pdbf = self.fpath
 

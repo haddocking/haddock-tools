@@ -10,11 +10,11 @@ def check_parenthesis(file):
     opened = 0
     closed = 0
     quote = 0
-    for match in open_parenthesis.finditer(file):
+    for _match in open_parenthesis.finditer(file):
         opened += 1
-    for match in close_parenthesis.finditer(file):
+    for _match in close_parenthesis.finditer(file):
         closed += 1
-    for match in quotation_marks.finditer(file):
+    for _match in quotation_marks.finditer(file):
         quote += 1
     if opened != closed:
         raise Exception("Problem with TBL file parentheses (%d opening for %d "
@@ -253,7 +253,6 @@ def validate_tbl(restraints, pcs=False):
     if mode == "postglobal":
         output += "!\n"
         output += tmp_output
-        tmp_output = None
         mode = "global"
     # If mode is not back to global, something has not been processed properly
     if mode != "global":

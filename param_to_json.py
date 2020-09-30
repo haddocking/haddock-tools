@@ -71,11 +71,7 @@ class HaddockParamWeb(object):
                     else:
                         if curr[2] == 0:  # parsing an elemental value, e.g Float(1), at outer level
                             # Seems to be never reached
-                            ind = ll.index("(")
-                            typ = ll[2:ind]
-                            val = ll[ind + 1:-2]
-                            # print typ, val
-                            # curr[3].append(spyder.__types__[typ](val))
+                            pass
                         else:  # elemental value at inner level, treat it as continuation
                             curr[1] += l[ident:] + "\n"
                 else:  # no objectlist, dedent

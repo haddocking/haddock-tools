@@ -168,7 +168,6 @@ def generate_pml(atom_lst, restraints):
     for n, r in enumerate(restraints, start=1):
         i, j = r
         atom_i, atom_j = atom_lst[i], atom_lst[j]
-        dist_ij = calc_euclidean(atom_i[3], atom_j[3])
 
         pml = "distance restraint_{0}, ".format(n)
         pml+= "(chain {0[0]} and resi {0[1]} and name {0[2]}), ".format(atom_i)

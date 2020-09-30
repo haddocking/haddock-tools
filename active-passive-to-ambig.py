@@ -41,30 +41,24 @@ def active_passive_to_ambig(active1, passive1, active2, passive2,
     for resi1 in active1:
         print('assign (resi {:d} and segid {:s})'.format(resi1, segid1))
         print('(')
-        lines = []
         c = 0
         for resi2 in all2:
             print('       (resi {:d} and segid {:s})'.format(resi2, segid2))
             c += 1
             if c != len(all2):
                 print('        or')
-#        for line in lines:
-#            print(line)
 
         print(') 2.0 2.0 0.0\n')
             
     for resi2 in active2:
         print('assign (resi {:d} and segid {:s})'.format(resi2, segid2))
         print('(\n')
-        lines = []
         c = 0
         for resi1 in all1:
             print('       (resi {:d} and segid {:s})'.format(resi1, segid1))
             c += 1
             if c != len(all1):
                 print('        or\n')
-#        for line in lines:
-#            print(line)
 
         print(') 2.0 2.0 0.0\n')
 
