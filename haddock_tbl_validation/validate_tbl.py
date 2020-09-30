@@ -4,8 +4,8 @@ import os
 
 
 def check_parenthesis(file):
-    open_parenthesis = re.compile('[\(]')
-    close_parenthesis = re.compile('[\)]')
+    open_parenthesis = re.compile('[(]')
+    close_parenthesis = re.compile('[)]')
     quotation_marks = re.compile('[\"]')
     opened = 0
     closed = 0
@@ -30,7 +30,7 @@ def validate_tbl(restraints, pcs=False):
                  'byres', 'not')
     connectors = ('and', 'or', 'not', 'byres')
     output = ""
-    parentmatch = re.compile('[\(\)]')
+    parentmatch = re.compile('[()]')
     # Global mode is activated outside any assign statement
     mode = "global"
     # Remove any carriage return/new line caracters

@@ -29,7 +29,7 @@ re_ATOM = re.compile("""
                      (ATOM[\s]{2}|HETATM)
                      (?P<serial>[\d\s]{5})
                      [\s]{1}
-                     (?P<atname>[\w\s\+\']{4})
+                     (?P<atname>[\w\s+\']{4})
                      (?P<altloc>[\w\s]{1})
                      (?P<resn>[\s\w]{3})
                      [\s]{1}
@@ -37,11 +37,11 @@ re_ATOM = re.compile("""
                      (?P<resi>[\s\-?\d+$]{4})
                      (?P<icode>[\w\s]{1})
                      [\s]{3}
-                     (?P<x>[\s\d\.\-]{8})
-                     (?P<y>[\s\d\.\-]{8})
-                     (?P<z>[\s\d\.\-]{8})
-                     (?P<o>[\s\d\.\-]{6})
-                     (?P<b>[\s\d\.\-]{6})
+                     (?P<x>[\s\d.\-]{8})
+                     (?P<y>[\s\d.\-]{8})
+                     (?P<z>[\s\d.\-]{8})
+                     (?P<o>[\s\d.\-]{6})
+                     (?P<b>[\s\d.\-]{6})
                      """, re.VERBOSE)
 # Taken from
 # http://www.wwpdb.org/documentation/format33/v3.3.html
