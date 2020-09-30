@@ -11,7 +11,9 @@ Adapted from Sjoerd's WHATIF code
 syntax: molprobity.py <PDB-file>        
 """
 
-import os, sys, time
+import io
+import os
+import sys
 import subprocess
 import tempfile
 
@@ -53,7 +55,7 @@ def run_molprobity(pdbdata, molprobity_executable=None):
     cmd_string = [reduce_exec, '-build', '-Xplor', '-quiet']
     
     # File Handle vs Data String
-    if isinstance(pdbdata, file):
+    if isinstance(pdbdata, io.TextIOBase):
         cmd_stdin = pdbdata.read()
     else:
         cmd_stdin = pdbdata

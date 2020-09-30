@@ -10,18 +10,9 @@ PDBParser.py
 Module to validate PDB files.
 """
 
-__author__    = "Alexandre Bonvin"
-__version__   = "2.3"
-__copyright__ = "Copyright 2014, Alexandre Bonvin"
-__email__     = "a.m.j.j.bonvin@uu.nl"
-__credits__   = ['Alexandre Bonvin', 'João Rodrigues', 'Mikael Trellet']
-
 import os
-import logging
 import re
 import argparse
-
-from Haddock.DataIO.GenericParser import GenericFileParser
 
 # Regular expression to parse PDB ATOM/HETATM lines
 # Spec: http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM
@@ -112,12 +103,12 @@ class PDBParser(object):
         # Holds key (model_id, chain, resi, icode) for each residue
         # and value (aname, position in self.atoms array)
         self.residues = {}
-        self._parse(fpath, chain_id_check)
+        self._parse(chain_id_check)
 
     def _check_path(self, path):
         """ Verifies the existence and permissions of a file     
             Args:
-                fpath (str): path to a file
+                path (str): path to a file
         
             Returns:
                 if existing and accessible, absolute path for file
@@ -210,7 +201,7 @@ class PDBParser(object):
                         try:
                             atom = self._parse_atom_line(line, chain_id_check)
                         except PDBParsingError as error:
-                            raise PDBParsingError('Could not parse the PDB file at line {0}\n{1}'.format(iline + 1, error.message), line, True)
+                            raise PDBParsingError('Could not parse the PDB file at line {0}\n{1}'.format(iline + 1, error), line, True)
                         else:
                             # Register atoms
                             atom_uid = (model_id, ) + atom
