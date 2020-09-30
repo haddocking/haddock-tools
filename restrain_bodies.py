@@ -188,7 +188,7 @@ if __name__ == '__main__':
     ap = ArgumentParser(description=__doc__)
     ap.add_argument('structures', nargs='+', help='PDB structures to restraint')
     ap.add_argument('--exclude', '-e', nargs='+', help='Chains to exclude from the calculation')
-    ap.add_argument('--verbose', '-v', action='count')
+    ap.add_argument('--verbose', '-v', default=0, action='count')
     args = ap.parse_args()
 
     # Set Logger
