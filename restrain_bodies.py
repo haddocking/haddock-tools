@@ -112,17 +112,17 @@ def build_restraints(bodies):
             except ValueError:
                 # Likely, sample size is 1
                 logging.warning('[!] One-sized body found. This may lead to problems..')
-                return (body[0], body[0])
+                return body[0], body[0]
 
             logging.debug('[+++] Trial {0}: {1} & {2}'.format(n_trials, res_i, res_ii))
             if abs(res_i - res_ii) > 3:
                 logging.info('[++] Picked residues {0} & {1}'.format(res_i, res_ii))
-                return (res_i, res_ii)
+                return res_i, res_ii
             n_trials += 1
             if n_trials == max_trials:
                 msg = '[!] Could not pick two unique distant residues in body after {0} tries'
                 logging.info(msg.format(max_trials))
-                return (res_i, res_ii)
+                return res_i, res_ii
 
     restraints = []
 

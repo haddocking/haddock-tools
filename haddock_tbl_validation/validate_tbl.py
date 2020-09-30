@@ -289,7 +289,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if (args.quick):
+    if args.quick:
         tbldata = open(args.file).read()
         # Check the parenthesis and quotation marks opening/closure
         check_parenthesis(tbldata)
