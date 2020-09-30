@@ -5,8 +5,7 @@ Python script to convert a list of active and passive residues into
 ambiguous interaction restraints for HADDOCK
 """
 
-def active_passive_to_ambig(active1, passive1, active2, passive2, 
-        segid1='A', segid2='B'):
+def active_passive_to_ambig(active1, passive1, active2, passive2, segid1='A', segid2='B'):
     """Convert active and passive residues to Ambiguous Interaction Restraints
 
     Parameters
@@ -16,6 +15,9 @@ def active_passive_to_ambig(active1, passive1, active2, passive2,
 
     passive1 : list
         List of passive residue numbers of the first segid
+
+    passive2 : list
+        List of passive residue numbers of the second segid
 
     active2 : list
         List of active residue numbers of the second segid
