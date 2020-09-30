@@ -79,7 +79,7 @@ class HaddockParamWeb(object):
                     curr, listmode = stack[-1]
                     ident -= 2
             elif l.endswith(","):  # continuation
-                if listmode == True:  # we're in an array, we expect unnamed items
+                if listmode:  # we're in an array, we expect unnamed items
                     v = l[ident:-1]
                     curr.append(v)
                 elif listmode is objectlist:  # we're parsing an objectlist, gather it for later
@@ -90,7 +90,7 @@ class HaddockParamWeb(object):
                     v = l[eq + 2:-1]
                     curr[k] = v
             else:  # endswith ( => indent
-                if listmode == False:  # we're in a class, we expect named items
+                if not listmode:  # we're in a class, we expect named items
                     k = l[ident:l.find("=") - 1]
                     if l.find("ObjectList") > -1:  # enter objectlist mode for the inner level
                         new = [None, None, 0, []]
