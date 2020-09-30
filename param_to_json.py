@@ -118,7 +118,7 @@ class HaddockParamWeb(object):
 
     def _change_value(self, key, new_val, dic):
         if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
+            for k, v in dic.items():
                 if k == key:
                     if type(new_val) != type(v):
                         raise Exception("Old and new values are not of the same type, {} expects {}".
@@ -146,7 +146,7 @@ class HaddockParamWeb(object):
         # if not dic:
         #     dic = self.data
         if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
+            for k, v in dic.items():
                 if k == key:
                     yield v
                 if isinstance(v, dict):
@@ -161,7 +161,7 @@ class HaddockParamWeb(object):
         if not dic:
             dic = self.data
         if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
+            for k, v in dic.items():
                 if isinstance(v, dict):
                     self._cast_type(v, k)
                 elif isinstance(v, list):
@@ -203,7 +203,7 @@ class HaddockParamWeb(object):
     def update(self, new_dict, orig_dict=None):
         if not orig_dict:
             orig_dict = self.data
-        for key, val in new_dict.iteritems():
+        for key, val in new_dict.items():
             if isinstance(val, collections.Mapping):
                 tmp = self.update(val, orig_dict.get(key, {}))
                 orig_dict[key] = tmp
@@ -239,7 +239,7 @@ class HaddockParamWeb(object):
             raise Exception("Key {} not found".format(key))
 
     def dump_keys(self, d, lvl=0):
-        for k, v in d.iteritems():
+        for k, v in d.items():
             print('%s%s' % (lvl * '  ', k))
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
