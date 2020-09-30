@@ -229,8 +229,8 @@ class PDBParser(object):
                 else:
                     raise PDBParsingError('Could not parse the PDB file at line {0}: record unknown ({1})'.format(iline, record), line, True)
         if len_warning:
-            print "WARNING: At least one ATOM/HETATM line consists of less than 80 columns. \nTo follow the official wwPDB guidelines, please use http://github.com/haddocking/pdb-tools/pdb_linewidth to"+\
-            "format your PDB file.\nOfficial PDB format guidelines can be found here: http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM.\n"
+            print("WARNING: At least one ATOM/HETATM line consists of less than 80 columns. \nTo follow the official wwPDB guidelines, please use http://github.com/haddocking/pdb-tools/pdb_linewidth to"+\
+            "format your PDB file.\nOfficial PDB format guidelines can be found here: http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM.\n")
 
 if __name__ == "__main__":
 
@@ -244,4 +244,4 @@ if __name__ == "__main__":
     try:
         f_pdb = PDBParser(args.pdb, args.no_chainid)
     except PDBParsingError as e:
-        print e
+        print(e)

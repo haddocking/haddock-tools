@@ -71,9 +71,9 @@ def active_passive_to_ambig(active1, passive1, active2, passive2,
 def main():
     import sys
     if len(sys.argv) != 3:
-        print '\nUsage:\n     python active-passive_to_ambig.py <active-passive-file1> <active-passive-file2>\n\n' +\
+        print('\nUsage:\n     python active-passive_to_ambig.py <active-passive-file1> <active-passive-file2>\n\n' +\
               'where <active-passive-file> is a file consisting of two space-delimited lines with\n' +\
-              'the first line active residues numbers and the second line passive residue numbers\n'
+              'the first line active residues numbers and the second line passive residue numbers\n')
         sys.exit()
 
     active1, passive1 = [[int(x) for x in line.split()] for line in open(sys.argv[1])]

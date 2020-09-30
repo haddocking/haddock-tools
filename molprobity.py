@@ -118,11 +118,11 @@ def analyze_protonation_state(pdbdata,pdbname="the PDB file"):
 if __name__ == "__main__":
     # Quick and dirty usage example
     if not sys.argv[1:]:
-        print "usage: {0} <pdb file> <pdb file 2> ...".format(sys.argv[0])
+        print("usage: {0} <pdb file> <pdb file 2> ...".format(sys.argv[0]))
         sys.exit(1)
     for ppath in sys.argv[1:]:
-        print "## Executing Reduce to assign histidine protonation states"
-        print "## Input PDB: {0} ".format(ppath)
+        print("## Executing Reduce to assign histidine protonation states")
+        print("## Input PDB: {0} ".format(ppath))
         open_fhandle = open(ppath)
         hadded, process_error = run_molprobity(open_fhandle)
 
@@ -140,5 +140,5 @@ if __name__ == "__main__":
         #sorted_histidines = sorted(ret, key=lambda x: x['resid'])
         sorted_states = sorted(ret, key=lambda x: (x['state'], x['resid']))
         for his in sorted_states:
-            print "HIS ( {0:n} )\t-->\t{1}".format(his['resid'], his['state'])
+            print("HIS ( {0:n} )\t-->\t{1}".format(his['resid'], his['state']))
 

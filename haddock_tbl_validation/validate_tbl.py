@@ -301,7 +301,7 @@ if __name__ == '__main__':
         if args.silent:
             validate_tbl(tbldata, args.pcs)
         else:
-            print validate_tbl(tbldata, args.pcs)
+            print(validate_tbl(tbldata, args.pcs))
     else:
         raise Exception("TBL file %s does not exist, check the path" %
                         args.file)

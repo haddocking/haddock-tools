@@ -60,7 +60,7 @@ class HaddockParamWeb(object):
                                 # we have removed outer indentation from txt and we are effectively doing a 2nd pass
                                 # here (suboptimal)
                                 txt = curr[1][:-2]
-                                print txt, curr[0]
+                                print(txt, curr[0])
                                 curr[3].append(self._parse(curr[0]))
                                 curr[:2] = None, None
                         else:  # dedent and leave objectlist mode
@@ -207,10 +207,10 @@ class HaddockParamWeb(object):
                 else:
                     json.dump(haddockparams.data, output)
         except IOError:
-            print "No such file or directory: {}".format(path)
+            print("No such file or directory: {}".format(path))
             sys.exit()
         except Exception as e:
-            print "Error while writing the file: {}".format(e)
+            print("Error while writing the file: {}".format(e))
             sys.exit()
 
     def update(self, new_dict, orig_dict=None):
@@ -253,7 +253,7 @@ class HaddockParamWeb(object):
 
     def dump_keys(self, d, lvl=0):
         for k, v in d.iteritems():
-            print '%s%s' % (lvl * '  ', k)
+            print('%s%s' % (lvl * '  ', k))
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
 
@@ -277,16 +277,16 @@ if os.path.exists(args.web[0]):
     if args.example:
         if int(args.example) == 1:
             # EXAMPLE 1 - change waterrefine parameter from 400 to 200
-            print haddockparams.get_value('hot')
+            print(haddockparams.get_value('hot'))
             haddockparams.data['dan1']['constants']['stages']['hot'] = 10
-            print haddockparams.get_value('hot')
+            print(haddockparams.get_value('hot'))
         elif int(args.example) == 2:
             # EXAMPLE 2 - change waterrefine param with key/value arguments
-            print haddockparams.get_value('waterrefine')
+            print(haddockparams.get_value('waterrefine'))
             haddockparams.change_value('waterrefine', 200)
-            print haddockparams.get_value('waterrefine')
+            print(haddockparams.get_value('waterrefine'))
         elif int(args.example) == 3:
             # EXAMPLE 3 - print all keys of haddockparams.data
-            print haddockparams.dump_keys(haddockparams.data)
+            print(haddockparams.dump_keys(haddockparams.data))
         else:
-            print "You must choose between examples 1, 2 or 3. (e.g. -e 1)"
+            print("You must choose between examples 1, 2 or 3. (e.g. -e 1)")
