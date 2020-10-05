@@ -20,7 +20,7 @@ try:
     from Bio.PDB import PDBParser
     from Bio.PDB import NeighborSearch
     from Bio.PDB.Polypeptide import is_aa
-except ImportError, e:
+except ImportError as e:
     print('[!] Could not import module \'biopython\': {0}'.format(e), file=sys.stderr)
     sys.exit(1)
 
@@ -58,13 +58,13 @@ if not ligand:
     sys.exit(1)
 
 # Calculate center of mass of the ligand
-ligand_com = map(lambda x: sum(x)/len(x), zip(*[at.coord for at in ligand]))
+ligand_com = list(map(lambda x: sum(x)/len(x), zip(*[at.coord for at in ligand])))
 ligand_com = np.asarray(ligand_com, dtype=np.float32)
 
 # Calculate neighbors considering only aminoacid/nucleotide atoms (excl. waters, other ligands, etc)
 sel_atoms = [at for at in structure.get_atoms() if at.parent.id[0] == ' ']
 ns = NeighborSearch(sel_atoms)
-neighbors = ns.search(ligand_com, 10.0, level='R') # 10A radius, return residues
+neighbors = ns.search(ligand_com, 10.0, level='R')  # 10A radius, return residues
 
 # Calculate residue closer to each ligand atom and the respective distance
 ligand_atoms = ligand.child_list

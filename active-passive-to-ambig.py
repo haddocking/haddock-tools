@@ -5,12 +5,8 @@ Python script to convert a list of active and passive residues into
 ambiguous interaction restraints for HADDOCK
 """
 
-import os, sys, time
-import subprocess
-import tempfile
 
-def active_passive_to_ambig(active1, passive1, active2, passive2, 
-        segid1='A', segid2='B'):
+def active_passive_to_ambig(active1, passive1, active2, passive2, segid1='A', segid2='B'):
     """Convert active and passive residues to Ambiguous Interaction Restraints
 
     Parameters
@@ -20,6 +16,9 @@ def active_passive_to_ambig(active1, passive1, active2, passive2,
 
     passive1 : list
         List of passive residue numbers of the first segid
+
+    passive2 : list
+        List of passive residue numbers of the second segid
 
     active2 : list
         List of active residue numbers of the second segid
@@ -41,39 +40,34 @@ def active_passive_to_ambig(active1, passive1, active2, passive2,
     for resi1 in active1:
         print('assign (resi {:d} and segid {:s})'.format(resi1, segid1))
         print('(')
-        lines = []
         c = 0
         for resi2 in all2:
             print('       (resi {:d} and segid {:s})'.format(resi2, segid2))
             c += 1
             if c != len(all2):
                 print('        or')
-#        for line in lines:
-#            print(line)
 
         print(') 2.0 2.0 0.0\n')
             
     for resi2 in active2:
         print('assign (resi {:d} and segid {:s})'.format(resi2, segid2))
         print('(\n')
-        lines = []
         c = 0
         for resi1 in all1:
             print('       (resi {:d} and segid {:s})'.format(resi1, segid1))
             c += 1
             if c != len(all1):
                 print('        or\n')
-#        for line in lines:
-#            print(line)
 
         print(') 2.0 2.0 0.0\n')
+
 
 def main():
     import sys
     if len(sys.argv) != 3:
-        print '\nUsage:\n     python active-passive_to_ambig.py <active-passive-file1> <active-passive-file2>\n\n' +\
-              'where <active-passive-file> is a file consisting of two space-delimited lines with\n' +\
-              'the first line active residues numbers and the second line passive residue numbers\n'
+        print('\nUsage:\n     python active-passive_to_ambig.py <active-passive-file1> <active-passive-file2>\n\n' +
+              'where <active-passive-file> is a file consisting of two space-delimited lines with\n' +
+              'the first line active residues numbers and the second line passive residue numbers\n')
         sys.exit()
 
     active1, passive1 = [[int(x) for x in line.split()] for line in open(sys.argv[1])]

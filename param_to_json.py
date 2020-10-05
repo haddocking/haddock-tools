@@ -19,12 +19,6 @@ Can also be used to get or modify a parameter value.
 Inspired by Sjoerd de Vries parser used in HADDOCK.
 """
 
-__author__    = "Mikael Trellet"
-__version__   = "1.0"
-__copyright__ = "Copyright 2017, Apache 2"
-__email__     = "mikael.trellet@gmail.com"
-__credits__   = ['Mikael Trellet']
-
 
 class HaddockParamWeb(object):
 
@@ -47,22 +41,17 @@ class HaddockParamWeb(object):
         curr, listmode = stack[-1]
         ident = 0
         objectlist = "ObjectList"
-        for l in s.splitlines():
-            if l.endswith("),"):
+        for line in s.splitlines():
+            if line.endswith("),"):
                 if listmode is objectlist:  # we are parsing an objectlist
-                    ll = l[ident + 2 * (curr[2] - 1):]
+                    ll = line[ident + 2 * (curr[2] - 1):]
                     if ll == "),":  # dedent
                         if curr[2] > 0:
-                            curr[1] += l[ident:] + "\n"
+                            curr[1] += line[ident:] + "\n"
                             curr[2] -= 1
                             if curr[2] == 0:  # we are at outer level, parse what we have and reset
                                 # Seems to be never reached
-                                # we have removed outer indentation from txt and we are effectively doing a 2nd pass
-                                # here (suboptimal)
-                                txt = curr[1][:-2]
-                                print txt, curr[0]
-                                curr[3].append(self._parse(curr[0]))
-                                curr[:2] = None, None
+                                pass
                         else:  # dedent and leave objectlist mode
                             curr[:] = curr[3]
                             stack.pop()
@@ -71,35 +60,32 @@ class HaddockParamWeb(object):
                     else:
                         if curr[2] == 0:  # parsing an elemental value, e.g Float(1), at outer level
                             # Seems to be never reached
-                            ind = ll.index("(")
-                            typ = ll[2:ind]
-                            val = ll[ind + 1:-2]
-                            # print typ, val
-                            # curr[3].append(spyder.__types__[typ](val))
+                            pass
                         else:  # elemental value at inner level, treat it as continuation
-                            curr[1] += l[ident:] + "\n"
+                            curr[1] += line[ident:] + "\n"
                 else:  # no objectlist, dedent
                     stack.pop()
                     curr, listmode = stack[-1]
                     ident -= 2
-            elif l.endswith(","):  # continuation
-                if listmode == True:  # we're in an array, we expect unnamed items
-                    v = l[ident:-1]
+            elif line.endswith(","):  # continuation
+                if listmode:  # we're in an array, we expect unnamed items
+                    v = line[ident:-1]
                     curr.append(v)
                 elif listmode is objectlist:  # we're parsing an objectlist, gather it for later
-                    curr[1] += l[ident:] + "\n"
+                    curr[1] += line[ident:] + "\n"
                 else:  # we're in a class, we expect named items
-                    eq = l.index("=")
-                    k = l[ident:eq - 1]
-                    v = l[eq + 2:-1]
+                    eq = line.index("=")
+                    k = line[ident:eq - 1]
+                    v = line[eq + 2:-1]
                     curr[k] = v
             else:  # endswith ( => indent
-                if listmode == False:  # we're in a class, we expect named items
-                    k = l[ident:l.find("=") - 1]
-                    if l.find("ObjectList") > -1:  # enter objectlist mode for the inner level
+                new = None
+                if not listmode:  # we're in a class, we expect named items
+                    k = line[ident:line.find("=") - 1]
+                    if line.find("ObjectList") > -1:  # enter objectlist mode for the inner level
                         new = [None, None, 0, []]
                         listmode = objectlist
-                    elif l.endswith("Array ("):  # enter array mode for the inner level
+                    elif line.endswith("Array ("):  # enter array mode for the inner level
                         new = []
                         listmode = True
                     else:  # enter class mode for the inner level
@@ -109,16 +95,16 @@ class HaddockParamWeb(object):
                     curr[k] = new
                 elif listmode is objectlist:  # parsing objectlist is just gathering text
                     if curr[2] == 0:  # reset the text if we are at the outer level
-                        curr[0] = l[ident:-2]
+                        curr[0] = line[ident:-2]
                         curr[1] = ""
-                    curr[1] += l[ident:] + "\n"
+                    curr[1] += line[ident:] + "\n"
                     curr[2] += 1
                     ident -= 2  # to offset the +2 below, we don't want to increase ident read
                 else:  # we're in array mode,
-                    if l.find("ObjectList") > -1:  # enter objectlist mode for the inner level
+                    if line.find("ObjectList") > -1:  # enter objectlist mode for the inner level
                         new = [None, None, 0, []]
                         listmode = "ObjectList"
-                    elif l.endswith("Array ("):  # enter array mode for the inner level
+                    elif line.endswith("Array ("):  # enter array mode for the inner level
                         new = []
                         listmode = True
                     else:  # enter class mode for the inner level
@@ -133,14 +119,16 @@ class HaddockParamWeb(object):
 
     def _change_value(self, key, new_val, dic):
         if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
+            for k, v in dic.items():
                 if k == key:
                     if type(new_val) != type(v):
-                        raise Exception("Old and new values are not of the same type, {} expects {}".format(key, type(v)))
+                        raise Exception("Old and new values are not of the same type, {} expects {}".
+                                        format(key, type(v)))
                     else:
                         if hasattr(new_val, "len") and hasattr(v, "len"):
                             if len(new_val) != len(v):
-                                raise Exception("Old and new values have different length, {} is {} long".format(key, len(v)))
+                                raise Exception("Old and new values have different length, {} is {} long".
+                                                format(key, len(v)))
                             else:
                                 dic[k] = new_val
                                 yield dic
@@ -159,7 +147,7 @@ class HaddockParamWeb(object):
         # if not dic:
         #     dic = self.data
         if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
+            for k, v in dic.items():
                 if k == key:
                     yield v
                 if isinstance(v, dict):
@@ -174,7 +162,7 @@ class HaddockParamWeb(object):
         if not dic:
             dic = self.data
         if hasattr(dic, 'iteritems'):
-            for k, v in dic.iteritems():
+            for k, v in dic.items():
                 if isinstance(v, dict):
                     self._cast_type(v, k)
                 elif isinstance(v, list):
@@ -207,16 +195,16 @@ class HaddockParamWeb(object):
                 else:
                     json.dump(haddockparams.data, output)
         except IOError:
-            print "No such file or directory: {}".format(path)
+            print("No such file or directory: {}".format(path))
             sys.exit()
         except Exception as e:
-            print "Error while writing the file: {}".format(e)
+            print("Error while writing the file: {}".format(e))
             sys.exit()
 
     def update(self, new_dict, orig_dict=None):
         if not orig_dict:
             orig_dict = self.data
-        for key, val in new_dict.iteritems():
+        for key, val in new_dict.items():
             if isinstance(val, collections.Mapping):
                 tmp = self.update(val, orig_dict.get(key, {}))
                 orig_dict[key] = tmp
@@ -252,8 +240,8 @@ class HaddockParamWeb(object):
             raise Exception("Key {} not found".format(key))
 
     def dump_keys(self, d, lvl=0):
-        for k, v in d.iteritems():
-            print '%s%s' % (lvl * '  ', k)
+        for k, v in d.items():
+            print("{}{}".format(lvl * "  ", k))
             if type(v) == dict:
                 self.dump_keys(v, lvl+1)
 
@@ -277,16 +265,16 @@ if os.path.exists(args.web[0]):
     if args.example:
         if int(args.example) == 1:
             # EXAMPLE 1 - change waterrefine parameter from 400 to 200
-            print haddockparams.get_value('hot')
+            print(haddockparams.get_value('hot'))
             haddockparams.data['dan1']['constants']['stages']['hot'] = 10
-            print haddockparams.get_value('hot')
+            print(haddockparams.get_value('hot'))
         elif int(args.example) == 2:
             # EXAMPLE 2 - change waterrefine param with key/value arguments
-            print haddockparams.get_value('waterrefine')
+            print(haddockparams.get_value('waterrefine'))
             haddockparams.change_value('waterrefine', 200)
-            print haddockparams.get_value('waterrefine')
+            print(haddockparams.get_value('waterrefine'))
         elif int(args.example) == 3:
             # EXAMPLE 3 - print all keys of haddockparams.data
-            print haddockparams.dump_keys(haddockparams.data)
+            print(haddockparams.dump_keys(haddockparams.data))
         else:
-            print "You must choose between examples 1, 2 or 3. (e.g. -e 1)"
+            print("You must choose between examples 1, 2 or 3. (e.g. -e 1)")

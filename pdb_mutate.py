@@ -27,6 +27,7 @@ __email__ = "gengcunliang@gmail.com; j.p.g.l.m.rodrigues@gmail.com"
 
 USAGE = __doc__.format(__author__, __email__)
 
+
 def check_input(args):
     """Checks whether to read from stdin/file and validates user input/options."""
 
@@ -63,9 +64,9 @@ def mutate(structure_fhandle, chain, resi, resn_wt, resn_mut):
                     line = line[0:17]+resn_mut+line[20:]
                     mutated_structure.append(line)
                 else:
-                    sys.stderr.write('Error: Wildtype residue of chain {0} resi {1} is not {2} but {3}.\n'.format(chain, resi, resn_wt, s_resn))
-                    return (None)
-                    break
+                    sys.stderr.write('Error: Wildtype residue of chain {0} resi {1} is not {2} but {3}.\n'.
+                                     format(chain, resi, resn_wt, s_resn))
+                    return None
             else:
                 mutated_structure.append(line)
         else:
@@ -74,9 +75,9 @@ def mutate(structure_fhandle, chain, resi, resn_wt, resn_mut):
 
 
 def _print_mutant(mut_fhandle, chain, resi, resn_wt, resn_mut):
-        mutant = mutate(mut_fhandle, chain, resi, resn_wt, resn_mut)
-        mutpdb = ''.join(mutant).rstrip("\n")
-        print(mutpdb)
+    mutant = mutate(mut_fhandle, chain, resi, resn_wt, resn_mut)
+    mutpdb = ''.join(mutant).rstrip("\n")
+    print(mutpdb)
 
 
 def _print_mutants(mut_fhandle):
@@ -96,12 +97,14 @@ def _print_mutants(mut_fhandle):
             continue
 
         with open(pdb_path) as pdb_fhandle:
-                structure = [l for l in pdb_fhandle]
+            structure = [l for l in pdb_fhandle]
 
         mutant = mutate(structure, chain, resi, resn_wt, resn_mut)
         if mutant:
-            m_file = open('{0}_{1}_{2}{3}{4}.pdb'.format(os.path.basename(pdb_path).split('.')[0], chain, resn_wt, resi, resn_mut), 'w')
-            print("{0}_{1}_{2}{3}{4}.pdb".format(os.path.basename(pdb_path).split('.')[0], chain, resn_wt, resi, resn_mut))
+            m_file = open('{0}_{1}_{2}{3}{4}.pdb'.format(os.path.basename(pdb_path).split('.')[0], chain, resn_wt, resi,
+                                                         resn_mut), 'w')
+            print("{0}_{1}_{2}{3}{4}.pdb".format(os.path.basename(pdb_path).split('.')[0], chain, resn_wt, resi,
+                                                 resn_mut))
             m_file.write(''.join(mutant))
             m_file.close()
         else:
@@ -109,8 +112,7 @@ def _print_mutants(mut_fhandle):
 
 
 if __name__ == "__main__":
-
-    mut_fhandle =  check_input(sys.argv[1:])
+    mut_fhandle = check_input(sys.argv[1:])
 
     if len(sys.argv[1:]) == 1:
         _print_mutants(mut_fhandle)

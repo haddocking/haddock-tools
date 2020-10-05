@@ -8,12 +8,6 @@ Output a list of active residues surrounding active residues given as input
 usage: passive_from_active.py <pdb> <active-residues> [-c CHAIN_ID] [-s SURFACE_RES_LIST]
 """
 
-__author__    = "Mikael Trellet"
-__version__   = "1.0"
-__copyright__ = "Copyright 2018, Apache 2"
-__email__     = "mikael.trellet@gmail.com"
-__credits__   = ['Mikael Trellet']
-
 import argparse
 import os
 import sys
@@ -179,7 +173,8 @@ def get_surface_resids(structure, cutoff=15, config_path=os.environ.get('FREESAS
     resid_access = {}
     for res_uid, access in rel_main_chain.items():
         resid_access[res_uid[2]] = {'side_chain_rel': rel_side_chain.get(res_uid), 'main_chain_rel': access}
-    surface_resids = [r for r, v in resid_access.items() if v['side_chain_rel'] >= cutoff or v['main_chain_rel'] >= cutoff]
+    surface_resids = [r for r, v in resid_access.items() if v['side_chain_rel'] >= cutoff or
+                      v['main_chain_rel'] >= cutoff]
     return surface_resids
 
 
@@ -189,7 +184,8 @@ if __name__ == "__main__":
     args_parser.add_argument('pdb_file', type=str, help='PDB file')
     args_parser.add_argument('active_list', type=str, help='List of active residues IDs (int) separated by commas')
     args_parser.add_argument('-c', '--chain-id', type=str, help='Chain id to be used in the PDB file (default: All)')
-    args_parser.add_argument('-s', '--surface-list', type=str, help='List of surface residues IDs (int) separated by commas')
+    args_parser.add_argument('-s', '--surface-list', type=str,
+                             help='List of surface residues IDs (int) separated by commas')
     args = args_parser.parse_args()
 
     # Parse the PDB file
@@ -210,7 +206,8 @@ if __name__ == "__main__":
         else:
             atom_list = [a for a in s[0].get_atoms()]
     except KeyError as e:
-        print('Chain {0} does not exist in the PDB file {1}, please enter a proper chain id'.format(args.chain_id, args.pdb_file))
+        print('Chain {0} does not exist in the PDB file {1}, please enter a proper chain id'.
+              format(args.chain_id, args.pdb_file))
         sys.exit(1)
 
     try:
@@ -232,7 +229,7 @@ if __name__ == "__main__":
     ns = NeighborSearch(atom_list)
     neighbors = []
     for a in act_atoms:
-        neighbors.append(ns.search(a, 6.5, "R")) # HADDOCK used 6.5A as default
+        neighbors.append(ns.search(a, 6.5, "R"))  # HADDOCK used 6.5A as default
 
     passive_list = set()
     for n in neighbors:

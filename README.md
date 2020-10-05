@@ -2,7 +2,7 @@
  haddock-tools 
 ================================================
 
-Set of useful HADDOCK utility scripts 
+Set of useful HADDOCK utility scripts, which requires Python 3.7+. 
 
 About 
 --------- 
