@@ -131,6 +131,28 @@ positional arguments:
     --pcs       PCS mode
 ```
 
+### calc-accessibility.py
+
+```bash
+$ python3 haddock-CSB-tools/calc-accessibility.py -h                                                                                                                                                                                                               [17:06:52]
+usage: calc-accessibility.py [-h] [--log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [--cutoff CUTOFF] pdb_input
+
+positional arguments:
+  pdb_input             PDB structure
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+  --cutoff CUTOFF       Relative cutoff for sidechain accessibility
+
+$ python3 haddock-CSB-tools/calc-accessibility.py complex_1w.pdb --cutoff 0.4                                                                                                                                                                                      [17:10:51]
+02/11/2020 17:10:57 L157 INFO - Calculate accessibility...
+02/11/2020 17:10:57 L228 INFO - Chain: A - 115 residues
+02/11/2020 17:10:57 L228 INFO - Chain: B - 81 residues
+02/11/2020 17:10:57 L234 INFO - Applying cutoff to side_chain_rel - 0.4
+02/11/2020 17:10:57 L244 INFO - Chain A - 82,83,84,85,86,87,88,90,91,94,95,98,99,102,104,106,109,113,116,117,118,122,128,129,130,132,139,141,144,145,148,149,150,151,153,156,158,160,162,163,167,168,169,170,171,173,174,175,176,178,179,180,181,183,184,186,188,194,196
+02/11/2020 17:10:57 L244 INFO - Chain B - 1,2,4,5,8,11,12,15,18,21,23,24,25,26,27,30,31,33,34,37,38,41,43,44,45,46,47,50,63,64,67,69,70,73,74,76,77,78,79,80,81
+```
 
 ------------
 ## PDB-related
