@@ -154,6 +154,46 @@ $ python3 haddock-CSB-tools/calc-accessibility.py complex_1w.pdb --cutoff 0.4   
 02/11/2020 17:10:57 L244 INFO - Chain B - 1,2,4,5,8,11,12,15,18,21,23,24,25,26,27,30,31,33,34,37,38,41,43,44,45,46,47,50,63,64,67,69,70,73,74,76,77,78,79,80,81
 ```
 
+### create_cif.py
+
+Converts the `cluster*.pdb` files in a run directory to [IHM mmCIF](https://mmcif.wwpdb.org/dictionaries/mmcif_ihm.dic/Index/) format
+
+Warning: Limited functionally, still work in progress! Tested for hetero-complexes with ambig restraints.
+
+Needs `ihm` and `biopython`, install it with
+```bash
+$ pip install ihm --install-option="--without-ext"
+$ pip install biopython
+```
+
+```
+$ python3 create_cif.py -h
+usage: create_cif.py [-h] run_directory
+
+positional arguments:
+  run_directory  Location of the uncompressed run, ex:
+                 /home/rodrigo/runs/47498-protein-protein
+
+optional arguments:
+  -h, --help     show this help message and exit
+
+
+$ python3 haddock-CSB-tools/create_cif.py ~/projects/cif_parser/47518-cif
+[23/02/2021 13:45:25] INFO Converting the cluster*.pdb structures to .cif
+[23/02/2021 13:45:25] INFO Looking for models in /Users/rodrigo/projects/cif_parser/47518-cif
+[23/02/2021 13:45:25] INFO Found 4 structures
+[23/02/2021 13:45:25] INFO Looking for the tblfile field in /Users/rodrigo/projects/cif_parser/47518-cif/job_params.json
+[23/02/2021 13:45:25] INFO tblfile field found, extracting information
+[23/02/2021 13:45:25] INFO Converting /Users/rodrigo/projects/cif_parser/47518-cif/cluster1_1.pdb
+[23/02/2021 13:45:26] INFO Saving as cluster1_1.cif
+[23/02/2021 13:45:26] INFO Converting /Users/rodrigo/projects/cif_parser/47518-cif/cluster1_2.pdb
+[23/02/2021 13:45:26] INFO Saving as cluster1_2.cif
+[23/02/2021 13:45:27] INFO Converting /Users/rodrigo/projects/cif_parser/47518-cif/cluster1_3.pdb
+[23/02/2021 13:45:27] INFO Saving as cluster1_3.cif
+[23/02/2021 13:45:28] INFO Converting /Users/rodrigo/projects/cif_parser/47518-cif/cluster1_4.pdb
+[23/02/2021 13:45:29] INFO Saving as cluster1_4.cif
+```
+
 ------------
 ## PDB-related
 
