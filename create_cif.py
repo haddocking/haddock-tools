@@ -1,19 +1,29 @@
 import os
+import sys
 import logging
 import pathlib
 import argparse
 import json
 import re
 from itertools import groupby, count
-import ihm
-import ihm.location
-import ihm.dataset
-import ihm.representation
-import ihm.restraint
-import ihm.protocol
-import ihm.model
-import ihm.dumper
-from Bio.PDB import PDBParser as BioParser, Selection, NeighborSearch
+try:
+    import ihm
+    import ihm.location
+    import ihm.dataset
+    import ihm.representation
+    import ihm.restraint
+    import ihm.protocol
+    import ihm.model
+    import ihm.dumper
+except:
+    print('IHM python module not found, check README')
+    sys.exit()
+
+try:
+    from Bio.PDB import PDBParser as BioParser, Selection, NeighborSearch
+except:
+    print('BioPython not found, check README')
+    sys.exit()
 
 VALID_BASES = ['DA', 'DC', 'DG', 'DT', 'A', 'C', 'G', 'U', 'DJ']
 VALID_AMINOACIDS = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS', 'MET', 'PHE',
