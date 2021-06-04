@@ -135,7 +135,8 @@ if __name__ == "__main__":
         print("## Input PDB: {0} ".format(ppath))
         open_fhandle = open(ppath)
         hadded, process_error = run_molprobity(open_fhandle)
-
+        hadded = hadded.decode()
+        
         # Write Optimized PDB, without USER nor Hs
         pname = os.path.basename(ppath)[:-4]
         fout = open("{0}_optimized.pdb".format(pname), 'w')
