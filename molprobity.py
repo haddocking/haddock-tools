@@ -17,6 +17,10 @@ import sys
 import subprocess
 import tempfile
 
+if sys.version_info[0] < 3:
+    print("Python 3+ needed")
+    sys.exit()
+
 
 def _check_molprobity_path(custom_path=None):
     """
@@ -135,7 +139,7 @@ if __name__ == "__main__":
         print("## Input PDB: {0} ".format(ppath))
         open_fhandle = open(ppath)
         hadded, process_error = run_molprobity(open_fhandle)
-        hadded = hadded.decode()
+        hadded = hadded.decode('utf-8')
         
         # Write Optimized PDB, without USER nor Hs
         pname = os.path.basename(ppath)[:-4]
