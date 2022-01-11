@@ -1,0 +1,13 @@
+name: haddock-tools
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - biopython=1.79
+  - ihm=0.25
+  - pip=21.3.1
+  - pip:
+      - pdb-tools==2.4.1
+      - freesasa==2.1.0

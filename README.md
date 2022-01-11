@@ -27,6 +27,8 @@ make
 cd haddock-tools && git pull origin master
 ```
 
+Alternatively you can use [haddock-tools docker container](quay.io/antonkulaga/haddock-tools:latest) that has all dependencies and freesasa preinstalled.
+
 Scripts
 ------------
 
