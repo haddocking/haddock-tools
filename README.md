@@ -373,7 +373,7 @@ C   C
 Usage:
 
 ```text
-$ python renumber_model.py example_data/ref.pdb example_data/to_refine.BL00010001.pdb
+$ python renumber_model.py example_data/renumber_model/ref.pdb example_data/renumber_model/to_refine.BL00010001.pdb
 
  [2022-07-13 16:29:05,492 renumber_model:L211 INFO] Getting sequence numbering relationship via BLOSUM62 alignment
  [2022-07-13 16:29:05,525 renumber_model:L114 DEBUG] Writing alignment to blosum62_A.aln
