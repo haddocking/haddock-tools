@@ -1,13 +1,13 @@
 
- haddock-tools 
+ haddock-tools
 ================================================
 
-Set of useful HADDOCK utility scripts, which requires Python 3.7+. 
+Set of useful HADDOCK utility scripts, which requires Python 3.7+.
 
-About 
---------- 
-This is a collection of scripts useful for pre- and post-processing and analysis for HADDOCK runs.  
-Requests for new scripts will be taken into consideration, depending on the effort and general usability of the script.  
+About
+---------
+This is a collection of scripts useful for pre- and post-processing and analysis for HADDOCK runs.
+Requests for new scripts will be taken into consideration, depending on the effort and general usability of the script.
 
 
 Installation
@@ -78,8 +78,8 @@ the first line active residues numbers and the second line passive residue numbe
 
 
 #### restrain_bodies.py
-A python script to creates distance restraints to lock several chains together. 
-Useful to avoid unnatural flexibility or movement due to 
+A python script to creates distance restraints to lock several chains together.
+Useful to avoid unnatural flexibility or movement due to
 sequence/numbering gaps during the refinement stage of HADDOCK.
 
 Usage:
@@ -229,7 +229,7 @@ Example:
 HIS ( 90 )	-->	HISD
 HIS ( 75 )	-->	HISE
 ```
-An optimized file is also written to disk, in this example it would be called ```1F3G_optimized.pdb```. 
+An optimized file is also written to disk, in this example it would be called ```1F3G_optimized.pdb```.
 
 
 #### pdb_blank_chain
@@ -356,6 +356,44 @@ optional arguments:
   -e [EXAMPLE], --example [EXAMPLE]
                         Print an example
 ```
+
+#### `renumber_model.py`
+
+A python script to match chains of a model to a given reference. The numbering relationship is obtained via sequence alignment with BLOSUM62 matrix. This is only indicated for complexes with high similarity.
+
+This script supports multi-chain complexes but expects the chains to match sequentially between the `reference` and the `model`.
+
+```text
+Ref  Model
+A   A
+B   B
+C   C
+```
+
+Usage:
+
+```text
+$ python renumber_model.py example_data/renumber_model/ref.pdb example_data/renumber_model/to_refine.BL00010001.pdb
+
+ [2022-07-13 16:29:05,492 renumber_model:L211 INFO] Getting sequence numbering relationship via BLOSUM62 alignment
+ [2022-07-13 16:29:05,525 renumber_model:L114 DEBUG] Writing alignment to blosum62_A.aln
+ [2022-07-13 16:29:05,526 renumber_model:L151 DEBUG] Sequence identity between chain A of example_data/ref.pdb and chain A of example_data/to_refine.BL00010001.pdb is 100.00%
+ [2022-07-13 16:29:05,527 renumber_model:L114 DEBUG] Writing alignment to blosum62_C.aln
+ [2022-07-13 16:29:05,528 renumber_model:L151 DEBUG] Sequence identity between chain C of example_data/ref.pdb and chain C of example_data/to_refine.BL00010001.pdb is 100.00%
+ [2022-07-13 16:29:05,529 renumber_model:L114 DEBUG] Writing alignment to blosum62_D.aln
+ [2022-07-13 16:29:05,529 renumber_model:L151 DEBUG] Sequence identity between chain D of example_data/ref.pdb and chain D of example_data/to_refine.BL00010001.pdb is 98.18%
+ [2022-07-13 16:29:05,531 renumber_model:L114 DEBUG] Writing alignment to blosum62_E.aln
+ [2022-07-13 16:29:05,531 renumber_model:L151 DEBUG] Sequence identity between chain E of example_data/ref.pdb and chain E of example_data/to_refine.BL00010001.pdb is 95.50%
+ [2022-07-13 16:29:05,531 renumber_model:L213 INFO] Renumbering model according to numbering relationship
+ [2022-07-13 16:29:05,531 renumber_model:L178 INFO] Renumbered model name: to_refine.BL00010001_renumbered.pdb
+ [2022-07-13 16:29:05,539 renumber_model:L199 WARNING] Ignored residues [43, 82, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202] in model's chain D
+ [2022-07-13 16:29:05,539 renumber_model:L199 WARNING] Ignored residues [17, 42, 77, 80, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237] in model's chain E
+ [2022-07-13 16:29:05,539 renumber_model:L216 INFO] Renumbering complete
+ [2022-07-13 16:29:05,540 renumber_model:L217 INFO] DO NOT trust this renumbering blindly!
+ [2022-07-13 16:29:05,540 renumber_model:L218 INFO] Check the .aln files for more information
+```
+
+A `_renumbered.pdb` file is created in the same directory as the input file together with multiple `blosum62_ChainID.aln` files.
 
 License
 ---------
