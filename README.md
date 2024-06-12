@@ -13,7 +13,7 @@ While some of them might still work, it is recommended to check our utilities cu
 
 - [pdb-tools](https://github.com/haddocking/pdb-tools) - for all things PDB-related
 - [haddock-runner](https://www.bonvinlab.org/haddock-runner/) - for running running large-scale HADDOCK jobs
-- [haddock-restraints](https//www.bonvinlab.org/haddock-restraints/) - for all things related to generating restraints for HADDOCK
+- [haddock-restraints](https://www.bonvinlab.org/haddock-restraints/) - for all things related to generating restraints for HADDOCK
 
 ---
 ---
