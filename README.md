@@ -2,6 +2,23 @@
  haddock-tools
 ================================================
 
+---
+---
+
+## Important❗
+
+Please note that most scripts here are out-dated!
+
+While some of them might still work, it is recommended to check our utilities currently in development, such as:
+
+- [pdb-tools](https://github.com/haddocking/pdb-tools) - for all things PDB-related
+- [haddock-runner](https://www.bonvinlab.org/haddock-runner/) - for running running large-scale HADDOCK jobs
+- [haddock-restraints](https//www.bonvinlab.org/haddock-restraints/) - for all things related to generating restraints for HADDOCK
+
+---
+---
+
+
 Set of useful HADDOCK utility scripts, which requires Python 3.7+.
 
 About
