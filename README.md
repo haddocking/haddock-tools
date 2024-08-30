@@ -48,6 +48,50 @@ Scripts
 ------------
 
 
+## Benchmark-related
+
+#### AnalyseBenchmarkResults.py
+
+This python3 script works together with the [haddock-runner](https://www.bonvinlab.org/haddock-runner/) as a post-processing tool to analyse multiple scenarios performances. Note that it is deticated to the analysis of runs performed by [haddock3] as it relies on reading the content of the `[caprieval]` module outputs.
+
+Three major plots will be generated:
+* capri-barplots:
+* violin-plots:
+* melqui-plots: 
+
+
+Requirements:
+* [matplotlib](https://matplotlib.org/)
+* [numpy](https://numpy.org/)
+
+`pip install numpy matplotlib`
+
+
+Usage:
+```bash
+python3 AnalyseBenchmarkResults.py <path/to/benchmark/directory/>
+
+optional arguments:
+  -o OUTPUT_PATH, --output_path OUTPUT_PATH
+                        Directory where to write output files.
+  -m {irmsd,dockq}, --metric {irmsd,dockq}
+                        Performance metric to track.
+  -s SCENARIO [SCENARIO ...], --scenario SCENARIO [SCENARIO ...]
+                        Name(s) of a specific scenario(s) to analyze.
+                        Can be multiple of them, separated by space.
+                        By default, all scenarios will be analysed
+                        together.
+  -t {protein,peptide,glycan}, --type {protein,peptide,glycan}
+                        Type of analysis to be conducted. By default, protein.
+  -d DPI, --dpi DPI     DPI of the generated figures.
+  --no-capriplots       Do not generate CAPRI plots (flag)
+  --no-violinplots      Do not generate violin plots (flag)
+  --no-melquiplots      Do not generate melqui plots (flag)
+  -n, --no-percentage   Display number of structures instread of
+                        percentages (flag)
+  -q, --quiet           Silences prints (flag)
+```
+
 ## Restraints-related
 
 #### passive_from_active.py
