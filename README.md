@@ -75,7 +75,7 @@ optional arguments:
   -o OUTPUT_PATH, --output_path OUTPUT_PATH
                         Directory where to write output files.
   -m {irmsd,dockq}, --metric {irmsd,dockq}
-                        Performance metric to track.
+                        Performance metric to track. By default, dockq.
   -s SCENARIO [SCENARIO ...], --scenario SCENARIO [SCENARIO ...]
                         Name(s) of a specific scenario(s) to analyze.
                         Can be multiple of them, separated by space.
@@ -83,11 +83,11 @@ optional arguments:
                         together.
   -t {protein,peptide,glycan}, --type {protein,peptide,glycan}
                         Type of analysis to be conducted. By default, protein.
-  -d DPI, --dpi DPI     DPI of the generated figures.
+  -d DPI, --dpi DPI     DPI of the generated figures. By default, 400.
   --no-capriplots       Do not generate CAPRI plots (flag)
   --no-violinplots      Do not generate violin plots (flag)
   --no-melquiplots      Do not generate melqui plots (flag)
-  -n, --no-percentage   Display number of structures instread of
+  -n, --no-percentage   Display number of structures instead of
                         percentages (flag)
   -q, --quiet           Silences prints (flag)
 ```
