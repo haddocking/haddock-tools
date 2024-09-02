@@ -55,9 +55,9 @@ Scripts
 This python3 script works together with the [haddock-runner](https://www.bonvinlab.org/haddock-runner/) as a post-processing tool to analyse multiple scenarios performances. Note that it is deticated to the analysis of runs performed by [haddock3](https://github.com/haddocking/haddock3) as it relies on reading the content of the `[caprieval]` module outputs.
 
 Three major plots will be generated:
-* capri-barplots:
-* violin-plots:
-* melqui-plots: 
+* capri-barplots: Standard best performing model among top X models, using CAPRI model quality assessment (high, medium, acceptable, near-acceptable and low quality models)
+* violin-plots: Dispersion of the tracked metric among top X models.
+* melqui-plots: Analysis of the top ranked 200 models using CAPRI quality assessment. Copyleft Adrien Melquiond.
 
 
 Requirements:
