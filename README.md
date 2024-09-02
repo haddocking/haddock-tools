@@ -52,7 +52,7 @@ Scripts
 
 #### AnalyseBenchmarkResults.py
 
-This python3 script works together with the [haddock-runner](https://www.bonvinlab.org/haddock-runner/) as a post-processing tool to analyse multiple scenarios performances. Note that it is deticated to the analysis of runs performed by [haddock3] as it relies on reading the content of the `[caprieval]` module outputs.
+This python3 script works together with the [haddock-runner](https://www.bonvinlab.org/haddock-runner/) as a post-processing tool to analyse multiple scenarios performances. Note that it is deticated to the analysis of runs performed by [haddock3](https://github.com/haddocking/haddock3) as it relies on reading the content of the `[caprieval]` module outputs.
 
 Three major plots will be generated:
 * capri-barplots:
