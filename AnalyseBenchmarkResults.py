@@ -9,16 +9,19 @@ Please modify the Global variable: CAPRIEVAL_STEPS to suite your needs.
 It is used to generate nice title to the caprieval steps.
 
 Usage:
->python3 AnalyseBenchmarkResults.py <path/to/benchmark/dir/to/analyse/>
+>python3 AnalyseBenchmarkResults.py <path/to/benchmark/dir/to/analyze/>
 """
 
 import argparse
 import glob
 import json
 import os
+import re
 import sys
+import tarfile
 import zipfile
 
+from functools import partial
 from pathlib import Path
 from typing import Callable, Optional, Union
 
@@ -37,7 +40,7 @@ except ModuleNotFoundError:
         )
 
 
-__version__ = "1.0.5"  # August 2024
+__version__ = "1.1.0"  # September 2025
 __author__ = ", ".join((
     "BonvinLab",
     "Computational Structural Biology group",
@@ -448,9 +451,8 @@ def gen_full_comparison_violins(
         scenars_perfs[scenars_order[0]][steps_order[0]]['values'],
         )
     nb_thresh = len(tops_order)
-     # Compute total number of plots
+    # Compute total number of plots
     total_plots = nb_thresh * nb_steps
-    processed = 0
 
     # Initate figures / axis
     fig, axes = plt.subplots(
@@ -459,10 +461,13 @@ def gen_full_comparison_violins(
         ncols=nb_steps,
         sharey=True,
         sharex=True,
+        squeeze=0,  # squeeze=0 allows to always return a 2d array
         )
 
-    # Loop over rows
+    processed = 0
+    # Loop over thresholds
     for ri, topx in enumerate(tops_order):
+        # Loop over caprieval steps
         for ci, cname in enumerate(steps_order):
             processed += 1
             if progress:
@@ -645,6 +650,9 @@ def make_scenar_melquiplots(
         nrows=nb_rows,
         ncols=1,
         )
+    if not isinstance(axes, list):
+        axes = [axes]
+
     # Loop over stages
     for si, (stage, stage_perfs) in enumerate(scenar_perfs.items()):
         # Point axis
@@ -867,12 +875,15 @@ def gen_full_comparison_barplots(
                 )
 
     # Set padding between two plots
-    pad = 5
+    pad = 5  # NOTE: nicely hardcoded !
+
     # Search for first row
     if len(rows_order) == 1:
         first_row = axes
     else:
         first_row = axes[0]
+    if not isinstance(first_row, list):
+        first_row = [first_row]
 
     # Add columns titles
     for ax, cname in zip(first_row, cols_order):
@@ -999,20 +1010,35 @@ def scenario_name_2_threshold(scenar_name: str) -> float:
     return threshold
 
 
-def get_caprieval_stages(basepath: str) -> list[str]:
+def get_caprieval_stages(
+        basepath: str,
+        read_from_archive: bool = False,
+        ) -> list[str]:
     """Retrieve all caprieval stages inside a haddock3 run.
 
     Parameters
     ----------
     basepath : str
         Path to a haddock3 run directory `rundir`.
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
 
     Return
     ------
     caprieval_stages : list
         List of caprieval module indexes
     """
-    caprieval_paths = glob.glob(f'{basepath}*caprieval/')
+    if not read_from_archive:
+        caprieval_paths = glob.glob(f'{basepath}*caprieval/')
+    else:
+        # Read members from the archive and retrieve capri_ss file paths
+        with tarfile.open(basepath, "r:gz") as tarin:
+            caprieval_paths = [
+                fp.name for fp in tarin.getmembers()
+                if re.search(r"\d+_caprieval_analysis\/capri_ss\.tsv", fp.name)
+            ]
+    # Gather only the stages IDs of the caprieval modules
     caprieval_stages = [
         hd3_module_2_stage(caprip.split('/')[-2])
         for caprip in caprieval_paths
@@ -1041,7 +1067,8 @@ def hd3_module_2_stage(indexed_modulename: str) -> str:
 def map_data(
         basepath: str,
         subset_scenarios: Optional[list[str]] = None,
-        ) -> dict[str, dict[str, dict[str, dict[str, str]]]]:
+        read_from_archive: bool = False,
+        ) -> dict[str, dict[str, dict[str, dict[str, Union[str, list[str, str]]]]]]:
     """Map data in one analysis dict to accessit easily.
 
     Parameters
@@ -1050,6 +1077,9 @@ def map_data(
         Path where the benchmarking scenarios can be found.
     subset_scenarios : Optional[list[str]]
         List of scenario names on which to perform the analysis.
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
    
     Return
     ------
@@ -1059,7 +1089,7 @@ def map_data(
         {"scenario_id":
             {"caprieval_stage":
                 {"PDBid":
-                    {"complexe_id": path/to/caprieval_ss.tsv,
+                    {"complexe_id": "path/to/caprieval_ss.tsv",
                      ...,
                     }
                 }
@@ -1067,7 +1097,7 @@ def map_data(
         }
     """
     # Initiate mapper
-    dtmap: dict[str, dict[str, dict[str, dict[str, str]]]] = {}
+    dtmap: dict[str, dict[str, dict[str, dict[str, Union[str, list[str, str]]]]]] = {}
     # Gather all directories
     pdbids = get_pdb_entries(basepath)
 
@@ -1086,30 +1116,74 @@ def map_data(
     # Make sure all pdbs have all scenarios
     for pdbid in pdbids:
         for scenario in all_scenarios:
-            scenar_rundir = f"{basepath}{pdbid}/{scenario}/run1/"
-            assert os.path.exists(scenar_rundir), \
-                f"[ERROR] could not find scenario `{scenario}` directory for entry `{pdbid}` at: {scenar_rundir}"
-   
+            # Default behavior
+            if not read_from_archive:
+                scenar_rundir = f"{basepath}{pdbid}/{scenario}/run1/"
+                assert os.path.exists(scenar_rundir), \
+                    (
+                        f"[ERROR] could not find scenario `{scenario}` "
+                        f"directory for entry `{pdbid}` at: {scenar_rundir}"
+                    )
+            # Case where we need to search data in the archive
+            else:
+                analysis_archive = f"{basepath}{pdbid}/{scenario}/run1_analysis.tgz"
+                assert os.path.exists(analysis_archive), \
+                    (
+                        f"[ERROR] could not find scenario `{scenario}` "
+                        f"archive for entry `{pdbid}` at: {analysis_archive}"
+                    )
+                
     all_caprieval_stages = []
     # Add scenario data to data maper
     for scenario in all_scenarios:
         # Loop over pdb ids
         for pdbid in pdbids:
-            # Generate scenario basepath
-            scenario_bp = f'{basepath}{pdbid}/{scenario}/run1/'
+            if not read_from_archive:
+                # Generate scenario basepath
+                scenario_bp = f"{basepath}{pdbid}/{scenario}/run1/"
+            else:
+                scenario_bp = f"{basepath}{pdbid}/{scenario}/run1_analysis.tgz"
             # Retrieve caprieval stages
-            caprieval_stages = get_caprieval_stages(scenario_bp)
+            caprieval_stages = get_caprieval_stages(
+                scenario_bp,
+                read_from_archive=read_from_archive,
+                )
             all_caprieval_stages += caprieval_stages
     all_caprieval_stages = sorted(list(set(all_caprieval_stages)))
     
     # Make sure all stages are computed for all pdb in all scenarios...
     for scenario in all_scenarios:
         for pdbid in pdbids:
+            archive_path = f"{basepath}{pdbid}/{scenario}/run1_analysis.tgz"
+            if read_from_archive:
+                tararchive = tarfile.open(archive_path, "r:gz")
             for stage in all_caprieval_stages:
-                # Build caprieval tsv filepath
-                caprieval_tsv_path = f"{basepath}{pdbid}/{scenario}/run1/{stage}_caprieval/capri_ss.tsv"  # noqa : E501
-                assert os.path.exists(caprieval_tsv_path), \
-                    f"[ERROR] could not access CAPRIEVAL results file at: {caprieval_tsv_path}\n- Stage {stage}\n- Scenario `{scenario}`\n- Target `{pdbid}`"
+                if not read_from_archive:
+                    # Build caprieval tsv filepath
+                    caprieval_tsv_path = f"{basepath}{pdbid}/{scenario}/run1/{stage}_caprieval/capri_ss.tsv"  # noqa : E501
+                    assert os.path.exists(caprieval_tsv_path), \
+                        (
+                            f"[ERROR] could not access CAPRIEVAL results file at: "
+                            f"{caprieval_tsv_path}\n- Stage {stage}\n- Scenario "
+                            f"`{scenario}`\n- Target `{pdbid}`"
+                        )
+                else:
+                    expected_capriss_fpath = f"run1_analysis/{stage}_caprieval_analysis/capri_ss.tsv"
+                    found_file = False
+                    try:
+                        _tarinfo = tararchive.getmember(expected_capriss_fpath)
+                        found_file = True
+                    except KeyError:
+                        assert found_file == True, \
+                            (
+                            f"[ERROR] could not access CAPRIEVAL results file at: "
+                            f"{expected_capriss_fpath}\n"
+                            f"  - Stage {stage}\n"
+                            f"  - Scenario `{scenario}`\n"
+                            f"  - Target `{pdbid}`"
+                            )
+            if read_from_archive:
+                tararchive.close()           
 
     # Gather all data
     for scenario in all_scenarios:
@@ -1117,8 +1191,14 @@ def map_data(
         for stage in all_caprieval_stages:
             dtmap[scenario][stage] = {}
             for pdbid in pdbids:
-                # Build caprieval tsv filepath
-                caprieval_tsv_path = f'{basepath}{pdbid}/{scenario}/run1/{stage}_caprieval/capri_ss.tsv'  # noqa : E501
+                if not read_from_archive:
+                    # Build caprieval tsv filepath
+                    caprieval_tsv_path = f"{basepath}{pdbid}/{scenario}/run1/{stage}_caprieval/capri_ss.tsv"  # noqa : E501
+                else:
+                    caprieval_tsv_path = [
+                        f"{basepath}{pdbid}/{scenario}/run1_analysis.tgz",
+                        f"run1_analysis/{stage}_caprieval_analysis/capri_ss.tsv",
+                    ]
                 # Hold datapath
                 dtmap[scenario][stage][pdbid] = caprieval_tsv_path
 
@@ -1128,8 +1208,9 @@ def map_data(
 def analyse_scenario(
         scenario_dt: dict,
         _entries_thresholds: list,
-        sort_dtype: str = 'haddock-score',
-        perf_dtype: str = 'irmsd',
+        sort_dtype: str = "haddock-score",
+        perf_dtype: str = "irmsd",
+        read_from_archive: bool = False,
         ) -> tuple[dict[str, dict], dict[str, dict]]:
     """Process the analysis of a scenario.
 
@@ -1145,8 +1226,9 @@ def analyse_scenario(
         Key used to sort data.
     perf_dtype : str
         Key used to define performance.
-    output : str
-        Basepath where to write the data
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
 
     Return
     ------
@@ -1177,6 +1259,7 @@ def analyse_scenario(
                 entries_thresholds,
                 sort_dtype=sort_dtype,
                 perf_dtype=perf_dtype,
+                read_from_archive=read_from_archive,
                 )
             # Hold best performances
             pdb_best_perfs[pdbid] = best_perfs_h
@@ -1199,8 +1282,8 @@ def analyse_scenario(
 
         # Hold stage performances
         scenario_stages_perfs[stage] = {
-            'values': stage_best_perfs,
-            'classes': stage_class_perfs,
+            "values": stage_best_perfs,
+            "classes": stage_class_perfs,
             }
         scenario_stages_pdb_perfs[stage] = pdb_perfs
 
@@ -1287,16 +1370,17 @@ def dtype_to_boundary_function(dtype: str) -> Callable:
 
 
 def analyse_caprieval_performances(
-        capireval_fpath: str,
+        capireval_fpath: Union[str, list[str, str]],
         entries_thresholds: list,
-        sort_dtype: str = 'haddock-score',
-        perf_dtype: str = 'irmsd',
+        sort_dtype: str = "haddock-score",
+        perf_dtype: str = "irmsd",
+        read_from_archive: bool = False,
         ) -> tuple[dict[int, float], dict[int, list[float]]]:
     """Analyse a CAPRIeval step performances.
 
     Parameters
     ----------
-    capireval_fpath : str
+    capireval_fpath : Union[str, list[str, str]]
         Path to the caprival file to analyse.
     entries_thresholds : list
         List of entries theshold to take into consideration.
@@ -1304,6 +1388,9 @@ def analyse_caprieval_performances(
         Key used to sort data.
     perf_dtype : str
         Key used to define performance.
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
 
     Return
     ------
@@ -1311,7 +1398,7 @@ def analyse_caprieval_performances(
         Dictionary holder best performances at each threshold.
     """
     # Load caprieval data
-    caprieval_data = load_caprieval_data(capireval_fpath)
+    caprieval_data = load_caprieval_data(capireval_fpath, read_from_archive)
     # Sort entries by perf value
     sorted_complexes = sorted(
         caprieval_data,
@@ -1418,8 +1505,9 @@ def get_reverse_bool(dt_type: str) -> bool:
 
 
 def load_caprieval_data(
-        tsvpath: str,
-        sep: str = '\t',
+        tsvpath: Union[str, list[str, str]],
+        read_from_archive: bool,
+        sep: str = "\t",
         ) -> dict[str, dict[str, float]]:
     """Load caprieval data as dict.
 
@@ -1427,6 +1515,9 @@ def load_caprieval_data(
     ----------
     tsvpath : str
         Path to the caprieval_ss.tsv file.
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
     sep : str
         String used to separate data in the file.
 
@@ -1436,32 +1527,50 @@ def load_caprieval_data(
         Dictionary holding data for each complexes.
     """
     data: dict[str, dict[str, float]] = {}
-    with open(tsvpath, 'r') as filin:
-        for i, _ in enumerate(filin):
-            # Split the line
-            s_ = _.strip().split(sep)
-            # Gather header names
-            if i == 0:
-                header = s_
-                continue
-            # Load data
-            complex_name = s_[header.index('model')]
-            complex_dt_str = {
-                'rank': s_[header.index('caprieval_rank')],
-                'haddock-score': s_[header.index('score')],
-                'irmsd': s_[header.index('irmsd')],
-                'lrmsd': s_[header.index('lrmsd')],
-                'fnat': s_[header.index('fnat')],
-                'ilrmsd': s_[header.index('ilrmsd')],
-                'dockq': s_[header.index('dockq')],
-                }
-            # Cast all values to float
-            complex_dt = {
-                k: float(v)
-                for k, v in complex_dt_str.items()
-                }
-            # Hold this guy
-            data[complex_name] = complex_dt
+    # Read file content
+    if not read_from_archive:
+        with open(tsvpath, "r") as filin:
+            file_content = filin.read()
+    else:
+        # Unpack archive name and tsv filepath
+        archive_path, _tsv_fpath = tsvpath
+        # Open archive
+        tarin = tarfile.open(archive_path, "r:gz")
+        # Extract desired file
+        tar_tsv = tarin.extractfile(_tsv_fpath)
+        # Read it
+        file_content = tar_tsv.read().decode("utf-8")
+        # Close archive
+        tarin.close()
+
+    # Loop over file lines
+    for i, _ in enumerate(file_content.split("\n")):
+        # Split the line
+        s_ = _.strip().split(sep)
+        # Gather header names
+        if i == 0:
+            header = s_
+            continue
+        if _.strip() == "":
+            continue
+        # Load data
+        complex_name = s_[header.index('model')]
+        complex_dt_str = {
+            'rank': s_[header.index('caprieval_rank')],
+            'haddock-score': s_[header.index('score')],
+            'irmsd': s_[header.index('irmsd')],
+            'lrmsd': s_[header.index('lrmsd')],
+            'fnat': s_[header.index('fnat')],
+            'ilrmsd': s_[header.index('ilrmsd')],
+            'dockq': s_[header.index('dockq')],
+            }
+        # Cast all values to float
+        complex_dt = {
+            k: float(v)
+            for k, v in complex_dt_str.items()
+            }
+        # Hold this guy
+        data[complex_name] = complex_dt
     return data
 
 
@@ -1492,8 +1601,8 @@ def load_json(path: str) -> Union[dict, list]:
     data : dict or list
         Python loaded data within file
     """
-    with open(path) as f:
-        data = json.load(f)
+    with open(path, "r") as fin:
+        data = json.load(fin)
     return data
 
 
@@ -1502,6 +1611,7 @@ def get_data_mapper(
         overwrite: bool = False,
         outpath: str = "",
         subset_scenarios: Optional[list[str]] = None,
+        read_from_archive: bool = False,
         ) -> dict:
     """Retrieve or generate data mapper.
 
@@ -1516,6 +1626,9 @@ def get_data_mapper(
         Base path where to write data
     subset_scenarios : Optional[list[str]]
         List of scenario names on which to perform the analysis.
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
 
     Return
     ------
@@ -1523,14 +1636,18 @@ def get_data_mapper(
         Dictionary mapping scenarios/pdbids to caprieval tsv paths.
     """
     # Name of the mapper
-    mapper_fpath = f'{outpath}_benchmark_mapper.json'
+    mapper_fpath = f"{outpath}_benchmark_mapper.json"
     # Check for no overwrites
     if not overwrite and os.path.exists(mapper_fpath):
         dtmapper = load_json(mapper_fpath)
         return dtmapper
 
     # Gather data mapper
-    dtmapper = map_data(basepath, subset_scenarios=subset_scenarios)
+    dtmapper = map_data(
+        basepath,
+        subset_scenarios=subset_scenarios,
+        read_from_archive=read_from_archive,
+        )
     # Write it
     write_json(dtmapper, mapper_fpath)
     # Return data
@@ -1578,7 +1695,7 @@ def set_output_path(
     return basename, base_outputpath
 
 
-def vprint(msg: str, silence: bool) -> None:
+def _vprint(silence: bool, msg: str) -> None:
     """Print on screen
 
     Parameters
@@ -1605,6 +1722,7 @@ def main(
         no_capriplots: bool = False,
         no_violinplots: bool = False,
         no_melquiplots: bool = False,
+        read_from_archive: bool = False,
         ) -> None:
     """Run the analysis procedure.
 
@@ -1616,28 +1734,48 @@ def main(
         Path to directory where to store the results
     scenarios : Optional[list[str]]
         List of scenario names on which to perform the analysis.
+    metric : str, optional
+        Quality metric to be used for the analysis, by default "irmsd"
+    silent : bool, optional
+        Set the STDOUT silent or not, by default False
+    no_percentage : bool, optional
+        If set to True, the values will be reported by
+        number of docking runs, by default False
+    no_capriplots : bool, optional
+        Do not generate the usual CAPRI model quality bar plots,
+        by default False
+    no_violinplots : bool, optional
+        Do not generate the violin plots, by default False
+    no_melquiplots : bool, optional
+        Do not generate the melquiplots, by default False
+    read_from_archive : bool, optional
+        When set to True, performs the search of capri_ss.tsv files from the
+        analysis archive instead of the run directory, by default False
     """
+    # Pre-setting the STDOUT print function
+    vprint = partial(_vprint, silent)
+
     # Initiate output paths
     basename, base_outputpath = set_output_path(
         benchmark_directory,
         outputpath,
         )
-    vprint(f"Setting the output directory path: `{outputpath}`", silent)
+    vprint(f"Setting the output directory path: `{outputpath}`")
 
     # Gather data mapper
-    vprint(f"- Searching for data in `{benchmark_directory}`", silent)
+    vprint(f"- Searching for data in `{benchmark_directory}`")
     dtmapper = get_data_mapper(
         benchmark_directory,
         overwrite=True,
         outpath=base_outputpath,
         subset_scenarios=scenarios,
+        read_from_archive=read_from_archive,
         )
 
     # Initiate all scenarios perforamces mapper
     vprint(
         f"- Loading data from `{benchmark_directory}` "
-        f"for {len(dtmapper)} scenario(s): {', '.join(dtmapper)}",
-        silent,
+        f"for {len(dtmapper)} scenario(s): {', '.join(dtmapper)}"
         )
     all_scenar_perfs: dict[str, dict] = {}
     all_scenar_melquis: dict[str, dict] = {}
@@ -1649,17 +1787,18 @@ def main(
             TOP_X_THRESHOLDS,
             sort_dtype='haddock-score',
             perf_dtype=metric,
+            read_from_archive=read_from_archive,
             )
         # Hold perforamnces
         all_scenar_perfs[scenar_name] = scenar_best_perfs
         all_scenar_melquis[scenar_name] = scenar_pdb_perfs
 
     # Write data as json
-    write_json(all_scenar_perfs, f'{base_outputpath}_performances.json')
+    write_json(all_scenar_perfs, f"{base_outputpath}_performances.json")
 
     # Draw general graph
     if not no_capriplots:
-        vprint("- Generating Bar plots", silent)
+        vprint("- Generating Bar plots")
         gen_full_comparison_barplots(
             all_scenar_perfs,
             basepath=base_outputpath,
@@ -1669,7 +1808,7 @@ def main(
             )
 
     if not no_violinplots:
-        vprint("- Generating Violin plots", silent)
+        vprint("- Generating Violin plots")
         gen_full_comparison_violins(
             all_scenar_perfs,
             basepath=base_outputpath,
@@ -1679,7 +1818,7 @@ def main(
             )
 
     if not no_melquiplots:
-       vprint("- Generating Melqui plots", silent)
+       vprint("- Generating Melqui plots")
        gen_full_comparison_melquiplots(
             all_scenar_melquis,
             perf_dtype=metric,
@@ -1810,6 +1949,18 @@ def _get_cmd_line_args() -> argparse.Namespace:
         default=False,
         )
     parser.add_argument(
+        '-a',
+        '--from-archive',
+        help=(
+            "Perfoms the analysis directly from a haddock3 analysis archived runs. "
+            "This option is ment to be used when haddock3 is launched with "
+            "`gen_archive = true`, therefore searching for capri_ss.tsv files "
+            "directly from the archive."
+            ),
+        action="store_true",
+        default=False,
+        )
+    parser.add_argument(
         '-q',
         '--quiet',
         help="Silences prints",
@@ -1828,12 +1979,15 @@ def welcome_msg(silent: bool) -> None:
     silent : bool
         If true, do not print
     """
-    vprint("#" * 80, silent)
-    vprint(f"#     Haddock-runner haddock3 analysis script", silent)
-    vprint(f"#     Version: {__version__}", silent)
-    vprint(f"#     Author:  {__author__}", silent)
-    vprint(f"#     Devs:    {', '.join(__dev__)}", silent)
-    vprint("#" * 80, silent)
+    msg = (
+        f"{'#' * 80}\n"
+        "#   Haddock-runner haddock3 analysis script\n"
+        f"#   Version: {__version__}\n"
+        f"#   Author:  {__author__}\n"
+        f"#   Devs:    {', '.join(__dev__)}\n"
+        f"{'#' * 80}\n"
+    )
+    _vprint(silent, msg)
 
 
 ############################
@@ -1853,6 +2007,7 @@ def maincli() -> None:
         no_capriplots=args.no_capriplots,
         no_violinplots=args.no_violinplots,
         no_melquiplots=args.no_melquiplots,
+        read_from_archive=args.from_archive,
         )
 
 
