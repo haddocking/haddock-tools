@@ -40,7 +40,7 @@ except ModuleNotFoundError:
         )
 
 
-__version__ = "1.1.0"  # September 2025
+__version__ = "1.1.1"  # September 2025
 __author__ = ", ".join((
     "BonvinLab",
     "Computational Structural Biology group",
@@ -650,7 +650,7 @@ def make_scenar_melquiplots(
         nrows=nb_rows,
         ncols=1,
         )
-    if not isinstance(axes, list):
+    if not isinstance(axes, np.ndarray):
         axes = [axes]
 
     # Loop over stages
@@ -882,7 +882,7 @@ def gen_full_comparison_barplots(
         first_row = axes
     else:
         first_row = axes[0]
-    if not isinstance(first_row, list):
+    if not isinstance(first_row, np.ndarray):
         first_row = [first_row]
 
     # Add columns titles

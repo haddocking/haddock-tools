@@ -89,6 +89,9 @@ optional arguments:
   --no-melquiplots      Do not generate melqui plots (flag)
   -n, --no-percentage   Display number of structures instead of
                         percentages (flag)
+  -a, --from-archive    Perfoms the analysis directly from a haddock3 analysis archived runs. This
+                        option is ment to be used when haddock3 is launched with `gen_archive =
+                        true`, therefore searching for capri_ss.tsv files directly from the archive.
   -q, --quiet           Silences prints (flag)
 ```
 
